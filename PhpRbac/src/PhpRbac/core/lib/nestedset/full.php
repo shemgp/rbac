@@ -1,25 +1,25 @@
 <?php
 interface ExtendedNestedSet extends NestedSetInterface
 {
-	//All functions with ConditionString, accept other parameters in variable numbers
-	function getID($ConditionString);
+    //All functions with ConditionString, accept other parameters in variable numbers
+    function getID($ConditionString);
 
-	function insertChildData($FieldValueArray=array(),$ConditionString=null);
-	function insertSiblingData($FieldValueArray=array(),$ConditionString=null);
+    function insertChildData($FieldValueArray=array(),$ConditionString=null);
+    function insertSiblingData($FieldValueArray=array(),$ConditionString=null);
 
-	function deleteSubtreeConditional($ConditionString);
-	function deleteConditional($ConditionString);
+    function deleteSubtreeConditional($ConditionString);
+    function deleteConditional($ConditionString);
 
 
-	function childrenConditional($ConditionString);
-	function descendantsConditional($AbsoluteDepths=false,$ConditionString);
-	function leavesConditional($ConditionString=null);
-	function pathConditional($ConditionString);
+    function childrenConditional($ConditionString);
+    function descendantsConditional($AbsoluteDepths=false,$ConditionString);
+    function leavesConditional($ConditionString=null);
+    function pathConditional($ConditionString);
 
-	function depthConditional($ConditionString);
-	function parentNodeConditional($ConditionString);
-	function siblingConditional($SiblingDistance=1,$ConditionString);
-	/**/
+    function depthConditional($ConditionString);
+    function parentNodeConditional($ConditionString);
+    function siblingConditional($SiblingDistance=1,$ConditionString);
+    /**/
 }
 /**
  * FullNestedSet Class
@@ -33,10 +33,10 @@ interface ExtendedNestedSet extends NestedSetInterface
  */
 class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
 {
-	/**
+    /**
     public $AutoRipRightLeft=true;
 
-  	private  function RipRightLeft(&$ResultSet)
+      private  function RipRightLeft(&$ResultSet)
     {
         if ($this->AutoRipRightLeft && $ResultSet)
         foreach ($ResultSet as &$v)
@@ -50,11 +50,11 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
     **/
     protected function lock()
     {
-    	Jf::sql("LOCK TABLE {$this->table()} WRITE");
+        Jf::sql("LOCK TABLE {$this->table()} WRITE");
     }
     protected function unlock()
     {
-    	Jf::sql("UNLOCK TABLES");
+        Jf::sql("UNLOCK TABLES");
     }
     /**
      * Returns the ID of a node based on a SQL conditional string
@@ -73,7 +73,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         if ($Res)
         return $Res[0]["ID"];
         else
-        	return null;
+            return null;
     }
     /**
      * Returns the record of a node based on a SQL conditional string
@@ -90,9 +90,9 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         array_unshift($args,$Query);
         $Res=call_user_func_array(("Jf::sql"),$args);
         if ($Res)
-	        return $Res[0];
+            return $Res[0];
         else
-        	return null;
+            return null;
     }
     /**
      * Returns the depth of a node in the tree
@@ -149,7 +149,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         if (count($Path)<2) return null;
         else return $Path[count($Path)-2];
     }
-	/**
+    /**
      * Deletes a node and shifts the children up
      * Note: use a condition to support only 1 row, LIMIT 1 used.
      * @param String $ConditionString
@@ -158,19 +158,19 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      */
     function deleteConditional($ConditionString,$Rest=null)
     {
-    	$this->lock();
-    	$Arguments=func_get_args();
+        $this->lock();
+        $Arguments=func_get_args();
         array_shift($Arguments);
         $Query="SELECT {$this->left()} AS `Left`,{$this->right()} AS `Right`
-			FROM {$this->table()}
-			WHERE $ConditionString LIMIT 1";
+            FROM {$this->table()}
+            WHERE $ConditionString LIMIT 1";
 
         array_unshift($Arguments,$Query);
         $Info=call_user_func_array("Jf::sql",$Arguments);
         if (!$Info)
         {
-        	$this->unlock();
-        	return false;
+            $this->unlock();
+            return false;
         }
         $Info=$Info[0];
 
@@ -190,12 +190,12 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      */
     function deleteSubtreeConditional($ConditionString,$Rest=null)
     {
-		$this->lock();
-    	$Arguments=func_get_args();
+        $this->lock();
+        $Arguments=func_get_args();
         array_shift($Arguments);
         $Query="SELECT {$this->left()} AS `Left`,{$this->right()} AS `Right` ,{$this->right()}-{$this->left()}+ 1 AS Width
-			FROM {$this->table()}
-			WHERE $ConditionString";
+            FROM {$this->table()}
+            WHERE $ConditionString";
 
         array_unshift($Arguments,$Query);
         $Info=call_user_func_array("Jf::sql",$Arguments);
@@ -221,8 +221,8 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      * @param boolean $AbsoluteDepths to return Depth of sub-tree from zero or absolutely from the whole tree
      * @param string $Condition
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
-	 * @return Rowset including Depth field
-	 * @seealso children
+     * @return Rowset including Depth field
+     * @seealso children
      */
     function descendantsConditional($AbsoluteDepths=false,$ConditionString,$Rest=null)
     {
@@ -234,20 +234,20 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $Query="
             SELECT node.*, (COUNT(parent.{$this->id()})-1 $DepthConcat) AS Depth
             FROM {$this->table()} AS node,
-            	{$this->table()} AS parent,
-            	{$this->table()} AS sub_parent,
-            	(
-            		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS innerDepth
-            		FROM {$this->table()} AS node,
-            		{$this->table()} AS parent
-            		WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
-            		AND (node.$ConditionString)
-            		GROUP BY node.{$this->id()}
-            		ORDER BY node.{$this->left()}
-            	) AS sub_tree
+                {$this->table()} AS parent,
+                {$this->table()} AS sub_parent,
+                (
+                    SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS innerDepth
+                    FROM {$this->table()} AS node,
+                    {$this->table()} AS parent
+                    WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
+                    AND (node.$ConditionString)
+                    GROUP BY node.{$this->id()}
+                    ORDER BY node.{$this->left()}
+                ) AS sub_tree
             WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
-            	AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->right()}
-            	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
+                AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->right()}
+                AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
             GROUP BY node.{$this->id()}
             HAVING Depth > 0
             ORDER BY node.{$this->left()}";
@@ -273,20 +273,20 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         $Query="
             SELECT node.*, (COUNT(parent.{$this->id()})-1 - (sub_tree.innerDepth )) AS Depth
             FROM {$this->table()} AS node,
-            	{$this->table()} AS parent,
-            	{$this->table()} AS sub_parent,
-           	(
-            		SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS innerDepth
-            		FROM {$this->table()} AS node,
-            		{$this->table()} AS parent
-            		WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
-            		AND (node.$ConditionString)
-            		GROUP BY node.{$this->id()}
-            		ORDER BY node.{$this->left()}
+                {$this->table()} AS parent,
+                {$this->table()} AS sub_parent,
+               (
+                    SELECT node.{$this->id()}, (COUNT(parent.{$this->id()}) - 1) AS innerDepth
+                    FROM {$this->table()} AS node,
+                    {$this->table()} AS parent
+                    WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
+                    AND (node.$ConditionString)
+                    GROUP BY node.{$this->id()}
+                    ORDER BY node.{$this->left()}
             ) AS sub_tree
             WHERE node.{$this->left()} BETWEEN parent.{$this->left()} AND parent.{$this->right()}
-            	AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->right()}
-            	AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
+                AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->right()}
+                AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
             GROUP BY node.{$this->id()}
             HAVING Depth = 1
             ORDER BY node.{$this->left()}";
@@ -298,7 +298,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             unset($v["Depth"]);
         return $Res;
     }
-	/**
+    /**
      * Returns the path to a node, including the node
      * Note: use a single condition, or supply "node." before condition fields.
      * @param string $ConditionString
@@ -324,7 +324,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
 
     /**
      * Finds all leaves of a parent
-     *	Note: if you don' specify $PID, There would be one less AND in the SQL Query
+     *    Note: if you don' specify $PID, There would be one less AND in the SQL Query
      * @param String $ConditionString
      * @param string $Rest optional, rest of variables to fill in placeholders of condition string, one variable for each ? in condition
      * @return Rowset Leaves
@@ -340,9 +340,9 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             $Query="SELECT *
                 FROM {$this->table()}
                 WHERE {$this->right()} = {$this->left()} + 1
-            	AND {$this->left()} BETWEEN
+                AND {$this->left()} BETWEEN
                 (SELECT {$this->left()} FROM {$this->table()} $ConditionString)
-                	AND
+                    AND
                 (SELECT {$this->right()} FROM {$this->table()} $ConditionString)";
 
             $Arguments=array_merge($Arguments,$Arguments);
@@ -365,14 +365,14 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      */
     function insertSiblingData($FieldValueArray=array(),$ConditionString=null,$Rest=null)
     {
-		$this->lock();
-    	//Find the Sibling
+        $this->lock();
+        //Find the Sibling
         $Arguments=func_get_args();
         array_shift($Arguments); //first argument, the array
         array_shift($Arguments);
         if ($ConditionString) $ConditionString="WHERE $ConditionString";
         $Query="SELECT {$this->right()} AS `Right`".
-        	" FROM {$this->table()} $ConditionString";
+            " FROM {$this->table()} $ConditionString";
 
         array_unshift($Arguments,$Query);
         $Sibl=call_user_func_array("Jf::sql",$Arguments);
@@ -397,13 +397,13 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         }
 
         $Query= "INSERT INTO {$this->table()} ({$this->left()},{$this->right()} $FieldsString) ".
-        	"VALUES(?,? $ValuesString)";
+            "VALUES(?,? $ValuesString)";
         array_unshift($Values,$Sibl["Right"]+2);
         array_unshift($Values,$Sibl["Right"]+1);
         array_unshift($Values,$Query);
 
         $Res=call_user_func_array("Jf::sql",$Values);
-		$this->unlock();
+        $this->unlock();
         return $Res;
     }
     /**
@@ -416,14 +416,14 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
      */
     function insertChildData($FieldValueArray=array(),$ConditionString=null,$Rest=null)
     {
-		$this->lock();
-    	//Find the Sibling
+        $this->lock();
+        //Find the Sibling
         $Arguments=func_get_args();
         array_shift($Arguments); //first argument, the array
         array_shift($Arguments);
         if ($ConditionString) $ConditionString="WHERE $ConditionString";
         $Query="SELECT {$this->right()} AS `Right`, {$this->left()} AS `Left`".
-        	" FROM {$this->table()} $ConditionString";
+            " FROM {$this->table()} $ConditionString";
         array_unshift($Arguments,$Query);
         $Parent=call_user_func_array("Jf::sql",$Arguments);
 
@@ -446,7 +446,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
             $Values[]=$v;
         }
         $Query= "INSERT INTO {$this->table()} ({$this->left()},{$this->right()} $FieldsString) ".
-        	"VALUES(?,? $ValuesString)";
+            "VALUES(?,? $ValuesString)";
         array_unshift($Values,$Parent["Right"]+1);
         array_unshift($Values,$Parent["Right"]);
         array_unshift($Values,$Query);
@@ -490,5 +490,3 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
     }
 
 }
-
-?>
