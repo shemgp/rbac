@@ -1,18 +1,19 @@
 <?php
-namespace models;
+namespace PhpRbac;
 
 /**
- * RBAC Manager - has the actual RBAC business logic.
+ * Provide NIST Level 2 Standard Role Based Access Control functionality.
  *
- * Documentation regarding Rbac Manager functionality.
- *
- * Rbac Manager: Provides NIST Level 2 Standard Hierarchical Role Based Access Control
+ * Allows maintainable function-level access control for enterprises, small
+ * applications, or frameworks.
  *
  * Has three members, Roles, Users and Permissions for specific operations
  *
  * @author jamesvl
  * @author abiusx
- * @version 2.0
+ *
+ * @see http://phprbac.net/index.php
+ * @see https://www.owasp.org/index.php/OWASP_PHPRBAC_Project
  */
 class Rbac
 {
