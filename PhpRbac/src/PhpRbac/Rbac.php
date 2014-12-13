@@ -1,51 +1,41 @@
 <?php
 namespace PhpRbac;
 
-use \Jf;
-
 /**
- * Provides NIST Level 2 Standard Role Based Access Control functionality
+ * Provide NIST Level 2 Standard Role Based Access Control functionality.
  *
- */
+ * Allows maintainable function-level access control for enterprises, small
+ * applications, or frameworks.
+ *
+ * @see http://phprbac.net/index.php
+ * @see https://www.owasp.org/index.php/OWASP_PHPRBAC_Project
+ **/
 class Rbac
 {
-    public function __construct($unit_test = '')
+    private $mgr;
+
+    public function __construct($settings)
     {
-        if ((string) $unit_test === 'unit_test') {
-            require_once dirname(dirname(__DIR__)) . '/tests/database/database.config';
-        } else {
-            require_once dirname(dirname(__DIR__)) . '/database/database.config';
-        }
-
-        require_once 'core/lib/Jf.php';
-
-        $this->Permissions = Jf::$Rbac->Permissions;
-        $this->Roles = Jf::$Rbac->Roles;
-        $this->Users = Jf::$Rbac->Users;
+        $this->mgr = new models\RbacManager($settings);
     }
 
     public function assign($role, $permission)
     {
-        return Jf::$Rbac->assign($role, $permission);
+        return $this->mgr->assign($role, $permission);
     }
 
     public function check($permission, $user_id)
     {
-        return Jf::$Rbac->check($permission, $user_id);
+        return $this->mgr->check($permission, $user_id);
     }
 
     public function enforce($permission, $user_id)
     {
-        return Jf::$Rbac->enforce($permission, $user_id);
+        return $this->mgr->enforce($permission, $user_id);
     }
 
     public function reset($ensure = false)
     {
-        return Jf::$Rbac->reset($ensure);
-    }
-
-    public function tablePrefix()
-    {
-        return Jf::$Rbac->tablePrefix();
+        return $this->mgr->reset($ensure);
     }
 }
