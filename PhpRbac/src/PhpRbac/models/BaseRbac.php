@@ -107,7 +107,11 @@ abstract class BaseRbac
      */
     public function returnId($entity = null)
     {
-        if (substr ($entity, 0, 1) == "/") {
+        if (is_numeric($entity)) {
+            return $entity;
+        }
+
+        if (substr ($entity, 0, 1) == '/') {
             $entityID = $this->pathId($entity);
         }
         else {

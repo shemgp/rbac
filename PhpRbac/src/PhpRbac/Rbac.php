@@ -56,26 +56,10 @@ class Rbac
      */
     function assign($Role, $Permission)
     {
-        if (is_numeric($Role)) {
-            $RoleID = $Role;
-        }
-        else {
-            if (substr($Role, 0, 1) == "/")
-                $RoleID = $this->Roles->pathId($Role);
-            else
-                $RoleID = $this->Roles->titleId($Role);
-        }
+        $RoleID = $this->Roles->returnId($Role);
+        $PermissionID = $this->Permissions->returnId($Permission);
 
-        if (is_numeric($Permission)) {
-            $PermissionID = $Permission;
-        }
-        else {
-            if (substr($Permission, 0, 1) == "/")
-                $PermissionID = $this->Permissions->pathId($Permission);
-            else
-                $PermissionID = $this->Permissions->titleId($Permission);
-        }
-
+        // todo: check in case requested Role or Permission doesn't exist?
         return $this->Roles->assign($RoleID, $PermissionID);
     }
 
@@ -88,25 +72,8 @@ class Rbac
      **/
     function unassign($Role, $Permission)
     {
-        if (is_numeric($Role)) {
-            $RoleID = $Role;
-        }
-        else {
-            if (substr($Role, 0, 1) == "/")
-                $RoleID = $this->Roles->pathId($Role);
-            else
-                $RoleID = $this->Roles->titleId($Role);
-        }
-
-        if (is_numeric($Permission)) {
-            $PermissionID = $Permission;
-        }
-        else {
-            if (substr($Permission, 0, 1) == "/")
-                $PermissionID = $this->Permissions->pathId($Permission);
-            else
-                $PermissionID = $this->Permissions->titleId($Permission);
-        }
+        $RoleID = $this->Roles->returnId($Role);
+        $PermissionID = $this->Permissions->returnId($Permission);
 
         return $this->Roles->unassign($RoleID, $PermissionID);
     }
@@ -130,16 +97,7 @@ class Rbac
         if ($UserID === null)
             throw new \exceptions\UserNotProvidedException("\$UserID is a required argument.");
 
-        // convert permission to ID
-        if (is_numeric ($Permission)) {
-            $PermissionID = $Permission;
-        }
-        else {
-            if (substr($Permission, 0, 1) == "/")
-                $PermissionID = $this->Permissions->pathId($Permission);
-            else
-                $PermissionID = $this->Permissions->titleId($Permission);
-        }
+        $PermissionID = $this->Permissions->returnId($Permission);
 
         // if invalid, throw exception
         if ($PermissionID === null)

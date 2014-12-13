@@ -154,11 +154,7 @@ class UserManager
         }
         else {
             $roleMgr = new RoleManager();
-
-            if (substr($Role, 0, 1) == "/")
-                $RoleID = $roleMgr->pathId($Role);
-            else
-                $RoleID = $roleMgr->titleId($Role);
+            $RoleID = return $roleMgr->returnId($Role);
         }
 
         return $RoleID;
