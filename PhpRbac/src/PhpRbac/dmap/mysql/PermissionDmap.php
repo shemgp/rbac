@@ -1,5 +1,5 @@
 <?php
-namespace \PhpRbac\dmap\mysql;
+namespace PhpRbac\dmap\mysql;
 
 class PermissionDmap extends BaseDmap {
 

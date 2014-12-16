@@ -1,5 +1,5 @@
 <?php
-namespace \PhpRbac\dmap\mysql;
+namespace PhpRbac\dmap\mysql;
 
 /**
  * Base data mapper for Permissions and Roles, since they are so similar.
@@ -101,8 +101,8 @@ class BaseDmap extends utils\PdoDataMapper {
         $GroupConcat = "GROUP_CONCAT(parent.Title ORDER BY parent.Lft SEPARATOR '/')";
 
         $sql = "SELECT node.id, $GroupConcat AS path
-                  FROM {$this->tblName)} AS node,
-                       {$this->tblName)} AS parent
+                  FROM {$this->tblName} AS node,
+                       {$this->tblName} AS parent
                  WHERE node.lft BETWEEN parent.lft AND parent.rght
                    AND node.title = ?
                  GROUP BY node.id
@@ -215,7 +215,7 @@ class BaseDmap extends utils\PdoDataMapper {
                        SELECT node.id,
                               (COUNT(parent.id) - 1) AS innerDepth
                          FROM {$this->tblName} AS node,
-                              {$this->tblName()} AS parent
+                              {$this->tblName} AS parent
                         WHERE node.lft BETWEEN parent.lft AND parent.rght
                               AND node.id = ?
                      GROUP BY node.id
@@ -266,7 +266,7 @@ class BaseDmap extends utils\PdoDataMapper {
         // for sqlite:
         // $qry =  "DELETE FROM sqlite_sequence WHERE name = {$this->tblName}";
 
-        $qry = "INSERT INTO {$this->tblName)}
+        $qry = "INSERT INTO {$this->tblName}
                        (Title, Description, Lft, Rght)
                 VALUES (?, ?, ?, ?)";
 

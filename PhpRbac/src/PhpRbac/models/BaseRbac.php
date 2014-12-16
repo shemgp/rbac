@@ -46,7 +46,7 @@ abstract class BaseRbac
 
         $res = $this->dmap->newChildData($ParentID, $Title, $Description);
 
-        return (int) $res['output']
+        return (int)$res['output'];
     }
 
     /**

@@ -12,7 +12,7 @@ class PermissionManager extends BaseRbac
     public function __construct($cfg)
     {
         parent::__construct($cfg);
-        $dmapClass = "dmap\{$cfg['dbType']}\PermissionDmap";
+        $dmapClass = "PhpRbac\\dmap\\{$cfg['dbType']}\\PermissionDmap";
         $this->dmap = new $dmapClass($cfg);
     }
 

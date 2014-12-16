@@ -1,5 +1,5 @@
 <?php
-namespace \PhpRbac\dmap\mysql;
+namespace PhpRbac\dmap\mysql;
 
 class RoleDmap extends BaseDmap {
 

@@ -59,9 +59,9 @@ class Rbac
 
         $this->Config = array_merge($defaultCfg, $Config);
 
-        $this->Permissions = new \models\PermissionManager($Config);
-        $this->Roles = new \models\RoleManager($Config);
-        $this->Users = new \models\UserManager($Config);
+        $this->Permissions = new models\PermissionManager($Config);
+        $this->Roles = new models\RoleManager($Config);
+        $this->Users = new models\UserManager($Config);
     }
 
     /**
