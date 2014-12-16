@@ -19,6 +19,10 @@
 			"email" : "jesse.burns@alliancecms.com",
 			"homepage" : "http://www.jbwebware.com",
 			"role" : "Developer"
+		}, {
+			"name" : "James Van Lommel",
+			"email" : "jamesvl@gmail.com",
+			"role" : "Developer"
 		}
 	],
 	"autoload" : {
@@ -28,7 +32,7 @@
 	},
 	"repositories" : [{
             "type" : "vcs",
-            "url" : "https://github.com/OWASP/rbac.git"
+            "url" : "https://jamesvl@bitbucket.org/jamesvl/php-rbac.git"
         }
     ]
 }
