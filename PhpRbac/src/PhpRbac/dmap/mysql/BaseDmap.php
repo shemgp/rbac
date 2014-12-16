@@ -7,7 +7,7 @@ namespace PhpRbac\dmap\mysql;
  * @author jamesvl
  * @author abiusx
  */
-class BaseDmap extends utils\PdoDataMapper {
+class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
 
     protected $pfx;
     protected $nst;
@@ -20,7 +20,7 @@ class BaseDmap extends utils\PdoDataMapper {
 
         $this->tblName = $this->pfx . $tblName;
 
-        $this->nst = new \utils\FullNestedSet($this->tblName, 'id', 'lft', 'rght');
+        $this->nst = new \PhpRbac\utils\FullNestedSet($this->tblName, 'id', 'lft', 'rght');
     }
 
 
@@ -260,7 +260,7 @@ class BaseDmap extends utils\PdoDataMapper {
         $qry = "DELETE FROM {$this->tblName}";
         $res = $this->_execQuery($qry);
 
-        $qry = "ALTER TABLE {$this->tblName} AUTO_INCREMENT = 1");
+        $qry = "ALTER TABLE {$this->tblName} AUTO_INCREMENT = 1";
         $res = $this->_execQuery($qry);
 
         // for sqlite:

@@ -71,7 +71,7 @@ class PdoDataMapper
 
         $opts = array(
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
-            \PDO::ATTR_PERSISTENT = $cfg['persist'],
+            \PDO::ATTR_PERSISTENT => $cfg['persist'],
         );
 
         try {
@@ -304,7 +304,7 @@ class PdoDataMapper
         if ($cfg['dbType'] == 'pgsql') {
             $dsnStr = implode(' ', $dsn);
         }
-        elseif ($cfg['dbType'] == 'sqlite']) {
+        elseif ($cfg['dbType'] == 'sqlite') {
             $dsnStr = implode('', $dsn);
         }
         else {

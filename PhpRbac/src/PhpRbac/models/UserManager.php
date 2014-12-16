@@ -2,7 +2,7 @@
 namespace PhpRbac\models;
 
 /**
- * Rbac User Manager: Contains functionality specific to Users
+ * Manage RBAC assigned Users.
  *
  * @author jamesvl
  * @author abiusx
@@ -162,7 +162,7 @@ class UserManager
         }
         else {
             $roleMgr = new RoleManager($this->cfg);
-            $RoleID = return $roleMgr->returnId($Role);
+            $RoleID = $roleMgr->returnId($Role);
         }
 
         return $RoleID;

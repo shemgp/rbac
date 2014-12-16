@@ -1,7 +1,7 @@
 <?php
 namespace PhpRbac\dmap\mysql;
 
-class UserDmap extends utils\PdoDataMapper {
+class UserDmap extends \PhpRbac\utils\PdoDataMapper {
 
     protected $pfx;
 
@@ -70,7 +70,7 @@ class UserDmap extends utils\PdoDataMapper {
     {
         $qry = "SELECT COUNT(userid) AS result
                   FROM {$this->pfx}userroles
-                 WHERE userid = ?"
+                 WHERE userid = ?";
 
         $params = array($UserID);
 
@@ -104,7 +104,7 @@ class UserDmap extends utils\PdoDataMapper {
                   (        {$this->pfx}permissions AS TPdirect
                       JOIN {$this->pfx}permissions AS TP ON ( TPdirect.Lft BETWEEN TP.Lft AND TP.Rght)
                       JOIN {$this->pfx}rolepermissions AS TRel ON (TP.ID=TRel.PermissionID)
-                  ) $LastPart"
+                  ) $LastPart";
 
         $params = array($UserID, $PermissionID);
 

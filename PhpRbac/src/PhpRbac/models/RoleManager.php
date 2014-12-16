@@ -2,14 +2,14 @@
 namespace PhpRbac\models;
 
 /**
- * Role Manager: Contains functionality specific to Roles
+ * Manage RBAC Roles.
  *
  * @author jamesvl
  * @author abiusx
  */
 class RoleManager extends BaseRbac
 {
-    public function __construct()
+    public function __construct($cfg)
     {
         $dmapClass = "PhpRbac\\dmap\\{$cfg['dbType']}\\RoleDmap";
         $this->dmap = new $dmapClass($cfg);

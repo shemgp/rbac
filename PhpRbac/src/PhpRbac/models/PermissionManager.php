@@ -2,7 +2,7 @@
 namespace PhpRbac\models;
 
 /**
- * Permission Manager: Contains functionality specific to Permissions
+ * Manage RBAC Permissions
  *
  * @author jamesvl
  * @author abiusx
