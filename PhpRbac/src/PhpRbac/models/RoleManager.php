@@ -1,4 +1,6 @@
 <?php
+namespace PhpRbac\models;
+
 /**
  * Role Manager: Contains functionality specific to Roles
  *

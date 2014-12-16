@@ -1,4 +1,6 @@
 <?php
+namespace PhpRbac\models;
+
 /**
  * Rbac base class; contains operations that are essentially the same for
  * permissions and roles and is inherited by both.

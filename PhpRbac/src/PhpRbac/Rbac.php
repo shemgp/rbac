@@ -59,9 +59,9 @@ class Rbac
 
         $this->Config = array_merge($defaultCfg, $Config);
 
-        $this->Permissions = new PermissionManager($Config);
-        $this->Roles = new RoleManager($Config);
-        $this->Users = new UserManager($Config);
+        $this->Permissions = new \models\PermissionManager($Config);
+        $this->Roles = new \models\RoleManager($Config);
+        $this->Users = new \models\UserManager($Config);
     }
 
     /**
@@ -112,7 +112,7 @@ class Rbac
     function check($Permission, $UserID = null)
     {
         if ($UserID === null)
-            throw new \exceptions\UserNotProvidedException("\$UserID is a required argument.");
+            throw new exceptions\UserNotProvidedException("\$UserID is a required argument.");
 
         $PermissionID = $this->Permissions->returnId($Permission);
 
@@ -138,7 +138,7 @@ class Rbac
     function enforce($Permission, $UserID = null)
     {
         if ($UserID === null)
-            throw new \exceptions\UserNotProvidedException("\$UserID is a required argument.");
+            throw new exceptions\UserNotProvidedException("\$UserID is a required argument.");
 
         if (!$this->check($Permission, $UserID)) {
             header('HTTP/1.1 403 Forbidden');
