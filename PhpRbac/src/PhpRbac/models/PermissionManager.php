@@ -7,14 +7,16 @@
  */
 class PermissionManager extends BaseRbac
 {
-    public function __construct()
+    public function __construct($cfg)
     {
-        $this->type = 'permissions';
+        parent::__construct($cfg);
+        $dmapClass = "dmap\{$cfg['dbType']}\PermissionDmap";
+        $this->dmap = new $dmapClass($cfg);
     }
 
     protected function type()
     {
-        return $this->type;
+        return get_class($this);
     }
 
     /**

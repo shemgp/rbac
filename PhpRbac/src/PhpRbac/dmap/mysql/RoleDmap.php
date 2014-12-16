@@ -3,9 +3,9 @@ namespace \PhpRbac\dmap\mysql;
 
 class RoleDmap extends BaseDmap {
 
-    public function __construct($settings)
+    public function __construct($cfg, $tblName = 'roles')
     {
-        $this->pfx = $settings['tbl_prefix'];
+        parent::__construct($cfg, $tblName);
     }
 
     public function unassignPermissionsFromRole($roleId)

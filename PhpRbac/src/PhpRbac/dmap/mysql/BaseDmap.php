@@ -7,21 +7,69 @@ namespace \PhpRbac\dmap\mysql;
  * @author jamesvl
  * @author abiusx
  */
-class BaseDmap extends utils\DbRepo {
+class BaseDmap extends utils\PdoDataMapper {
 
-    protected $type;
     protected $pfx;
     protected $nst;
 
-    public function __construct($settings)
+    public function __construct($cfg, $tblName)
     {
-        $this->type = $settings['type'];
-        $this->pfx = $settings['tbl_prefix'];
+        parent::__construct($cfg);
 
-        $this->tblName = $this->pfx . $this->type();
+        $this->pfx = $cfg['pfx'];
+
+        $this->tblName = $this->pfx . $tblName;
 
         $this->nst = new \utils\FullNestedSet($this->tblName, 'id', 'lft', 'rght');
     }
+
+
+    /**
+     * Assign a role and permission to each other.
+     *
+     **/
+    public function assign($roleId, $permId)
+    {
+        if ($roleId === null || $permId === null) {
+            return array(
+                'success' => false,
+                'reason' => 'Must be valid role or permission ids',
+                'output' => null
+            );
+        }
+
+        $qry = "INSERT INTO {$this->pfx}rolepermissions
+                       (roleid, permissionid, assignmentdate)
+                       VALUES (?, ?, NOW())";
+
+        $params = array($roleId, $permissionId);
+
+        return $this->_execQuery($qry, $params);
+    }
+
+    public function unassign($roleId, $permid)
+    {
+        $qry = "DELETE FROM {$this->pfx}rolepermissions
+                 WHERE role = ?
+                   AND permissionid = ?";
+
+        $params = array($roleId, $permissionId);
+
+        return $this->_execQuery($qry, $params);
+    }
+
+    public function resetAssignments()
+    {
+        $qry ="DELETE FROM {$this->pfx}rolepermissions";
+        $res = $this->_execQuery($qry);
+
+        $qry = "ALTER TABLE {$this->pfx}rolepermissions AUTO_INCREMENT = 1";
+        $res = $this->_execQuery($qry);
+
+        // $qry ="DELETE FROM sqlite_sequence WHERE name = {$this->pfx}rolepermissions";
+
+    }
+
 
     /**
      * Add a new child with the given Title and Description to $parentId.
@@ -48,19 +96,19 @@ class BaseDmap extends utils\DbRepo {
      **/
     public function idFromPath($path)
     {
-        $Parts = explode ( "/", $path );
+        $Parts = explode( "/", $path );
 
         $GroupConcat = "GROUP_CONCAT(parent.Title ORDER BY parent.Lft SEPARATOR '/')";
 
-        $sql = "SELECT node.ID, $GroupConcat AS Path
+        $sql = "SELECT node.id, $GroupConcat AS path
                   FROM {$this->tblName)} AS node,
                        {$this->tblName)} AS parent
-                 WHERE node.Lft BETWEEN parent.Lft AND parent.Rght
-                   AND node.Title = ?
-                 GROUP BY node.ID
-                HAVING Path = ?";
+                 WHERE node.lft BETWEEN parent.lft AND parent.rght
+                   AND node.title = ?
+                 GROUP BY node.id
+                HAVING path = ?";
 
-        $res = Jf::sql($sql, $Parts[count($Parts) - 1], $path);
+        $res = $this->_fetchRow($sql, array($Parts[count($Parts) - 1], $path));
 
         if ($res)
             return $res[0]['ID'];
@@ -77,6 +125,7 @@ class BaseDmap extends utils\DbRepo {
 
         return $this->_fetchOne($qry, $params);
     }
+
 
     public function getTitleFromId($id)
     {
@@ -105,12 +154,13 @@ class BaseDmap extends utils\DbRepo {
     public function getDescriptionFromId($id)
     {
         $qry = "SELECT description
-            FROM {$this->tblName}
-            WHERE id = ?";
+                  FROM {$this->tblName}
+                 WHERE id = ?";
         $params = array($id);
 
         return $this->_fetchOne($qry, $params);
     }
+
 
     public function update($id, $title = null, $descrip = null)
     {
@@ -141,15 +191,21 @@ class BaseDmap extends utils\DbRepo {
             return array('success' => true, 'reason' => 'Nothing to change');
 
         $qry = "UPDATE {$this->tblName}
-            SET $rows
-            WHERE id = ?";
+                   SET $rows
+                 WHERE id = ?";
 
         return $this->_execQuery($qry, $params);
     }
 
-    // was: childrenCondtional in FullNestedSet
+    /**
+     *
+     * was: childrenCondtional in FullNestedSet
+     **/
     public function getChildrenOfId($id)
     {
+        // or:
+        // return $this->nst->childrenConditional('id = ?', $id);
+
         $qry = "SELECT node.*,
                       (COUNT(parent.id) - 1 - (sub_tree.innerDepth )) AS Depth
                   FROM {$this->tblName} AS node,
@@ -219,39 +275,4 @@ class BaseDmap extends utils\DbRepo {
 
         return $res;
     }
-
-    public function assign($roleId, $permId)
-    {
-        $qry = "INSERT INTO {$this->pfx}rolepermissions
-                       (roleid, permissionid, assignmentdate)
-                       VALUES (?, ?, NOW())";
-
-        $params = array($roleId, $permissionId);
-
-        return $this->_execQuery($qry, $params);
-    }
-
-    public function unassign($roleId, $permid)
-    {
-        $qry = "DELETE FROM {$this->pfx}rolepermissions
-                 WHERE role = ?
-                   AND permissionid = ?";
-
-        $params = array($roleId, $permissionId);
-
-        return $this->_execQuery($qry, $params);
-    }
-
-    public function resetAssignments()
-    {
-        $qry ="DELETE FROM {$this->pfx}rolepermissions";
-        $res = $this->_execQuery($qry);
-
-        $qry = "ALTER TABLE {$this->pfx}rolepermissions AUTO_INCREMENT = 1";
-        $res = $this->_execQuery($qry);
-
-        // $qry ="DELETE FROM sqlite_sequence WHERE name = {$this->pfx}rolepermissions";
-
-    }
-
 }

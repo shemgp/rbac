@@ -9,13 +9,13 @@ class RoleManager extends BaseRbac
 {
     public function __construct()
     {
-        $this->type = 'roles';
-        $this->dmap = new dmap\mysql\RoleDmap();
+        $dmapClass = "dmap\{$cfg['dbType']}\RoleDmap";
+        $this->dmap = new $dmapClass($cfg);
     }
 
     protected function type()
     {
-        return $this->type;
+        return get_class($this);
     }
 
     /**
@@ -30,7 +30,7 @@ class RoleManager extends BaseRbac
      * @todo: Check for valid permissions/roles
      * @todo: Implement custom error handler
      */
-    public function assign($Role, $Permission)
+    public function assign($roleId, $permId)
     {
         $res = $this->dmap->assign($roleId, $permId);
 

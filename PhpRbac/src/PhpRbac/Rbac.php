@@ -24,27 +24,44 @@ class Rbac
     /** @var \models\UserManager */
     public $Users;
 
+    public $Config;
+
     /**
      * Create this class and configure Manager classes with proper backend.
      *
      * You _must_ pass in a map of options with the following parameters:
      *
-     * dmap - one of 'mysql', 'sqlite', or 'postgres', defined in /dmap
-     * db   - itself a map containing
-     *        - dsn: the full data source name to connect to the DB
-     *        OR
-     *        - server
-     *        - schema (if applicable, for Postgres only)
-     *        - port
-     * user - username to connect to the db
-     * pass - password used to db connection; may be null for sqlite
-     * prefix - the table prefix to help namespace tables
+     * $Config is a map with the following keys:
+     *   - dbType   - DSN prefix for PDO; e.g. 'mysql', 'pgsql', or 'sqlite'
+     *
+     *   - host     - DB host to connect to
+     *   - port     - optional, port to connect to if not the default port
+     *   OR
+     *   - socket   - unix socket used to connect to database
+     *   OR
+     *   - filePath - absolute path to sqlite DB file
+     *
+     *   - dbName   - name of database to connect to, optional for sqlite
+     *   - user     - username to connect with, optional for sqlite
+     *   - pass     - the password to connect with, optional for sqlite
+     *
+     *   - appName  - optional, Postgres only
+     *   - persist  - whether to use persistent DB connection; default is false
+     *
+     *   - pfx      - prefix for all table names, default is 'rbac_'
+     *
      **/
-    function __construct($opts)
+    function __construct($Config)
     {
-        $this->Permissions = new PermissionManager();
-        $this->Roles = new RoleManager();
-        $this->Users = new UserManager();
+        $defaultCfg = array(
+            'pfx' => 'rbac_'
+        );
+
+        $this->Config = array_merge($defaultCfg, $Config);
+
+        $this->Permissions = new PermissionManager($Config);
+        $this->Roles = new RoleManager($Config);
+        $this->Users = new UserManager($Config);
     }
 
     /**

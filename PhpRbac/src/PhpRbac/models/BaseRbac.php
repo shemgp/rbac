@@ -10,6 +10,12 @@ abstract class BaseRbac
 {
     protected $dmap;
     protected $type;
+    protected $cfg;
+
+    public function __construct($cfg)
+    {
+        $this->cfg = $cfg;
+    }
 
     function rootId()
     {
@@ -162,8 +168,12 @@ abstract class BaseRbac
      */
     protected function getRecord($ID)
     {
-        $args = func_get_args ();
-        return call_user_func_array ( array ($this->{$this->type ()}, "getRecord" ), $args );
+        $qry = "SELECT *
+            FROM {$this->tblName}
+            WHERE id = ?";
+        $params = array($ID);
+
+        return $this->_fetchRow($qry, $params);
     }
 
     /**
@@ -240,7 +250,7 @@ abstract class BaseRbac
      */
     function children($ID)
     {
-        return $this->{$this->type ()}->childrenConditional ( "ID=?", $ID );
+        return $this->dmap->getChildrenOfId($ID);
     }
 
     /**
@@ -252,7 +262,7 @@ abstract class BaseRbac
      */
     function descendants($ID)
     {
-        $res = $this->descendants($ID);
+        $res = $this->dmap->descendants($ID);
 
         $out = array();
 

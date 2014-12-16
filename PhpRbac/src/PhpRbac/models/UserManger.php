@@ -7,9 +7,15 @@
  */
 class UserManager
 {
-    public function __construct($settings)
+    protected $cfg;
+    protected $dmap;
+
+    public function __construct($cfg)
     {
-        $this->dmap = new dmap\mysql\UserDmap();
+        $this->cfg = $cfg;
+
+        $dmapClass = "dmap\{$cfg['dbType']}\UserDmap";
+        $this->dmap = new $dmapClass($cfg);
     }
 
     /**
@@ -153,7 +159,7 @@ class UserManager
             $RoleID = $Role;
         }
         else {
-            $roleMgr = new RoleManager();
+            $roleMgr = new RoleManager($this->cfg);
             $RoleID = return $roleMgr->returnId($Role);
         }
 

@@ -1,12 +1,16 @@
 <?php
 namespace \PhpRbac\dmap\mysql;
 
-class UserDmap extends utils\DBRepo {
+class UserDmap extends utils\PdoDataMapper {
 
-    public function __construct($settings)
+    protected $pfx;
+
+    public function __construct($cfg, $tblName = 'userroles')
     {
-        $this->pfx = $settings['tbl_prefix'];
-        $this->tblName = $this->pfx . 'userroles';
+        $this->pfx = $cfg['pfx'];
+        parent::__construct($cfg);
+
+        $this->tblName = $this->pfx . $tblName;
     }
 
     public function hasRole($RoleID, $UserID)
@@ -39,7 +43,7 @@ class UserDmap extends utils\DBRepo {
 
     public function unassign($UserID, $RoleID)
     {
-        $qry = "DELETE FROM {$this->tablePrefix()}userroles
+        $qry = "DELETE FROM {$this->pfx}userroles
                  WHERE userid = ?
                    AND roleid = ?";
 
@@ -51,7 +55,7 @@ class UserDmap extends utils\DBRepo {
 
     public function allRoles($UserID)
     {
-        $qry = "SELECT TR.*
+        $qry = "SELECT tr.*
                   FROM {$this->pfx}userroles AS ur
                   JOIN {$this->pfx}roles AS tr ON
                        (ur.roleid = tr.id)
@@ -75,7 +79,7 @@ class UserDmap extends utils\DBRepo {
 
     public function resetAssignments()
     {
-        $qry = "DELETE FROM {$this->tablePrefix()}userroles";
+        $qry = "DELETE FROM {$this->pfx}userroles";
 
         $res = $this->_execQuery($qry);
 

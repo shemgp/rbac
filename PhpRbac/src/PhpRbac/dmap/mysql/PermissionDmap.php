@@ -3,12 +3,9 @@ namespace \PhpRbac\dmap\mysql;
 
 class PermissionDmap extends BaseDmap {
 
-    public function __construct($settings)
+    public function __construct($cfg, $tblName = 'permissions')
     {
-        $this->type = 'permissions';
-
-        parent::__construct($settings);
-        $this->pfx = $settings['tbl_prefix'];
+        parent::__construct($cfg, $tblName);
     }
 
     public function unassignRoles($permId)
@@ -55,7 +52,7 @@ class PermissionDmap extends BaseDmap {
         $params = array($permid);
 
         if ($onlyIds) {
-            $qry = "SELECT roleid AS `id`
+            $qry = "SELECT roleid AS id
                 FROM {$this->pfx}rolepermissions
                 WHERE permissionid = ?
                 ORDER BY roleid";
