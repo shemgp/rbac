@@ -48,6 +48,7 @@ class PdoDataMapper
             'pfx' => 'rbac_',
             'user' => null,
             'pass' => null,
+            'appName' => null,
         );
 
         $this->cfg = array_merge($defaultCfg, $cfg);
@@ -281,7 +282,7 @@ class PdoDataMapper
     {
         $dsn = array($cfg['dbType'] . ':');
 
-        if ($dsn['socket']) {
+        if ($cfg['socket']) {
             $dsn[] = 'unix_socket=' . $cfg['socket'];
         }
         elseif ($cfg['filePath']) {

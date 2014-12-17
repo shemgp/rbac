@@ -20,24 +20,7 @@ class RoleManager extends BaseRbac
         return get_class($this);
     }
 
-    /**
-     * Assigns a role to a permission (or vice-verse).
-     *
-     * Will report failure if the permission already exists in the table.
-     *
-     * @param mixed   Id of the Role
-     * @param mixed   Id of the Permission
-     * @return boolean   True if inserted okay. False if existing or failure.
-     *
-     * @todo: Check for valid permissions/roles
-     * @todo: Implement custom error handler
-     */
-    public function assign($roleId, $permId)
-    {
-        $res = $this->dmap->assign($roleId, $permId);
 
-        return $res['success'];
-    }
 
     /**
      * Unassigns a role-permission relation

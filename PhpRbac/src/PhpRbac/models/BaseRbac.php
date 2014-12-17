@@ -44,7 +44,7 @@ abstract class BaseRbac
         if ($ParentID === null)
             $ParentID = $this->rootId();
 
-        $res = $this->dmap->newChildData($ParentID, $Title, $Description);
+        $res = $this->dmap->newFirstChild($ParentID, $Title, $Description);
 
         return (int)$res['output'];
     }
@@ -97,6 +97,25 @@ abstract class BaseRbac
     }
 
     /**
+     * Assigns a role to a permission (or vice-verse).
+     *
+     * Will report failure if the permission already exists in the table.
+     *
+     * @param mixed   Id of the Role
+     * @param mixed   Id of the Permission
+     * @return boolean   True if inserted okay. False if existing or failure.
+     *
+     * @todo: Check for valid permissions/roles
+     * @todo: Implement custom error handler
+     */
+    public function assign($roleId, $permId)
+    {
+        $res = $this->dmap->assign($roleId, $permId);
+
+        return $res['success'];
+    }
+
+    /**
      * Return count of the entity
      *
      * @return integer
@@ -105,6 +124,7 @@ abstract class BaseRbac
     {
         return (int) $this->dmap->count();
     }
+
 
     /**
      * Returns ID of entity
@@ -162,6 +182,7 @@ abstract class BaseRbac
     {
         return $this->dmap->idFromTitle($Title);
     }
+
 
     /**
      * Return the whole record of a single entry (including Rght and Lft fields)
@@ -228,6 +249,7 @@ abstract class BaseRbac
         return $this->dmap->getDescriptionFromId($ID);
     }
 
+
     /**
      * Edits an entity, changing title and/or description. Maintains Id.
      *
@@ -242,6 +264,7 @@ abstract class BaseRbac
 
         return $res['success'];
     }
+
 
     /**
      * Returns children of an entity
@@ -298,6 +321,7 @@ abstract class BaseRbac
     {
         return $this->dmap->parentNodeOfId($ID);
     }
+
 
     /**
      * Reset the table back to its initial state

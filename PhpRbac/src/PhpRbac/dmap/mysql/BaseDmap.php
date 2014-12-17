@@ -1,6 +1,8 @@
 <?php
 namespace PhpRbac\dmap\mysql;
 
+
+
 /**
  * Base data mapper for Permissions and Roles, since they are so similar.
  *
@@ -17,10 +19,13 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
         parent::__construct($cfg);
 
         $this->pfx = $cfg['pfx'];
-
         $this->tblName = $this->pfx . $tblName;
 
         $this->nst = new \PhpRbac\utils\FullNestedSet($this->tblName, 'id', 'lft', 'rght');
+
+        // legacy: MySQL data mappers user the Jf utility class to run queries
+        // That (singleton) static class needs configuration:
+        \PhpRbac\utils\Jf::setTablePrefix($this->pfx);
     }
 
 
@@ -116,7 +121,7 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
             return null;
     }
 
-    public function getIdFromTitle($title)
+    public function idFromTitle($title)
     {
         $qry = "SELECT id
                   FROM {$this->tblName}
