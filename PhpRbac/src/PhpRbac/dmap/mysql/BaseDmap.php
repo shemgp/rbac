@@ -86,6 +86,12 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
      **/
     public function newFirstChild($parentId, $title, $descrip)
     {
+        $toSave = array(
+            'title' => $title,
+            'description' => $descrip
+        );
+
+        return $this->nst->insertChildData($toSave, 'id = ?', $parentId);
     }
 
     public function count()
@@ -273,7 +279,7 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
         // $qry =  "DELETE FROM sqlite_sequence WHERE name = {$this->tblName}";
 
         $qry = "INSERT INTO {$this->tblName}
-                       (Title, Description, Lft, Rght)
+                       (title, description, lft, rght)
                 VALUES (?, ?, ?, ?)";
 
         $params = array('root', 'root', 0, 1);
