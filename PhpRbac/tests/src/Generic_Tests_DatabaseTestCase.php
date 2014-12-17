@@ -31,7 +31,7 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
         if ($this->conn === null) {
             if (self::$pdo == null) {
                 if ((string) $GLOBALS['DB_ADAPTER'] === 'pdo_sqlite') {
-                    self::$pdo = new PDO('sqlite:' . dirname(dirname(__FILE__)) . '/database/' . $GLOBALS['DB_DBNAME']);
+                    self::$pdo = new \PDO('sqlite:' . dirname(dirname(__FILE__)) . '/database/' . $GLOBALS['DB_DBNAME']);
 
                     $sql = file_get_contents(dirname(dirname(__DIR__))."/database/sqlite.sql");
                     $sql = str_replace("PREFIX_", $GLOBALS['DB_PREFIX'], $sql);
@@ -42,7 +42,7 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
                         self::$pdo->query($query);
 
                 } else {
-                    self::$pdo = new PDO( $GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
+                    self::$pdo = new \PDO( $GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
                 }
             }
             $this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);

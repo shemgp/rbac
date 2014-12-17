@@ -366,4 +366,13 @@ abstract class BaseRbac
 
         return $res;
     }
+
+
+    /**
+     * @deprecated
+     **/
+    public function tablePrefix()
+    {
+        return $this->cfg['pfx'];
+    }
 }

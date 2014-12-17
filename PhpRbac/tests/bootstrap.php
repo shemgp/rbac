@@ -1,5 +1,5 @@
 <?php
-require_once('./database/database.confg');
+require_once('./database/database.config');
 
 global $TEST_CFG;
 $TEST_CFG = $cfg;

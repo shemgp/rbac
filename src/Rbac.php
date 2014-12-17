@@ -59,9 +59,9 @@ class Rbac
 
         $this->Config = array_merge($defaultCfg, $Config);
 
-        $this->Permissions = new models\PermissionManager($Config);
-        $this->Roles = new models\RoleManager($Config);
-        $this->Users = new models\UserManager($Config);
+        $this->Permissions = new models\PermissionManager($this->Config);
+        $this->Roles = new models\RoleManager($this->Config);
+        $this->Users = new models\UserManager($this->Config);
     }
 
     /**
@@ -170,5 +170,17 @@ class Rbac
         $res = $res and $this->Users->resetAssignments(true);
 
         return $res;
+    }
+
+    /*
+     * Present only because test cases expect this method.
+     *
+     * No need for Rbac class to actually have knowledge about table internals.
+     *
+     * @deprecated
+     **/
+    public function tablePrefix()
+    {
+        return $this->Roles->tablePrefix();
     }
 }

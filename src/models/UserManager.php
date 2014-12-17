@@ -167,4 +167,13 @@ class UserManager
 
         return $RoleID;
     }
+
+
+    /**
+     * @deprecated
+     **/
+    public function tablePrefix()
+    {
+        return $this->cfg['pfx'];
+    }
 }
