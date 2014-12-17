@@ -46,20 +46,20 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
 
         $qry = "INSERT INTO {$this->pfx}rolepermissions
                        (roleid, permissionid, assignmentdate)
-                       VALUES (?, ?, NOW())";
+                       VALUES (?, ?, UNIX_TIMESTAMP())";
 
-        $params = array($roleId, $permissionId);
+        $params = array($roleId, $permId);
 
         return $this->_execQuery($qry, $params);
     }
 
-    public function unassign($roleId, $permid)
+    public function unassign($roleId, $permId)
     {
         $qry = "DELETE FROM {$this->pfx}rolepermissions
                  WHERE role = ?
                    AND permissionid = ?";
 
-        $params = array($roleId, $permissionId);
+        $params = array($roleId, $permId);
 
         return $this->_execQuery($qry, $params);
     }

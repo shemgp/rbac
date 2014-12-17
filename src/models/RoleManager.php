@@ -21,7 +21,6 @@ class RoleManager extends BaseRbac
     }
 
 
-
     /**
      * Unassigns a role-permission relation
      *

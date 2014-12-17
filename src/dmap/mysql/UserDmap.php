@@ -32,10 +32,9 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
     {
         $qry = "INSERT INTO {$this->pfx}userroles
                 (userid, roleid, assignmentdate)
-                VALUES (?,?,?)";
+                VALUES (?, ?, UNIX_TIMESTAMP())";
 
-        $now = time();
-        $params = array($UserID, $RoleID, $now);
+        $params = array($UserID, $RoleID);
         $res = $this->_execQuery($qry, $params);
 
         return $res['success'];

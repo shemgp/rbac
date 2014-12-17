@@ -7,7 +7,7 @@ namespace PhpRbac;
  * Allows maintainable function-level access control for enterprises, small
  * applications, or frameworks.
  *
- * Has three members, Roles, Users and Permissions for specific operations
+ * Has three members, Roles, Users and Permissions for specific operations.
  *
  * @author jamesvl
  * @author abiusx
