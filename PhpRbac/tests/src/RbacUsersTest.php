@@ -1,5 +1,5 @@
 <?php
-namespace PhpRbac;
+namespace PhpRbac\tests;
 
 /**
  * @file
@@ -11,7 +11,7 @@ namespace PhpRbac;
  * Documentation for all Unit Tests regarding RbacUserManager functionality.
  */
 
-class RbacUsersTest extends \RbacSetup
+class RbacUsersTest extends RbacSetup
 {
     /*
      * Test for proper object instantiation

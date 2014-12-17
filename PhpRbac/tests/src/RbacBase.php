@@ -1,4 +1,5 @@
 <?php
+namespace PhpRbac\tests;
 
 use PhpRbac\Rbac;
 
@@ -12,7 +13,7 @@ use PhpRbac\Rbac;
  * Documentation for all Unit Tests regarding BaseRbac functionality.
  */
 
-class RbacBase extends \RbacSetup
+class RbacBase extends RbacSetup
 {
     /*
      * Tests for $this->Instance()->add()

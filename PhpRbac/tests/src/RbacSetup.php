@@ -1,7 +1,7 @@
 <?php
-//namespace PhpRbac;
+namespace PhpRbac\tests;
 
-use PhpRbac\Rbac;
+use \PhpRbac\Rbac;
 
 /**
  * @file
@@ -13,7 +13,7 @@ use PhpRbac\Rbac;
  * Documentation for all Unit Tests regarding RbacSetup functionality.
  */
 
-class RbacSetup extends \Generic_Tests_DatabaseTestCase
+class RbacSetup extends Generic_Tests_DatabaseTestCase
 {
     /*
      * Test Setup and Fixture
@@ -23,7 +23,8 @@ class RbacSetup extends \Generic_Tests_DatabaseTestCase
 
     public static function setUpBeforeClass()
     {
-    	self::$rbac = new Rbac('unit_test');
+        global $TEST_CFG;
+    	self::$rbac = new Rbac($TEST_CFG);
 
     	if ((string) $GLOBALS['DB_ADAPTER'] === 'pdo_sqlite') {
     	    self::$rbac->reset(true);

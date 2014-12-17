@@ -1,4 +1,6 @@
 <?php
+namespace PhpRbac\tests;
+
 /**
  * @defgroup phprbac_unit_tests Rbac Unit Test Functionality
  * @{

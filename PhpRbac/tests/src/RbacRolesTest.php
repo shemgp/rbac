@@ -1,5 +1,5 @@
 <?php
-namespace PhpRbac;
+namespace PhpRbac\tests;
 
 /**
  * @file
@@ -11,7 +11,7 @@ namespace PhpRbac;
  * Documentation for all Unit Tests regarding RoleManager functionality.
  */
 
-class RbacRolesTest extends \RbacBase
+class RbacRolesTest extends RbacBase
 {
     protected function Instance()
     {
