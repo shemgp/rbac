@@ -46,7 +46,7 @@ abstract class BaseRbac
 
         $res = $this->dmap->newFirstChild($ParentID, $Title, $Description);
 
-        return (int)$res['output'];
+        return (int)$res;
     }
 
     /**
@@ -340,7 +340,7 @@ abstract class BaseRbac
             return;
         }
 
-        $this->dmap->reset();
+        $res = $this->dmap->reset();
 
         return (int)$res['output'];
     }
