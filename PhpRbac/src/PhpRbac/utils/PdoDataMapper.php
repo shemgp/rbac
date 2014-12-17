@@ -241,13 +241,18 @@ class PdoDataMapper
                     // an update
                      $output = $pk;
                 }
-                else if ($stmtType == 'INS') {
+                elseif ($stmtType == 'INS') {
                     $result = $stmt->fetch(\PDO::FETCH_ASSOC);
 
-                    if (array_key_exists('id', $result))
+                    if (is_array($result) && array_key_exists('id', $result))
                         $output = $result['id'];
+                    elseif (!empty($result))
+                        $output = $result;
                     else
                         $output = null;
+                }
+                elseif ($stmtType == 'ALT') { // ALTER TABLE
+                     $output = null;
                 }
                 else {
                      // was probably a DELETE
