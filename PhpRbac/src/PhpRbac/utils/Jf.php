@@ -1,8 +1,6 @@
 <?php
 namespace PhpRbac\utils;
 
-require_once __DIR__."/rbac.php";
-
 class Jf
 {
     public static $Db = null;
@@ -46,7 +44,7 @@ class Jf
             if (get_class ( self::$Db ) == "mysqli")
                 return call_user_func_array ( "self::sqlMysqli", $args );
             else
-                throw new Exception ( "Unknown database interface type." );
+                throw new \Exception ( "Unknown database interface type." );
     }
 
     static function sqlPdo($Query)
