@@ -120,10 +120,12 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
                  GROUP BY node.id
                 HAVING path = ?";
 
-        $res = $this->_fetchRow($sql, array($Parts[count($Parts) - 1], $path));
+        $params = array($Parts[count($Parts) - 1], $path);
+
+        $res = $this->_fetchRow($sql, $params);
 
         if ($res)
-            return $res[0]['ID'];
+            return $res['id'];
         else
             return null;
     }
