@@ -26,6 +26,7 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
         // legacy: MySQL data mappers user the Jf utility class to run queries
         // That (singleton) static class needs configuration:
         \PhpRbac\utils\Jf::setTablePrefix($this->pfx);
+        \PhpRbac\utils\Jf::$Db = $this->getDBH();
     }
 
 

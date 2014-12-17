@@ -68,7 +68,7 @@ class Jf
             $result = self::$Db->query ( $Query );
             if ($result===false)
                 return null;
-            $res=$result->fetchAll ( PDO::FETCH_ASSOC );
+            $res=$result->fetchAll ( \PDO::FETCH_ASSOC );
             if ($res===array())
                 return null;
             return $res;
@@ -100,7 +100,7 @@ class Jf
                 return $stmt->rowCount();
             elseif ($type == "SELECT")
             {
-                $res=$stmt->fetchAll ( PDO::FETCH_ASSOC );
+                $res=$stmt->fetchAll ( \PDO::FETCH_ASSOC );
                 if ($res===array())
                     return null;
                 else
