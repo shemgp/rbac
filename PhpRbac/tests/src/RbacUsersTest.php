@@ -18,7 +18,7 @@ class RbacUsersTest extends RbacSetup
      */
 
     public function testUsersInstance() {
-        $this->assertInstanceOf('RbacUserManager', self::$rbac->Users);
+        $this->assertInstanceOf('PhpRbac\models\UserManager', self::$rbac->Users);
     }
 
     /*
@@ -73,7 +73,7 @@ class RbacUsersTest extends RbacSetup
     }
 
     /**
-     * @expectedException RbacUserNotProvidedException
+     * @expectedException PhpRbac\exceptions\UserNotProvidedException
      */
 
     public function testUsersAssignNoUserID()
@@ -153,7 +153,7 @@ class RbacUsersTest extends RbacSetup
     }
 
     /**
-     * @expectedException RbacUserNotProvidedException
+     * @expectedException PhpRbac\exceptions\UserNotProvidedException
      */
 
     public function testUsersHasRoleNoUserId()
@@ -221,7 +221,7 @@ class RbacUsersTest extends RbacSetup
     }
 
     /**
-     * @expectedException RbacUserNotProvidedException
+     * @expectedException PhpRbac\exceptions\UserNotProvidedException
      */
 
     public function testUsersAllRolesNoRolesEmpty()
@@ -256,7 +256,7 @@ class RbacUsersTest extends RbacSetup
     }
 
     /**
-     * @expectedException RbacUserNotProvidedException
+     * @expectedException PhpRbac\exceptions\UserNotProvidedException
      */
 
     public function testUsersRoleCountNoRolesEmpty()
@@ -356,7 +356,7 @@ class RbacUsersTest extends RbacSetup
     }
 
     /**
-     * @expectedException RbacUserNotProvidedException
+     * @expectedException PhpRbac\exceptions\UserNotProvidedException
      */
 
     public function testUsersUnassignNoUserIdException()

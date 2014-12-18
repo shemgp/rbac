@@ -163,7 +163,7 @@ class RbacManagerTest extends RbacSetup
     }
 
     /**
-     * @expectedException RbacUserNotProvidedException
+     * @expectedException PhpRbac\exceptions\UserNotProvidedException
      */
 
     public function testManagerCheckWithNullUserIdException()
@@ -172,7 +172,7 @@ class RbacManagerTest extends RbacSetup
     }
 
     /**
-     * @expectedException RbacPermissionNotFoundException
+     * @expectedException PhpRbac\exceptions\PermissionNotFoundException
      */
 
     public function testManagerCheckWithNullPermException()
@@ -237,7 +237,7 @@ class RbacManagerTest extends RbacSetup
     }
 
     /**
-     * @expectedException RbacUserNotProvidedException
+     * @expectedException PhpRbac\exceptions\UserNotProvidedException
      */
 
     public function testManagerEnforceWithNullUserIdException()
@@ -246,7 +246,7 @@ class RbacManagerTest extends RbacSetup
     }
 
     /**
-     * @expectedException RbacPermissionNotFoundException
+     * @expectedException PhpRbac\exceptions\PermissionNotFoundException
      */
 
     public function testManagerEnforceWithNullPermException()

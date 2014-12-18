@@ -28,7 +28,7 @@ class RbacPermissionsTest extends RbacBase
      */
 
     public function testPermissionsInstance() {
-        $this->assertInstanceOf('PermissionManager', self::$rbac->Permissions);
+        $this->assertInstanceOf('PhpRbac\models\PermissionManager', self::$rbac->Permissions);
     }
 
     /*

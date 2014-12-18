@@ -28,7 +28,7 @@ class RbacRolesTest extends RbacBase
      */
 
     public function testRolesInstance() {
-        $this->assertInstanceOf('RoleManager', self::$rbac->Roles);
+        $this->assertInstanceOf('PhpRbac\models\RoleManager', self::$rbac->Roles);
     }
 
     /*
