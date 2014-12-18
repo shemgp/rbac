@@ -246,8 +246,10 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
         $params = array($id);
         $res = $this->_fetchAll($qry, $params);
 
-        foreach ($res as &$v)
-            unset($v['depth']);
+        if ($res !== null) {
+            foreach ($res as &$v)
+                unset($v['depth']);
+        }
 
         return $res;
     }

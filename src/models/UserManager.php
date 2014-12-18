@@ -29,7 +29,7 @@ class UserManager
      * @throws \exceptions\UserNotProvidedException
      * @return boolean success
      */
-    function hasRole($Role, $UserID)
+    function hasRole($Role, $UserID = null)
     {
         if ($UserID === null)
             throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
