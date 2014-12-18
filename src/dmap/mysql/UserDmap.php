@@ -20,7 +20,7 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
                   JOIN {$this->pfx}roles trdirect ON
                        (trdirect.id = tur.roleid)
                   JOIN {$this->pfx}roles tr ON
-                       (tr.lft BETWEEN trdirect.lft AND trdirect.rght) tr
+                       (tr.lft BETWEEN trdirect.lft AND trdirect.rght)
                  WHERE tur.userid = ?
                    AND tr.id = ?";
         $params = array($UserID, $RoleID);
@@ -62,7 +62,12 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
 
         $params = array($UserID);
 
-        return $this->_fetchAll($qry, $params);
+        $rows = $this->_fetchAll($qry, $params);
+
+        if (empty($rows))
+            return null;
+        else
+            return $rows;
     }
 
     public function roleCount($UserID)
@@ -73,20 +78,17 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
 
         $params = array($UserID);
 
-        return $this->_fetchOne($qry, $params);
+        return (int) $this->_fetchOne($qry, $params);
     }
 
     public function resetAssignments()
     {
-        $qry = "DELETE FROM {$this->pfx}userroles";
+        $qry = "TRUNCATE TABLE {$this->pfx}userroles";
         $res = $this->_execQuery($qry);
-
-        $qry = "ALTER TABLE {$this->pfx}userroles AUTO_INCREMENT = 1";
-        $this->_execQuery($qry);
 
         return $res['output'];
 
-        // mysql and sqlite additions
+        // sqlite:
         // "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "_userroles"
     }
 
@@ -106,7 +108,7 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
                       JOIN {$this->pfx}rolepermissions AS TRel ON (TP.ID=TRel.PermissionID)
                   ) $LastPart";
 
-        $params = array($UserID, $PermissionID);
+        $params = array($userId, $permId);
 
         $res = $this->_fetchOne($qry, $params);
 

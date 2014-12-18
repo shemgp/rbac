@@ -139,8 +139,7 @@ class UserManager
 
     public function check($UserID, $PermissionID)
     {
-        $this->dmap->check($UserID, $PermissionID);
-
+        return $this->dmap->check($UserID, $PermissionID);
     }
 
 

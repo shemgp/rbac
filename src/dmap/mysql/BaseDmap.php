@@ -66,14 +66,10 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
 
     public function resetAssignments()
     {
-        $qry ="DELETE FROM {$this->pfx}rolepermissions";
-        $res = $this->_execQuery($qry);
-
-        $qry = "ALTER TABLE {$this->pfx}rolepermissions AUTO_INCREMENT = 1";
+        $qry ="TRUNCATE TABLE {$this->pfx}rolepermissions";
         $res = $this->_execQuery($qry);
 
         // $qry ="DELETE FROM sqlite_sequence WHERE name = {$this->pfx}rolepermissions";
-
     }
 
 
@@ -179,7 +175,7 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
     public function update($id, $title = null, $descrip = null)
     {
         $toChange = '';
-        $params = array($id);
+        $params = array();
 
         if ($title !== null) {
             $toChange = 'title = ?';
@@ -202,13 +198,17 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
         }
 
         if ($toChange === '')
-            return array('success' => true, 'reason' => 'Nothing to change');
+            return true;
 
         $qry = "UPDATE {$this->tblName}
-                   SET $rows
+                   SET $toChange
                  WHERE id = ?";
 
-        return $this->_execQuery($qry, $params);
+        $params[] = $id;
+
+        $res = $this->_execQuery($qry, $params);
+
+        return $res['output'] == 1;
     }
 
     /**
@@ -243,13 +243,11 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
                 HAVING depth = 1
               ORDER BY node.lft";
 
-        $params = array(id);
+        $params = array($id);
         $res = $this->_fetchAll($qry, $params);
 
-        if ($res['success']) {
-            foreach ($res as &$v)
-                unset($v['depth']);
-        }
+        foreach ($res as &$v)
+            unset($v['depth']);
 
         return $res;
     }
@@ -271,11 +269,16 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
 
     public function reset()
     {
-        $qry = "DELETE FROM {$this->tblName}";
+        $qry = "TRUNCATE TABLE {$this->tblName}";
         $res = $this->_execQuery($qry);
 
-        $qry = "ALTER TABLE {$this->tblName} AUTO_INCREMENT = 1";
+        /*
+        $qry = "ALTER TABLE {$this->tblName} DROP COLUMN id;";
         $res = $this->_execQuery($qry);
+        $qry = "ALTER TABLE {$this->tblName} ADD COLUMN `ID` INT UNSIGNED NOT NULL AUTO_INCREMENT FIRST,
+                ADD PRIMARY KEY (`ID`);";
+        $res = $this->_execQuery($qry);
+         */
 
         // for sqlite:
         // $qry =  "DELETE FROM sqlite_sequence WHERE name = {$this->tblName}";
@@ -288,5 +291,15 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
         $res = $this->_execQuery($qry, $params);
 
         return $res;
+    }
+
+    public function deleteConditional($cond, $id)
+    {
+        $this->nst->deleteConditional($cond, $id);
+    }
+
+    public function deleteSubtreeConditional($cond, $id)
+    {
+        $this->nst->deleteSubtreeConditional($cond, $id);
     }
 }

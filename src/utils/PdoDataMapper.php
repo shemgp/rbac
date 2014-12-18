@@ -117,7 +117,10 @@ class PdoDataMapper
             $data = $stmt->fetchAll();
             $stmt->closeCursor();
 
-            return $data;
+            if (empty($data))
+                return null;
+            else
+                return $data;
         }
         else {
             error_log($this->dbh->errorInfo()[2]);
@@ -132,7 +135,7 @@ class PdoDataMapper
     {
         $res = $this->_fetchAll($qry, $qryParams);
 
-        if (!empty($res))
+        if ($res !== null)
             return $res[0];
         else
             return null;
@@ -174,7 +177,11 @@ class PdoDataMapper
             $timeEnd = microtime(true);
 
             $stmt->closeCursor();
-            return $data;
+
+            if (empty($data))
+                return null;
+            else
+                return $data;
         }
         else {
             error_log($this->dbh->errorInfo()[2]);
@@ -197,7 +204,10 @@ class PdoDataMapper
         $data = $stmt->fetchAll(\PDO::FETCH_COLUMN);
         $stmt->closeCursor();
 
-        return $data;
+        if (empty($data))
+            return null;
+        else
+            return $data;
     }
 
     /**
@@ -239,7 +249,7 @@ class PdoDataMapper
 
                 if ($stmtType == 'UPD') {
                     // an update
-                     $output = $pk;
+                     $output = $stmt->rowCount();
                 }
                 elseif ($stmtType == 'INS') {
                     $result = $stmt->fetch(\PDO::FETCH_ASSOC);

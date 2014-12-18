@@ -244,7 +244,7 @@ abstract class BaseRbac
     {
         $res = $this->dmap->update($ID, $NewTitle, $NewDescription);
 
-        return $res['success'];
+        return $res;
     }
 
 

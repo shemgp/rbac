@@ -22,21 +22,25 @@ class PermissionDmap extends BaseDmap {
     /**
      * Delete a node and shift its children up a level.
      *
+     * Return false is nothing to do.
+     *
      * @param integer   PK id of the node to delete.
      **/
     public function moveChildrenUp($permId)
     {
-        $this->nst->deleteConditional('id = ?', $permId);
+        return $this->nst->deleteConditional('id = ?', $permId);
     }
 
     /**
      * Delete a node and all of its descendants.
      *
+     * Return false is nothing to do.
+     *
      * @param integer   PK id of the node to delete.
      **/
     public function removeChildren($permId)
     {
-        $this->nst->deleteSubtreeConditional('id = ?', $permId);
+        return $this->nst->deleteSubtreeConditional('id = ?', $permId);
     }
 
     /**
@@ -49,7 +53,7 @@ class PermissionDmap extends BaseDmap {
      **/
     public function rolesForPermission($permId, $onlyIds = true)
     {
-        $params = array($permid);
+        $params = array($permId);
 
         if ($onlyIds) {
             $qry = "SELECT roleid AS id
