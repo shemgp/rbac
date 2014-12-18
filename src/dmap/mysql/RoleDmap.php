@@ -20,7 +20,7 @@ class RoleDmap extends BaseDmap {
     public function unassignUsersFromRole($roleId)
     {
         $qry = "DELETE FROM {$this->pfx}userroles
-i                WHERE roleid = ?";
+                 WHERE roleid = ?";
 
         $params = array($roleId);
 

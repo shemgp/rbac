@@ -1,5 +1,5 @@
 <?php
-namespace exceptions;
+namespace PhpRbac\exceptions;
 
 class PermissionNotFoundException extends RbacException
 {

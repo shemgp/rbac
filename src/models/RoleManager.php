@@ -11,6 +11,8 @@ class RoleManager extends BaseRbac
 {
     public function __construct($cfg)
     {
+        parent::__construct($cfg);
+
         $dmapClass = "PhpRbac\\dmap\\{$cfg['dbType']}\\RoleDmap";
         $this->dmap = new $dmapClass($cfg);
     }
@@ -20,6 +22,29 @@ class RoleManager extends BaseRbac
         return get_class($this);
     }
 
+    /**
+     * Assigns a role to a permission (or vice-verse).
+     *
+     * Will report failure if the permission already exists in the table.
+     *
+     * @param mixed   Id, Title, or Path of the Role
+     * @param mixed   Id, Title, or Path of the Permission
+     * @return boolean   True if inserted okay. False if existing or failure.
+     *
+     * @todo: Check for valid permissions/roles
+     * @todo: Implement custom error handler
+     */
+    public function assign($Role, $Permission)
+    {
+        $perms = new PermissionManager($this->cfg);
+
+        $roleId = $this->returnId($Role);
+        $permId = $perms->returnId($Permission);
+
+        $res = $this->dmap->assign($roleId, $permId);
+
+        return $res['success'];
+    }
 
     /**
      * Unassigns a role-permission relation
@@ -30,10 +55,16 @@ class RoleManager extends BaseRbac
      */
     public function unassign($Role, $Permission)
     {
+        $perms = new PermissionManager($this->cfg);
+
+        $roleId = $this->returnId($Role);
+        $permId = $perms->returnId($Permission);
+
         $res = $this->dmap->unassign($roleId, $permId);
 
         return $res['success'];
     }
+
 
     /**
      * Remove role(s) completely from the system.
@@ -58,7 +89,7 @@ class RoleManager extends BaseRbac
      * @param integer   PK id of the Role to remove from use in Permissions
      * @return integer  Number of assigned roles deleted
      */
-    protected function unassignPermissions($ID)
+    public function unassignPermissions($ID)
     {
         $res = $this->dmap->unassignPermissionsFromRole($ID);
 
@@ -71,7 +102,7 @@ class RoleManager extends BaseRbac
      * @param integer   PK id of the Role to remove from use by Users
      * @return integer  Number of User Roles deleted.
      */
-    protected function unassignUsers($ID)
+    public function unassignUsers($ID)
     {
         $res = $this->dmap->unassignUsersFromRole($ID);
 
@@ -88,7 +119,7 @@ class RoleManager extends BaseRbac
      * @todo: If we pass a Role that doesn't exist the method just returns
      *        false. We may want to check for a valid Role.
      */
-    function hasPermission($Role, $Permission)
+    public function hasPermission($Role, $Permission)
     {
         $res = $this->dmap->hasPermission($Role, $Permission);
 
@@ -105,7 +136,7 @@ class RoleManager extends BaseRbac
      *        where each contains the id, title and description of permissions,
      *        or null if none are found.
      */
-    function permissions($Role, $OnlyIDs = true)
+    public function permissions($Role, $OnlyIDs = true)
     {
         if (!is_numeric($Role))
             $Role = $this->returnId($Role);

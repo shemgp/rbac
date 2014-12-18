@@ -1,5 +1,5 @@
 <?php
-namespace exceptions;
+namespace PhpRbac\exceptions;
 
 class RbacException extends \Exception
 {

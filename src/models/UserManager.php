@@ -32,7 +32,7 @@ class UserManager
     function hasRole($Role, $UserID)
     {
         if ($UserID === null)
-            throw new exceptions\UserNotProvidedException("\$UserID is a required argument.");
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
 
         $RoleID = $this->_getRoleId($Role);
         $res = $this->dmap->hasRole($RoleID, $UserID);
@@ -52,7 +52,7 @@ class UserManager
     function assign($Role, $UserID = null)
     {
         if ($UserID === null)
-            throw new exceptions\UserNotProvidedException("\$UserID is a required argument.");
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
 
         $RoleID = $this->_getRoleId($Role);
 
@@ -73,7 +73,7 @@ class UserManager
     function unassign($Role, $UserID = null)
     {
         if ($UserID === null)
-            throw new exceptions\UserNotProvidedException("\$UserID is a required argument.");
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
 
         $RoleID = $this->_getRoleId($Role);
 
@@ -93,7 +93,7 @@ class UserManager
     function allRoles($UserID = null)
     {
         if ($UserID === null)
-            throw new exceptions\UserNotProvidedException("\$UserID is a required argument.");
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
 
 
         return $this->dmap->allRoles($UserID);
@@ -110,7 +110,7 @@ class UserManager
     function roleCount($UserID = null)
     {
         if ($UserID === null)
-            throw new exceptions\UserNotProvidedException("\$UserID is a required argument.");
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
 
         return $this->dmap->roleCount($UserID);
     }
@@ -139,7 +139,7 @@ class UserManager
 
     public function check($UserID, $PermissionID)
     {
-        $this->dmap->checkPermission($UserID, $PermissionID);
+        $this->dmap->check($UserID, $PermissionID);
 
     }
 

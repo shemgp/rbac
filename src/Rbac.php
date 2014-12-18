@@ -73,10 +73,6 @@ class Rbac
      */
     function assign($Role, $Permission)
     {
-        $RoleID = $this->Roles->returnId($Role);
-        $PermissionID = $this->Permissions->returnId($Permission);
-
-        // todo: check in case requested Role or Permission doesn't exist?
         return $this->Roles->assign($RoleID, $PermissionID);
     }
 
@@ -89,9 +85,6 @@ class Rbac
      **/
     function unassign($Role, $Permission)
     {
-        $RoleID = $this->Roles->returnId($Role);
-        $PermissionID = $this->Permissions->returnId($Permission);
-
         return $this->Roles->unassign($RoleID, $PermissionID);
     }
 
@@ -120,7 +113,7 @@ class Rbac
         if ($PermissionID === null)
             throw new exceptions\PermissionNotFoundException("The permission '{$Permission}' not found.");
 
-        return $this->User->check($UserID, $PermissionID);
+        return $this->Users->check($UserID, $PermissionID);
     }
 
     /**

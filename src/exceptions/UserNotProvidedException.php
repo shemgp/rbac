@@ -1,6 +1,6 @@
 <?php
-namespace exceptions;
+namespace PhpRbac\exceptions;
 
-class RbacUserNotProvidedException extends RbacException
+class UserNotProvidedException extends RbacException
 {
 }

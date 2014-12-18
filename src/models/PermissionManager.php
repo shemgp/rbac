@@ -22,6 +22,49 @@ class PermissionManager extends BaseRbac
     }
 
     /**
+     * Assigns a role to a permission (or vice-verse).
+     *
+     * Will report failure if the permission already exists in the table.
+     *
+     * @param mixed   Id, Title, or Path of the Role
+     * @param mixed   Id, Title, or Path of the Permission
+     * @return boolean   True if inserted okay. False if existing or failure.
+     *
+     * @todo: Check for valid permissions/roles
+     * @todo: Implement custom error handler
+     */
+    public function assign($Role, $Permission)
+    {
+        $roles = new RoleManager($this->cfg);
+
+        $roleId = $roles->returnId($Role);
+        $permId = $this->returnId($Permission);
+
+        $res = $this->dmap->assign($roleId, $permId);
+
+        return $res['success'];
+    }
+
+    /**
+     * Unassigns a role-permission relation
+     *
+     * @param integer  Id of the Role
+     * @param integer  Id of the Permission
+     * @return boolean
+     */
+    public function unassign($Role, $Permission)
+    {
+        $roles = new RoleManager($this->cfg);
+
+        $roleId = $roles->returnId($Role);
+        $permId = $this->returnId($Permission);
+
+        $res = $this->dmap->unassign($roleId, $permId);
+
+        return $res['success'];
+    }
+
+    /**
      * Remove permissions from system
      *
      * @param integer $ID
@@ -47,10 +90,10 @@ class PermissionManager extends BaseRbac
      *      Permission Id
      * @return integer
      */
-    protected function unassignRoles($ID)
+    public function unassignRoles($ID)
     {
 
-        $res = $this->dmap(unassignRoles($ID));
+        $res = $this->dmap->unassignRoles($ID);
         return (int) $res['output'];
     }
 

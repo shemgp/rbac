@@ -79,13 +79,14 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
     public function resetAssignments()
     {
         $qry = "DELETE FROM {$this->pfx}userroles";
-
         $res = $this->_execQuery($qry);
+
+        $qry = "ALTER TABLE {$this->pfx}userroles AUTO_INCREMENT = 1";
+        $this->_execQuery($qry);
 
         return $res['output'];
 
         // mysql and sqlite additions
-        // "ALTER TABLE {$this->tablePrefix()}userroles AUTO_INCREMENT =1 " );
         // "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "_userroles"
     }
 

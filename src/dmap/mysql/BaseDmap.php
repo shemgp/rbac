@@ -56,7 +56,7 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
     public function unassign($roleId, $permId)
     {
         $qry = "DELETE FROM {$this->pfx}rolepermissions
-                 WHERE role = ?
+                 WHERE roleid = ?
                    AND permissionid = ?";
 
         $params = array($roleId, $permId);
