@@ -47,7 +47,7 @@ class RbacRolesTest extends RbacBase
         $this->Instance()->assign($role_id_1, $perm_id_2);
         $this->Instance()->assign($role_id_1, $perm_id_3);
 
-        $result = $this->Instance()->permissions($perm_id_1);
+        $result = $this->Instance()->permissions($role_id_1);
 
         $expected = array('2', '3', '4');
 
