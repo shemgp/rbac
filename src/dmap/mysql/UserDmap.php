@@ -91,15 +91,10 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
 
     public function check($userId, $permId)
     {
-        // this first one works on MySQL only
+        // this works on MySQL only
         $LastPart = "ON (TR.ID = TRel.RoleID)
                 WHERE TUrel.UserID = ?
                   AND TPdirect.ID = ?";
-
-        // this works for both sqlite and MySQL
-        $LastPart="AS Temp ON ( TR.ID = Temp.RoleID)
-                WHERE TUrel.UserID = ?
-                  AND Temp.ID = ?";
 
         $qry = "SELECT COUNT(*) AS Result
                   FROM {$this->pfx}userroles AS TUrel

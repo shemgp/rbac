@@ -165,7 +165,7 @@ class Rbac
         return $res;
     }
 
-    /*
+    /**
      * Present only because test cases expect this method.
      *
      * No need for Rbac class to actually have knowledge about table internals.
