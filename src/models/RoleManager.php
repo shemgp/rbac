@@ -77,10 +77,10 @@ class RoleManager extends BaseRbac
         $this->unassignPermissions($ID);
         $this->unassignUsers($ID);
 
-        if (! $Recursive)
-            return $this->dmap->deleteConditional("ID=?", $ID);
+        if (!$Recursive)
+            return $this->dmap->deleteConditional('id = ?', $ID);
         else
-            return $this->dmap->deleteSubtreeConditional("ID=?", $ID);
+            return $this->dmap->deleteSubtreeConditional('id = ?', $ID);
     }
 
     /**

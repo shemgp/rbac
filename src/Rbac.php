@@ -105,10 +105,7 @@ class Rbac
     function check($Permission, $UserID = null)
     {
         if ($UserID === null)
-            throw new \Exception("\$UserID is a required argument.");
-            //throw new exceptions\UserNotProvidedException("\$UserID is a required argument.");
-        // model class will throw the specific exception commented out above,
-        // but tests expect the general \Excpetion class, so leaving as-is
+            throw new exceptions\UserNotProvidedException("\$UserID is a required argument.");
 
         $PermissionID = $this->Permissions->returnId($Permission);
 

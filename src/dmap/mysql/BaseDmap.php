@@ -104,6 +104,22 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
      **/
     public function idFromPath($path)
     {
+        // 1024 is the MySQL default, though any server can have that globally
+        // changed; only way to detect that is another query:
+        // SHOW VARIABLES LIKE 'group%';
+        $MYSQL_GROUP_CONCAT_LIMIT = 1024;
+        $pathLen = strlen($path);
+
+        if ($pathLen > $MYSQL_GROUP_CONCAT_LIMIT) {
+            ++$pathLen;
+            $qry = "SET SESSION group_concat_max_len = $pathLen";
+
+            $res = $this->_execQuery($qry);
+
+            if (!$res)
+                die('You must have permission to change group_concat max len');
+        }
+
         $Parts = explode( "/", $path );
 
         $GroupConcat = "GROUP_CONCAT(parent.Title ORDER BY parent.Lft SEPARATOR '/')";
@@ -149,10 +165,10 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
 
     public function getPathForId($id)
     {
-        $qry = "SELECT parent.*
+        $qry = "SELECT parent.id AS id, parent.title AS title
                   FROM {$this->tblName} AS node,
                        {$this->tblName} AS parent
-                 WHERE node.lft BETWEEN parent.lft AND parent.rgth
+                 WHERE node.lft BETWEEN parent.lft AND parent.rght
                    AND (node.id = ?)
                ORDER BY parent.lft";
 
@@ -248,7 +264,7 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
 
         if ($res !== null) {
             foreach ($res as &$v)
-                unset($v['depth']);
+                unset($v['Depth']);
         }
 
         return $res;
@@ -297,11 +313,11 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
 
     public function deleteConditional($cond, $id)
     {
-        $this->nst->deleteConditional($cond, $id);
+        return $this->nst->deleteConditional($cond, $id);
     }
 
     public function deleteSubtreeConditional($cond, $id)
     {
-        $this->nst->deleteSubtreeConditional($cond, $id);
+        return $this->nst->deleteSubtreeConditional($cond, $id);
     }
 }

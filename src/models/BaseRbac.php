@@ -203,21 +203,19 @@ abstract class BaseRbac
         $res = $this->dmap->getPathForId($ID);
         $out = null;
 
-        if (is_array($res) && count($res)) {
+        if ($res !== null) {
             foreach ($res as $r) {
-                if ($r ['ID'] == 1)
+                if ($r ['id'] == 1)
                     $out = '/';
                 else
                     $out .= "/" . $r['title'];
-
-                if (strlen($out) > 1)
-                    return substr ($out, 1);
-                else
-                    return $out;
             }
         }
 
-        return null;
+        if (strlen($out) > 1)
+            return substr ($out, 1);
+        else
+            return $out;
     }
 
     /**
@@ -242,6 +240,9 @@ abstract class BaseRbac
      */
     function edit($ID, $NewTitle = null, $NewDescription = null)
     {
+        if ($NewTitle === null && $NewDescription === null)
+            return false;
+
         $res = $this->dmap->update($ID, $NewTitle, $NewDescription);
 
         return $res;
