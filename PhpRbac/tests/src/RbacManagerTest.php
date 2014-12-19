@@ -182,7 +182,7 @@ class RbacManagerTest extends RbacSetup
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException PhpRbac\exceptions\UserNotProvidedException
      */
 
     public function testManagerCheckWithNoUserIdException()
@@ -256,7 +256,7 @@ class RbacManagerTest extends RbacSetup
     }
 
     /**
-     * @expectedException PHPUnit_Framework_Error
+     * @expectedException PhpRbac\exceptions\UserNotProvidedException
      */
 
     public function testManagerEnforceWithNoUserIdException()
