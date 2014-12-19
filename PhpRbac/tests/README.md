@@ -12,6 +12,9 @@
     * MySQL
         * Execute the queries located in the 'mysql.sql' file in the 'rbac/PhpRbac/database/' directory
             * **WARNING:** Make sure you replace 'PREFIX_' appropriately
+            * PREFIX_ _must_ be replaced by 'phprbac_' - the tests assume this
+            * No other tables besides the RBAC ones may be present in the
+              database, or tests will fail.
     * SQLite
         * The database will be created/overwritten for you automatically when you run the Unit Tests
 * Navigate to 'rbac/PhpRbac/tests/database' and open up 'database.config'. Change the database connection info accordingly

@@ -1,14 +1,7 @@
 <?php
 namespace PhpRbac\dmap\sqlite;
 
-/**
- * Base data mapper for Permissions and Roles, since they are so similar.
- *
- * @author jamesvl
- * @author abiusx
- */
-class BaseDmap extends \PhpRbac\dmap\mysql\BaseDmap {
-
+class RoleDmap extends \PhpRbac\dmap\mysql\RoleDmap {
     /**
      * Get the id of a [Role|Permission] given just its string Path.
      **/
