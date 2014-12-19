@@ -14,4 +14,9 @@ class UserDmap extends \PhpRbac\dmap\mysql\UserDmap {
 
         return $res['output'];
     }
+
+    protected function dbNow()
+    {
+        return "'now'";
+    }
 }

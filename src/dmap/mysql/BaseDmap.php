@@ -46,7 +46,7 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
 
         $qry = "INSERT INTO {$this->pfx}rolepermissions
                        (roleid, permissionid, assignmentdate)
-                       VALUES (?, ?, UNIX_TIMESTAMP())";
+                       VALUES (?, ?, {$this->dbNow()})";
 
         $params = array($roleId, $permId);
 
@@ -319,5 +319,10 @@ class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
     public function deleteSubtreeConditional($cond, $id)
     {
         return $this->nst->deleteSubtreeConditional($cond, $id);
+    }
+
+    protected function dbNow()
+    {
+        return 'UNIX_TIMESTAMP()';
     }
 }

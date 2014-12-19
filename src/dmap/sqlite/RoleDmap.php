@@ -9,7 +9,7 @@ class RoleDmap extends \PhpRbac\dmap\mysql\RoleDmap {
     {
         $Parts = explode( "/", $path );
 
-        $qry = "SELECT node.id, GROUP_CONCAT(parent.title, '/') AS path
+        $qry = "SELECT node.id AS id, GROUP_CONCAT(parent.title, '/') AS path
                   FROM {$this->tblName} AS node,
                        {$this->tblName} AS parent
                  WHERE node.lft BETWEEN parent.lft AND parent.rght
@@ -22,7 +22,7 @@ class RoleDmap extends \PhpRbac\dmap\mysql\RoleDmap {
 
         $res = $this->_fetchRow($qry, $params);
 
-        if ($res)
+        if ($res !== null)
             return $res['id'];
         else
             return null;
@@ -34,8 +34,8 @@ class RoleDmap extends \PhpRbac\dmap\mysql\RoleDmap {
         $res = $this->_execQuery($qry);
 
         $qry ="DELETE FROM sqlite_sequence
-                WHERE name = {$this->pfx}rolepermissions";
-        $res = $this->_execQuery($qry);
+                WHERE name = ?";
+        $res = $this->_execQuery($qry, array("{$this->pfx}rolepermissions"));
     }
 
     public function reset()
@@ -55,5 +55,10 @@ class RoleDmap extends \PhpRbac\dmap\mysql\RoleDmap {
         $res = $this->_execQuery($qry, $params);
 
         return $res;
+    }
+
+    protected function dbNow()
+    {
+        return "'now'";
     }
 }

@@ -32,7 +32,7 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
     {
         $qry = "INSERT INTO {$this->pfx}userroles
                 (userid, roleid, assignmentdate)
-                VALUES (?, ?, UNIX_TIMESTAMP())";
+                VALUES (?, ?, {$this->dbNow()})";
 
         $params = array($UserID, $RoleID);
         $res = $this->_execQuery($qry, $params);
@@ -87,16 +87,19 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
         $res = $this->_execQuery($qry);
 
         return $res['output'];
-
-        // sqlite:
-        // "delete from sqlite_sequence where name=? ", $this->tablePrefix () . "_userroles"
     }
 
     public function check($userId, $permId)
     {
+        // this first one works on MySQL only
         $LastPart = "ON (TR.ID = TRel.RoleID)
                 WHERE TUrel.UserID = ?
                   AND TPdirect.ID = ?";
+
+        // this works for both sqlite and MySQL
+        $LastPart="AS Temp ON ( TR.ID = Temp.RoleID)
+                WHERE TUrel.UserID = ?
+                  AND Temp.ID = ?";
 
         $qry = "SELECT COUNT(*) AS Result
                   FROM {$this->pfx}userroles AS TUrel
@@ -115,4 +118,8 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
         return $res !== null && $res >= 1;
     }
 
+    protected function dbNow()
+    {
+        return 'UNIX_TIMESTAMP()';
+    }
 }

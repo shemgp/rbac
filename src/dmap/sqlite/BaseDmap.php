@@ -41,8 +41,8 @@ class BaseDmap extends \PhpRbac\dmap\mysql\BaseDmap {
         $res = $this->_execQuery($qry);
 
         $qry ="DELETE FROM sqlite_sequence
-                WHERE name = {$this->pfx}rolepermissions";
-        $res = $this->_execQuery($qry);
+                WHERE name = ?";
+        $res = $this->_execQuery($qry, array("{$this->pfx}rolepermissions"));
     }
 
     public function reset()
