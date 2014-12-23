@@ -5,7 +5,7 @@ namespace phprbac\utils;
  * Queries our Postgres instance for data
  * Starting class for future data layer interface.
  **/
-class PdoDataMapper
+class PdoWrapper
 {
     protected $cfg;
     protected $tblName; // sub-classes set this for convenience
@@ -73,6 +73,7 @@ class PdoDataMapper
         $opts = array(
             \PDO::ATTR_DEFAULT_FETCH_MODE => \PDO::FETCH_ASSOC,
             \PDO::ATTR_PERSISTENT => $cfg['persist'],
+            // \PDO::ATTR_CASE => \PDO::CASE_LOWER,
         );
 
         try {
@@ -108,6 +109,7 @@ class PdoDataMapper
         if ($stmt === false) {
             error_log($this->dbh->errorInfo()[2]);
             // debug only:
+            echo($qry);
             die($this->dbh->errorInfo()[2]);
 
             return array();
@@ -123,6 +125,7 @@ class PdoDataMapper
                 return $data;
         }
         else {
+            echo($qry);
             error_log($this->dbh->errorInfo()[2]);
             die('Error executing query');
         }
@@ -184,6 +187,7 @@ class PdoDataMapper
                 return $data;
         }
         else {
+            echo($qry);
             error_log($this->dbh->errorInfo()[2]);
             die('Error executing query');
         }
@@ -199,6 +203,17 @@ class PdoDataMapper
         $this->_ensureConnected();
 
         $stmt = $this->dbh->prepare($qry);
+
+        if ($stmt === false) {
+            echo("\n$qry\n");
+            print_r($qryParams);
+            error_log($this->dbh->errorInfo()[2]);
+            // debug only:
+            die($this->dbh->errorInfo()[2]);
+
+            return array();
+        }
+
         $stmt->execute($qryParams);
 
         $data = $stmt->fetchAll(\PDO::FETCH_COLUMN);
@@ -276,11 +291,13 @@ class PdoDataMapper
                 $res['output']  = $output;
          }
          else {
+                echo($qry);
                 $errObj = is_object($stmt) ? $stmt : $this->dbh;
                 $errorInfo = $errObj->errorInfo();
 
                 error_log($errorInfo[2] . "\t" . $qry);
                 $res['reason']  = $errorInfo[2]; // driver-specific error message
+                die('halt on _execQuery');
          }
 
          return $res;

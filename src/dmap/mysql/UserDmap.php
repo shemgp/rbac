@@ -1,7 +1,7 @@
 <?php
 namespace PhpRbac\dmap\mysql;
 
-class UserDmap extends \PhpRbac\utils\PdoDataMapper {
+class UserDmap extends \PhpRbac\utils\PdoWrapper {
 
     protected $pfx;
 

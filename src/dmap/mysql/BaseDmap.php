@@ -1,15 +1,13 @@
 <?php
 namespace PhpRbac\dmap\mysql;
 
-
-
 /**
  * Base data mapper for Permissions and Roles, since they are so similar.
  *
  * @author jamesvl
  * @author abiusx
  */
-class BaseDmap extends \PhpRbac\utils\PdoDataMapper {
+class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
     protected $pfx;
     protected $nst;
