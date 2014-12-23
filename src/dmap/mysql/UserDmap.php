@@ -107,7 +107,6 @@ class UserDmap extends \PhpRbac\utils\PdoDataMapper {
                   ) $LastPart";
 
         $params = array($userId, $permId);
-
         $res = $this->_fetchOne($qry, $params);
 
         return $res !== null && $res >= 1;
