@@ -1,0 +1,16 @@
+<phpunit bootstrap="./bootstrap.php">
+    <testsuites>
+        <testsuite name="Wrapper">
+            <directory>./src</directory>
+        </testsuite>
+    </testsuites>
+    <php>
+        <var name="DB_ADAPTER" value="pdo_pgsql" />
+        <var name="DB_DSN" value="pgsql:dbname=rbac;host=localhost" />
+        <var name="DB_USER" value="vagrant" />
+        <var name="DB_PASSWD" value="vagrant" />
+        <var name="DB_DBNAME" value="vagrant" />
+        <var name="DATASET_PATH" value="/data-adj-list/" />
+        <var name="DATASET_EXT" value="yml" />
+    </php>
+</phpunit>

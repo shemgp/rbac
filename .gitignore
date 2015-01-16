@@ -4,6 +4,9 @@
 *.orig
 tmp/*
 .DS_Store
+.vimrc
+.lvimrc
+*.sqlite3
 
 # Vendor Code #
 ###############
