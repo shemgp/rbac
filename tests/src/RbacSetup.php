@@ -40,7 +40,22 @@ class RbacSetup extends Generic_Tests_DatabaseTestCase
 
     public function getDataSet()
     {
-        return $this->createXMLDataSet(dirname(__FILE__) . '/datasets/database-seed.xml');
+        return $this->_dataSet('database-seed', false);
+    }
+
+    protected function _dataSet($fileName, $flatXml = true)
+    {
+        $fileLoc = dirname(__FILE__) . $GLOBALS['DATASET_PATH'] . $fileName . '.' . $GLOBALS['DATASET_EXT'];
+
+        if ($GLOBALS['DATASET_EXT'] === 'yml') {
+            return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet($fileLoc);
+        }
+        else {
+            if ($flatXml)
+                return $this->createFlatXMLDataSet($fileLoc);
+            else
+                return $this->createXMLDataSet($fileLoc);
+        }
     }
 
     /*

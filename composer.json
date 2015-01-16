@@ -28,7 +28,7 @@
 	"autoload" : {
 		"psr-4" : {
 			"PhpRbac\\" : "src/",
-			"PhpRbac\\tests\\" : "PhpRbac/tests/src/"
+			"PhpRbac\\tests\\" : "tests/src/"
 		}
 	},
 	"repositories" : [{

@@ -1,0 +1,5 @@
+phprbac_roles:
+  id: 1
+  parent:
+  title: root
+  description: root

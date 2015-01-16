@@ -1,0 +1,21 @@
+phprbac_roles:
+  -
+   id: 1
+   parent:
+   title: root
+   description: root
+  -
+   id: 2
+   parent: 1
+   title: roles_1
+   description: "roles Description 1"
+  -
+   id: 3
+   parent: 2
+   title: roles_2
+   description: "roles Description 2"
+  -
+   id: 4
+   parent: 2
+   title: roles_3
+   description: "roles Description 3"

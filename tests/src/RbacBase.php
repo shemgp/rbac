@@ -12,13 +12,11 @@ use PhpRbac\Rbac;
  * @{
  * Documentation for all Unit Tests regarding BaseRbac functionality.
  */
-
 class RbacBase extends RbacSetup
 {
     /*
      * Tests for $this->Instance()->add()
      */
-
     public function testAddNullTitle()
     {
         $dataSet = $this->getConnection()->createDataSet();
@@ -49,7 +47,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_' . $this->type() . '_sequential.xml')
+        $expectedTable = $this->_dataSet('base/expected_add_' . $this->type() . '_sequential')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -73,7 +71,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_' . $this->type() . '_hierarchy.xml')
+        $expectedTable = $this->_dataSet('base/expected_add_' . $this->type() . '_hierarchy')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -199,7 +197,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_edit_' . $this->type() . '_title.xml')
+        $expectedTable = $this->_dataSet('base/expected_edit_' . $this->type() . '_title')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -214,7 +212,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_edit_' . $this->type() . '_description.xml')
+        $expectedTable = $this->_dataSet('base/expected_edit_' . $this->type() . '_description')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -229,7 +227,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_edit_' . $this->type() . '_all.xml')
+        $expectedTable = $this->_dataSet('base/expected_edit_' . $this->type() . '_all')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -263,7 +261,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_single.xml')
+        $expectedTable = $this->_dataSet('base/expected_add_path_' . $this->type() . '_single')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -283,7 +281,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_single_description.xml')
+        $expectedTable = $this->_dataSet('base/expected_add_path_' . $this->type() . '_single_description')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -299,7 +297,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_sequential.xml')
+        $expectedTable = $this->_dataSet('base/expected_add_path_' . $this->type() . '_sequential')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -332,7 +330,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_sequential_description.xml')
+        $expectedTable = $this->_dataSet('base/expected_add_path_' . $this->type() . '_sequential_description')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -354,7 +352,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_hierarchy.xml')
+        $expectedTable = $this->_dataSet('base/expected_add_path_' . $this->type() . '_hierarchy')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -414,7 +412,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
         );
 
-        $expectedTable = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_add_path_' . $this->type() . '_hierarchy_description.xml')
+        $expectedTable = $this->_dataSet('base/expected_add_path_' . $this->type() . '_hierarchy_description')
         ->getTable($this->Instance()->tablePrefix() . $this->type());
 
         $this->assertTablesEqual($expectedTable, $queryTable);
@@ -682,7 +680,7 @@ class RbacBase extends RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '.xml');
+        $expectedDataSet = $this->_dataSet('base/expected_assign_' . $this->type());
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -704,7 +702,7 @@ class RbacBase extends RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '.xml');
+        $expectedDataSet = $this->_dataSet('base/expected_assign_' . $this->type());
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -726,7 +724,7 @@ class RbacBase extends RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '.xml');
+        $expectedDataSet = $this->_dataSet('base/expected_assign_' . $this->type());
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -755,7 +753,7 @@ class RbacBase extends RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->type() . '.xml');
+        $expectedDataSet = $this->_dataSet('base/expected_assign_' . $this->type());
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -780,7 +778,7 @@ class RbacBase extends RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->type() . '.xml');
+        $expectedDataSet = $this->_dataSet('base/expected_unassign_' . $this->type());
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -805,7 +803,7 @@ class RbacBase extends RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->type() . '.xml');
+        $expectedDataSet = $this->_dataSet('base/expected_unassign_' . $this->type());
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -844,7 +842,7 @@ class RbacBase extends RbacSetup
             array('AssignmentDate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_reset_assignments_' . $this->type() . '.xml');
+        $expectedDataSet = $this->_dataSet('base/expected_reset_assignments_' . $this->type());
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -877,7 +875,7 @@ class RbacBase extends RbacSetup
             $this->Instance()->tablePrefix() . $this->type(),
         ));
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_reset_' . $this->type() . '.xml');
+        $expectedDataSet = $this->_dataSet('base/expected_reset_' . $this->type());
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
