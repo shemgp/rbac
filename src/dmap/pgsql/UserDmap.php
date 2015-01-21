@@ -53,7 +53,7 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
         $params = array($userId, $roleId);
         $res = $this->_execQuery($qry, $params);
 
-        return $res['success'];
+        return $res['output'];
     }
 
     public function unassign($userId, $roleId)
@@ -117,24 +117,24 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
         roles AS
         (
             SELECT  id
-              FROM  phprbac_roles
+              FROM  {$this->pfx}roles
               WHERE  id IN (SELECT roleid
-                              FROM phprbac_userroles ur
+                              FROM {$this->pfx}userroles ur
                              WHERE ur.userid = ?)
           UNION ALL
             SELECT  child.id
               FROM  roles
-              JOIN  phprbac_roles child ON child.parent = roles.id
+              JOIN  {$this->pfx}roles child ON child.parent = roles.id
         ),
         perms (id) AS
         (
             SELECT id, parent
-              FROM phprbac_permissions
+              FROM {$this->pfx}permissions
              WHERE id = ?
          UNION ALL
             SELECT p.id, p.parent
               FROM perms
-              JOIN phprbac_permissions p ON p.id = perms.parent
+              JOIN {$this->pfx}permissions p ON p.id = perms.parent
         ),
         role_perms AS
         (
@@ -142,7 +142,7 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
               FROM roles, perms
        )
         SELECT COUNT(rp.*) AS num_found
-          FROM phprbac_rolepermissions rp
+          FROM {$this->pfx}rolepermissions rp
           JOIN role_perms
                ON (rp.roleid = role_perms.role_id
                  AND rp.permissionid = role_perms.perm_id)";

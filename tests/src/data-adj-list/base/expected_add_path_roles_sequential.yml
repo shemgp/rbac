@@ -1,7 +1,7 @@
 phprbac_roles:
   -
    id: 1
-   parent: 0
+   parent:
    title: root
    description: root
   -

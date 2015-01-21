@@ -39,12 +39,15 @@ abstract class BaseRbac
      * @param integer|null  Optional ID of the parent node in the hierarchy
      * @return integer      id of the new entry
      */
-    function add($Title, $Description, $ParentID = null)
+    function add($title, $description, $parentId = null)
     {
-        if ($ParentID === null)
-            $ParentID = $this->rootId();
+        if ($parentId === null)
+            $parentId = $this->rootId();
 
-        $res = $this->dmap->newFirstChild($ParentID, $Title, $Description);
+        if ($title === null)
+            return 0;
+
+        $res = $this->dmap->newFirstChild($parentId, $title, $description);
 
         return (int)$res;
     }
@@ -76,7 +79,7 @@ abstract class BaseRbac
             if (isset($Descriptions[$index]))
                 $Description = $Descriptions[$index];
             else
-                $Description = "";
+                $Description = null;
 
             $CurrentPath .= "/{$p}";
             $t = $this->pathId($CurrentPath);
@@ -145,8 +148,6 @@ abstract class BaseRbac
      */
     public function pathId($Path)
     {
-        $Path = "root" . $Path;
-
         // strip trailing slash
         if ($Path [strlen($Path) - 1] == "/")
             $Path = substr ( $Path, 0, strlen ( $Path ) - 1 );
@@ -204,18 +205,11 @@ abstract class BaseRbac
         $out = null;
 
         if ($res !== null) {
-            foreach ($res as $r) {
-                if ($r ['id'] == 1)
-                    $out = '/';
-                else
-                    $out .= "/" . $r['title'];
-            }
+            // strip leading 'root'
+            $out = substr($res['path'], 4);
         }
 
-        if (strlen($out) > 1)
-            return substr ($out, 1);
-        else
-            return $out;
+        return $out;
     }
 
     /**
@@ -275,8 +269,10 @@ abstract class BaseRbac
         $out = array();
 
         if (is_array($res)) {
+            array_shift($res); // discard the parent node
+
             foreach ($res as $v) {
-                $out[$v['Title']] = $v;
+                $out[$v['title']] = $v;
             }
         }
 
@@ -290,7 +286,12 @@ abstract class BaseRbac
      */
     function depth($ID)
     {
-        return $this->dmap->depthOfId($ID);
+        $depth = $this->dmap->depthOfId($ID);
+
+        if ($depth === null)
+            return -1;
+        else
+            return $depth;
     }
 
     /**
@@ -338,14 +339,13 @@ abstract class BaseRbac
      */
     function resetAssignments($Ensure = false)
     {
-        if ($Ensure !== true)
-        {
+        if ($Ensure !== true) {
             throw new \Exception ("You must pass true to this function, otherwise it won't work.");
             return;
         }
 
         $res = $this->dmap->resetAssignments();
-        $this->assign ($this->rootId(), $this->rootId());
+        $this->assign($this->rootId(), $this->rootId());
 
         return $res;
     }

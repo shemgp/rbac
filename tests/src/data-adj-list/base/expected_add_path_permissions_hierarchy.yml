@@ -67,7 +67,6 @@ phprbac_permissions:
   -
    id: 14
    parent: 1
-   _Rght: 30
    title: permissions_33
    description:
   -

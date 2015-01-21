@@ -16,6 +16,6 @@ phprbac_permissions:
    description:
   -
    id: 4
-   parent: 2
+   parent: 3
    title: permissions_3
    description:

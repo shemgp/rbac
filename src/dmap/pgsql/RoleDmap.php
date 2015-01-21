@@ -8,6 +8,7 @@ class RoleDmap extends BaseDmap {
         parent::__construct($cfg, $tblName);
     }
 
+
     public function unassignPermissionsFromRole($roleId)
     {
         $qry = "DELETE FROM {$this->pfx}rolepermissions
@@ -26,6 +27,7 @@ class RoleDmap extends BaseDmap {
 
         return $this->_execQuery($qry, $params);
     }
+
 
     /**
      * See if a Role has the requested permission.
@@ -48,22 +50,22 @@ class RoleDmap extends BaseDmap {
         roles AS
         (
             SELECT  id
-              FROM  phprbac_roles
+              FROM  {$this->pfx}roles
              WHERE  id = ?
           UNION ALL
             SELECT  child.id
               FROM  roles
-              JOIN  phprbac_roles child ON child.parent = roles.id
+              JOIN  {$this->pfx}roles child ON child.parent = roles.id
         ),
         perms (id) AS
         (
             SELECT id, parent
-              FROM phprbac_permissions
+              FROM {$this->pfx}permissions
              WHERE id = ?
          UNION ALL
             SELECT p.id, p.parent
               FROM perms
-              JOIN phprbac_permissions p ON p.id = perms.parent
+              JOIN {$this->pfx}permissions p ON p.id = perms.parent
         ),
         role_perms AS
         (
@@ -71,7 +73,7 @@ class RoleDmap extends BaseDmap {
               FROM roles, perms
        )
         SELECT COUNT(rp.*) AS num_found
-          FROM phprbac_rolepermissions rp
+          FROM {$this->pfx}rolepermissions rp
           JOIN role_perms
                ON (rp.roleid = role_perms.role_id
                  AND rp.permissionid = role_perms.perm_id)";
@@ -82,6 +84,31 @@ class RoleDmap extends BaseDmap {
 
         return $res !== null && $res >= 1;
     }
+
+    public function permissionsForRole($roleId, $onlyIds = true)
+    {
+        $params = array($roleId);
+
+        if ($onlyIds) {
+            $qry = "SELECT permissionid AS id
+                      FROM {$this->pfx}rolepermissions
+                     WHERE roleid = ?
+                  ORDER BY permissionid";
+
+            return $this->_fetchCol($qry, $params);
+        }
+        else {
+            $qry = "SELECT perms.id, perms.title, perms.description
+                      FROM {$this->pfx}permissions AS perms
+                 LEFT JOIN {$this->pfx}rolepermissions AS rp ON
+                           (rp.permissionid = perms.id)
+                     WHERE roleid = ?
+                  ORDER BY perms.id";
+
+            return $this->_fetchAll($qry, $params);
+        }
+    }
+
 
     /**
      * Use multiple queries to do same thing as hasPermissions()
@@ -113,30 +140,6 @@ class RoleDmap extends BaseDmap {
         $numFound = $this->_fetchOne($qry, $params);
 
         return $numFound > 0;
-    }
-
-    public function permissionsForRole($roleId, $onlyIds = true)
-    {
-        $params = array($roleId);
-
-        if ($onlyIds) {
-            $qry = "SELECT permissionid AS id
-                      FROM {$this->pfx}rolepermissions
-                     WHERE roleid = ?
-                  ORDER BY permissionid";
-
-            return $this->_fetchCol($qry, $params);
-        }
-        else {
-            $qry = "SELECT perms.id, perms.title, perms.description
-                      FROM {$this->pfx}permissions AS perms
-                 LEFT JOIN {$this->pfx}rolepermissions AS rp ON
-                           (rp.permissionid = perms.id)
-                     WHERE roleid = ?
-                  ORDER BY perms.id";
-
-            return $this->_fetchAll($qry, $params);
-        }
     }
 
 }

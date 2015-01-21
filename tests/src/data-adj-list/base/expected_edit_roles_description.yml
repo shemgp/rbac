@@ -1,5 +1,5 @@
 phprbac_roles:
   id: 2
-  parent:
+  parent: 1
   title: roles_title
   description: "roles Description edited"

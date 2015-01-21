@@ -17,6 +17,7 @@ class RoleManager extends BaseRbac
         $this->dmap = new $dmapClass($cfg);
     }
 
+
     protected function type()
     {
         return get_class($this);
@@ -108,6 +109,7 @@ class RoleManager extends BaseRbac
 
         return $res['output'];
     }
+
 
     /**
      * Checks to see if a role has a permission or not

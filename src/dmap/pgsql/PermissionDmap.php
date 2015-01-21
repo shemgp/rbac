@@ -8,6 +8,7 @@ class PermissionDmap extends BaseDmap {
         parent::__construct($cfg, $tblName);
     }
 
+
     public function unassignRoles($permId)
     {
         $qry = "DELETE FROM {$this->pfx}rolepermissions
@@ -65,7 +66,10 @@ class PermissionDmap extends BaseDmap {
     {
         $descendants = $this->descendants($permId);
 
-        $descIds = array_column($descenants, 'id');
+        if ($descendants === null)
+            return;
+
+        $descIds = array_column($descendants, 'id');
 
         $placeholders = implode(', ', array_fill(0, count($descIds), '?'));
 

@@ -67,7 +67,6 @@ phprbac_roles:
   -
    id: 14
    parent: 1
-   _Rght: 30
    title: roles_33
    description: "roles Description 33"
   -

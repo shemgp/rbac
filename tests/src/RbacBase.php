@@ -14,6 +14,11 @@ use PhpRbac\Rbac;
  */
 class RbacBase extends RbacSetup
 {
+    protected function setup() {
+        self::$rbac->reset(true);
+        parent::setup();
+    }
+
     /*
      * Tests for $this->Instance()->add()
      */
@@ -30,9 +35,10 @@ class RbacBase extends RbacSetup
     {
         $dataSet = $this->getConnection()->createDataSet();
 
+        // adding a null description is now allowed
         $type_id = $this->Instance()->add($this->type() . '_title', null);
 
-        $this->assertSame(0, $type_id);
+        $this->assertSame(2, $type_id);
     }
 
     public function testAddSequential()
@@ -137,7 +143,7 @@ class RbacBase extends RbacSetup
         $this->Instance()->add($this->type() . '_title', $this->type() . ' Description');
         $title_id = $this->Instance()->titleId($this->type() . '_title');
 
-        $this->assertSame('2', $title_id);
+        $this->assertSame(2, $title_id);
     }
 
     public function testGetTitleIdNull()
@@ -194,7 +200,7 @@ class RbacBase extends RbacSetup
         $this->Instance()->edit($type_id, $this->type() . '_title_edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE id=2'
         );
 
         $expectedTable = $this->_dataSet('base/expected_edit_' . $this->type() . '_title')
@@ -209,7 +215,7 @@ class RbacBase extends RbacSetup
         $this->Instance()->edit($type_id, null, $this->type() . ' Description edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE id=2'
         );
 
         $expectedTable = $this->_dataSet('base/expected_edit_' . $this->type() . '_description')
@@ -224,7 +230,7 @@ class RbacBase extends RbacSetup
         $this->Instance()->edit($type_id, $this->type() . '_title_edited', $this->type() . ' Description edited');
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE ID=2'
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' WHERE id=2'
         );
 
         $expectedTable = $this->_dataSet('base/expected_edit_' . $this->type() . '_all')
@@ -456,7 +462,7 @@ class RbacBase extends RbacSetup
 
         $path_id = $this->Instance()->pathId('/' . $this->type() . '_1/' . $this->type() . '_2');
 
-        $this->assertSame('3', $path_id);
+        $this->assertSame(3, $path_id);
     }
 
     public function testPathIDNullBadPath()
@@ -477,7 +483,7 @@ class RbacBase extends RbacSetup
 
         $path_id = $this->Instance()->pathId("/first_depth0/first_depth1/first_depth2/first_depth3/first_depth4/first_depth5/first_depth6/first_depth7/first_depth8/first_depth9/first_depth10/final_109");
 
-        $this->assertSame('13', $path_id);
+        $this->assertSame(13, $path_id);
     }
 
     public function testPathIDGroupConcatMaxCharCountLongCount()
@@ -487,7 +493,7 @@ class RbacBase extends RbacSetup
 
         $path_id = $this->Instance()->pathId("/second_depth0/second_depth1/second_depth2/second_depth3/second_depth4/second_depth5/second_depth6/second_depth7/second_depth8/second_depth9/second_depth10/second_depth11/second_depth12/second_depth13/second_depth14/second_depth15/second_depth16/second_depth17/second_depth18/second_depth19/second_depth20/second_depth21/second_depth22/second_depth23/second_depth24/second_depth25/second_depth26/second_depth27/second_depth28/second_depth29/second_depth30/second_depth31/second_depth32/second_depth33/second_depth34/second_depth35/second_depth36/second_depth37/second_depth38/second_depth39/second_depth40/second_depth41/second_depth42/second_depth43/second_depth44/second_depth45/second_depth46/second_depth47/second_depth48/second_depth49/second_depth50/second_depth51/second_depth52/second_depth53/second_depth54/second_depth55/second_depth56/second_depth57/second_depth58/second_depth59/second_depth60/second_depth61/second_depth62/second_depth63/second_depth64/second_depth65/second_depth66/second_depth67/second_depth68/second_depth69/second_depth70/second_depth71/second_depth72/second_depth73/second_depth74/second_depth75/second_depth76/second_depth77/second_depth78/second_depth79/second_depth80/second_depth81/second_depth82/second_depth83/second_depth84/second_depth85/second_depth86/second_depth87/second_depth88/second_depth89/second_depth90/second_depth91/second_depth92/second_depth93/second_depth94/second_depth95/second_depth96/second_depth97/second_depth98/second_depth99/second_depth100/second_depth101/second_depth102/second_depth103/second_depth104/second_depth105/second_depth106/second_depth107/second_depth108/second_depth109/final_109");
 
-        $this->assertSame('124', $path_id);
+        $this->assertSame(124, $path_id);
     }
 
     /*
@@ -526,18 +532,16 @@ class RbacBase extends RbacSetup
 
         $expected = array(
             array(
-            	   'ID' => '5',
-            	   'Lft' => '4',
-            	   'Rght' => '7',
-            	   'Title' => $this->type() . '_4',
-            	   'Description' => '',
+               'id' => 5,
+               'parent' => 4,
+               'title' => $this->type() . '_4',
+               'description' => null,
             ),
             array(
-            	   'ID' => '7',
-            	   'Lft' => '8',
-            	   'Rght' => '11',
-            	   'Title' => $this->type() . '_6',
-            	   'Description' => '',
+               'id' => 7,
+               'parent' => 4,
+               'title' => $this->type() . '_6',
+               'description' => null,
             )
         );
 
@@ -565,36 +569,28 @@ class RbacBase extends RbacSetup
 
         $expected = array(
             $this->type() . '_4' => array(
-            	   'ID' => '5',
-            	   'Lft' => '4',
-            	   'Rght' => '7',
-            	   'Title' => $this->type() . '_4',
-            	   'Description' => '',
-            	   'Depth' => '1',
+               'id' => 5,
+               'title' => $this->type() . '_4',
+               'description' => null,
+               'depth' => 1,
             ),
             $this->type() . '_5' => array(
-            	   'ID' => '6',
-            	   'Lft' => '5',
-            	   'Rght' => '6',
-            	   'Title' => $this->type() . '_5',
-            	   'Description' => '',
-            	   'Depth' => '2',
+               'id' => 6,
+               'title' => $this->type() . '_5',
+               'description' => null,
+               'depth' => 2,
             ),
             $this->type() . '_6' => array(
-            	   'ID' => '7',
-            	   'Lft' => '8',
-            	   'Rght' => '11',
-            	   'Title' => $this->type() . '_6',
-            	   'Description' => '',
-        	       'Depth' => '1',
+               'id' => 7,
+               'title' => $this->type() . '_6',
+               'description' => null,
+               'depth' => 1,
             ),
             $this->type() . '_7' => array(
-            	   'ID' => '8',
-            	   'Lft' => '9',
-            	   'Rght' => '10',
-            	   'Title' => $this->type() . '_7',
-            	   'Description' => '',
-            	   'Depth' => '2',
+               'id' => 8,
+               'title' => $this->type() . '_7',
+               'description' => null,
+               'depth' => 2,
             ),
         );
 
@@ -642,11 +638,10 @@ class RbacBase extends RbacSetup
         $parent_node = $this->Instance()->parentNode($path_id);
 
         $expected = array(
-            'ID' => '3',
-            'Lft' => '2',
-            'Rght' => '13',
-            'Title' => $this->type() . '_2',
-            'Description' => '',
+            'id' => 3,
+            'parent' => 2,
+            'title' => $this->type() . '_2',
+            'description' => null,
         );
 
         $this->assertSame($expected, $parent_node);
@@ -677,7 +672,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('base/expected_assign_' . $this->type());
@@ -699,7 +694,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('base/expected_assign_' . $this->type());
@@ -721,7 +716,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('base/expected_assign_' . $this->type());
@@ -732,7 +727,6 @@ class RbacBase extends RbacSetup
     /*
      * Tests for $this->Instance()->unassign()
      */
-
     public function testUnassignId()
     {
         $perm_id = self::$rbac->Permissions->add('permissions_1', 'permissions Description 1');
@@ -750,10 +744,10 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
-        $expectedDataSet = $this->_dataSet('base/expected_assign_' . $this->type());
+        $expectedDataSet = $this->_dataSet('base/expected_unassign_' . $this->type());
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -775,7 +769,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('base/expected_unassign_' . $this->type());
@@ -800,7 +794,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('base/expected_unassign_' . $this->type());
@@ -839,7 +833,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('base/expected_reset_assignments_' . $this->type());

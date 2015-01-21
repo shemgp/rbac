@@ -26,7 +26,7 @@ phprbac_permissions:
    description: "permissions Description 3"
   -
    id: 6
-   parent: 2
+   parent: 1
    title: forum
    description: "Define permissions for the Forums"
   -

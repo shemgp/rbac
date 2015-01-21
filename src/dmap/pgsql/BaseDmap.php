@@ -41,7 +41,8 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $params = array($roleId, $permId);
 
-        return $this->_execQuery($qry, $params);
+        $res = $this->_execQuery($qry, $params);
+        return $res['success'];
     }
 
     public function unassign($roleId, $permId)
@@ -57,7 +58,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
     public function resetAssignments()
     {
-        $qry ="TRUNCATE TABLE {$this->pfx}rolepermissions RESTART IDENTITY";
+        $qry ="TRUNCATE TABLE {$this->pfx}rolepermissions";
         $res = $this->_execQuery($qry);
     }
 
@@ -71,6 +72,10 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
      **/
     public function newFirstChild($parentId, $title, $descrip)
     {
+        // null titles are not allowed
+        if ($title === null || trim($title) === '')
+            return 0;
+
         $toSave = array(
             'title' => $title,
             'description' => $descrip
@@ -78,10 +83,13 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $qry = "INSERT INTO {$this->tblName}
             (parent, title, description)
-            VALUES (?, ?, ?)";
+            VALUES (?, ?, ?)
+            RETURNING id";
 
         $params = array($parentId, $title, $descrip);
-        return $this->_execQuery($qry, $params);
+        $res = $this->_execQuery($qry, $params, 'id');
+
+        return $res['output'];
     }
 
     public function count()
@@ -105,13 +113,13 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
             paths AS
             (
                 SELECT id, parent, '' AS title, description, ARRAY[id] AS path
-                  FROM phprbac_roles
+                  FROM {$this->tblName}
                  WHERE id = 1
             UNION ALL
                 SELECT c.id, c.parent, paths.title || '/' || c.title,
                        c.description, paths.path || c.id
                   FROM paths
-                  JOIN phprbac_roles c ON (c.parent = paths.id)
+                  JOIN {$this->tblName} c ON (c.parent = paths.id)
                  WHERE array_upper(path, 1) <= ?
             )
             SELECT id, parent, title, description, path
@@ -122,7 +130,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $params = array($depth, $depth, $path);
 
-        $res = $this->_fetchRow($sql, $params);
+        $res = $this->_fetchRow($qry, $params);
 
         if ($res)
             return $res['id'];
@@ -181,7 +189,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $params = array($id);
 
-        return $this->_fetchAll($qry, $params);
+        return $this->_fetchRow($qry, $params);
     }
 
     public function getDescriptionFromId($id)
@@ -228,7 +236,6 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
                  WHERE id = ?";
 
         $params[] = $id;
-
         $res = $this->_execQuery($qry, $params);
 
         return $res['output'] == 1;
@@ -245,7 +252,8 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $qry = "SELECT id, parent, title, description
                   FROM {$this->tblName}
-                 WHERE parent = ?";
+                 WHERE parent = ?
+              ORDER BY id";
 
         $params = array($id);
         $res = $this->_fetchAll($qry, $params);
@@ -255,6 +263,8 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
     /**
      * Get all descendants of a parent node. *Does* include the parent node.
+     *
+     * Nodes are not returned in any particular order relative to the root.
      *
      * @param integer   PK id of the node.
      * @return array    id, title, description, and depth of each of its descendants
@@ -274,9 +284,10 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
         )
         SELECT  *
           FROM  descendants
-      ORDER BY depth";
+      ORDER BY id";
 
-        $params = array($id, $id);
+        $params = array($id);
+
         return $this->_fetchAll($qry, $params);
     }
 
@@ -310,15 +321,15 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
         $qry = "WITH RECURSIVE
         ancestors AS
         (
-            SELECT  id, parent, title, description, 1 AS depth
+            SELECT  id, parent, title, description, 0 AS depth
               FROM  {$this->tblName}
              WHERE  id = ?
         UNION ALL
-            SELECT  r.id, r.parent,  r.title, r.description, depth + 1
+            SELECT  r.id, r.parent,  r.title, r.description, depth + 1 AS depth
               FROM  ancestors
               JOIN  {$this->tblName} r ON r.id = ancestors.parent
         )
-        SELECT id, parent, title, description, depth, path
+        SELECT id, parent, title, description, depth
           FROM ancestors
       ORDER BY depth DESC
           LIMIT 1";
@@ -326,7 +337,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
        $params = array($id);
        $res = $this->_fetchRow($qry, $params);
 
-       return $res['level'];
+       return $res['depth'];
     }
 
     public function parentNodeOfId($id)
@@ -350,22 +361,23 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $qry = "INSERT INTO {$this->tblName}
                        (title, description, parent)
-                VALUES (?, ?, ?)";
+                VALUES (?, ?, ?)
+             RETURNING id";
 
         $params = array('root', 'root', null);
-        $res = $this->_execQuery($qry, $params);
+        $res = $this->_execQuery($qry, $params, 'id');
 
         return $res;
     }
 
     public function deleteConditional($cond, $id)
     {
-        return $this->nst->deleteConditional($cond, $id);
+        die('nyi - BaseDmap deleteConditional');
     }
 
     public function deleteSubtreeConditional($cond, $id)
     {
-        return $this->nst->deleteSubtreeConditional($cond, $id);
+        die('nyi - BaseDmap deleteSubtreeConditional');
     }
 
     protected function dbNow()
