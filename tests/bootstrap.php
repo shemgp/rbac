@@ -1,5 +1,5 @@
 <?php
-require_once('./database/database.config');
+require_once __DIR__ . '/database/database.config';
 
 global $TEST_CFG;
 
@@ -15,4 +15,5 @@ elseif ($GLOBALS['DB_ADAPTER'] == 'pdo_pgsql')
 error_reporting(E_ALL);
 
 // use Composer autoloader
-require dirname(__DIR__) . '/../../autoload.php';
+$autoloader = require(__DIR__ . '/../../../autoload.php');
+$autoloader->addPsr4('PhpRbac\\tests\\', __DIR__ . '/src');
