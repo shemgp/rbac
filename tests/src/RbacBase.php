@@ -86,7 +86,6 @@ class RbacBase extends RbacSetup
     /*
      * Tests for $this->Instance()->count()
      */
-
     public function testCount()
     {
         $this->Instance()->add($this->type() . '_title_1', $this->type() . ' Description 1');
@@ -101,7 +100,6 @@ class RbacBase extends RbacSetup
     /*
      * Tests for $this->Instance()->returnId()
      */
-
     public function testReturnIdTitle()
     {
         $this->Instance()->addPath('/'. $this->type() . '_1/'. $this->type() . '_2');
@@ -258,7 +256,6 @@ class RbacBase extends RbacSetup
     /*
      * Tests for $this->Instance()->addPath()
      */
-
     public function testAddPathSingle()
     {
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3');

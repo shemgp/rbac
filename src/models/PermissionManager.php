@@ -67,24 +67,24 @@ class PermissionManager extends BaseRbac
     /**
      * Remove permissions from system
      *
-     * @param integer $ID
+     * @param integer $id
      *            permission id
-     * @param boolean $Recursive
+     * @param boolean $recursive
      *            delete all descendants
      *
      */
-    public function remove($ID, $Recursive = false)
+    public function remove($id, $recursive = false)
     {
-        $this->unassignRoles($ID);
+        $this->unassignRoles($id);
 
-        if (!$Recursive)
-            return $this->dmap->moveChildrenUp($ID);
+        if (!$recursive)
+            return $this->dmap->moveChildrenUp($id);
         else
-            return $this->dmap->removeChildren($ID);
+            return $this->dmap->removeChildren($id);
     }
 
     /**
-     * Unassignes all roles of this permission, and returns their number
+     * Unassigns all roles of this permission, and returns their number
      *
      * @param integer $ID
      *      Permission Id
@@ -95,6 +95,11 @@ class PermissionManager extends BaseRbac
 
         $res = $this->dmap->unassignRoles($ID);
         return (int) $res['output'];
+    }
+
+    protected function _unassign($id)
+    {
+        return $this->unassignRoles($id);
     }
 
     /**

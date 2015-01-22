@@ -68,23 +68,6 @@ class RoleManager extends BaseRbac
 
 
     /**
-     * Remove role(s) completely from the system.
-     *
-     * @param integer   role id
-     * @param boolean   whether to delete all descendants
-     */
-    public function remove($ID, $Recursive = false)
-    {
-        $this->unassignPermissions($ID);
-        $this->unassignUsers($ID);
-
-        if (!$Recursive)
-            return $this->dmap->deleteConditional('id = ?', $ID);
-        else
-            return $this->dmap->deleteSubtreeConditional('id = ?', $ID);
-    }
-
-    /**
      * Unassigns all permissions belonging to a role
      *
      * @param integer   PK id of the Role to remove from use in Permissions
@@ -94,7 +77,13 @@ class RoleManager extends BaseRbac
     {
         $res = $this->dmap->unassignPermissionsFromRole($ID);
 
-        return $res['output'];
+        return (int)$res['output'];
+    }
+
+    protected function _unassign($id)
+    {
+        $this->unassignPermissions($id);
+        $this->unassignUsers($id);
     }
 
     /**

@@ -306,6 +306,30 @@ abstract class BaseRbac
         return $this->dmap->parentNodeOfId($ID);
     }
 
+    /**
+     * Remove Role or Permission from system
+     *
+     * @param integer   Role or permission id.
+     * @param boolean   Whether to delete all descendants.
+     */
+    public function remove($id, $recursive = false)
+    {
+        $this->_unassign($id);
+
+        if (!$recursive)
+            return $this->dmap->moveChildrenUp($id);
+        else
+            return $this->dmap->removeChildren($id);
+    }
+
+    /**
+     * Remove roles and permission assignments.
+     **/
+    protected function _unassign($id)
+    {
+        // override in child classes
+    }
+
 
     /**
      * Reset the table back to its initial state

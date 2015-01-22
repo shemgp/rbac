@@ -1,3 +1,4 @@
 phprbac_rolepermissions:
-  roleid: 1
-  permissionid: 1
+  -
+    roleid: 1
+    permissionid: 1

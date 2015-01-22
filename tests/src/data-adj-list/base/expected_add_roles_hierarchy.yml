@@ -26,7 +26,7 @@ phprbac_roles:
    description: "roles Description 3"
   -
    id: 6
-   parent: 2
+   parent: 1
    title: forum
    description: "Define roles for the Forums"
   -
