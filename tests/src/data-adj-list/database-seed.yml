@@ -17,9 +17,3 @@ phprbac_roles:
     parent:
     title: root
     description: root
-
-phprbac_userroles:
-  -
-    userid: 1
-    roleid: 1
-    assignmentdate: 1376789692
