@@ -112,8 +112,10 @@ class RoleDmap extends BaseDmap {
 
     /**
      * Use multiple queries to do same thing as hasPermissions()
-     * 
+     *
      * Only kept around for reference purproses.
+     *
+     * @deprecated
      **/
     protected function hasPermissionMultiQuery($roleId, $permId)
     {

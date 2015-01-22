@@ -16,22 +16,26 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
     /**
      * See if a User has a particular Role.
      *
-     * Roles are inherited, so if we're referring to any child role as well,
-     * the answer is yes.
+     * Roles are inherited, so if the User is assigned to any role that is also
+     * a parent of $roleId, the answer is yes.
+     *
+     * @param integer   Id of the Role
+     * @param integer   Id of the User
+     * @return boolean  Whether the User has the role, or a parent of the role.
      **/
     public function hasRole($roleId, $userId)
     {
-        // the 'descendants()' query from BaseDmap, with minor modification
+        // the 'ancestors()' query from BaseDmap, with minor modification
         $qry = "WITH RECURSIVE
         roles AS
         (
-            SELECT  id, title, description, 0 AS depth
-              FROM  {$this->pfx}roles h
+            SELECT  id, parent, title, description, 0 AS depth
+              FROM  {$this->pfx}roles
              WHERE  id = ?
         UNION ALL
-            SELECT  hc.id, hc.title, hc.description, depth + 1
+            SELECT  par.id, par.parent, par.title, par.description, depth + 1
               FROM  roles
-              JOIN  {$this->pfx}roles hc ON hc.parent = roles.id
+              JOIN  {$this->pfx}roles par ON par.id = roles.parent
         )
         SELECT  r.*
           FROM  roles r
@@ -39,7 +43,7 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
          WHERE ur.userid = ?";
         $params = array($roleId, $userId);
 
-        $res = $this->_fetchOne($qry, $params);
+        $res = $this->_fetchRow($qry, $params);
 
         return !empty($res);
     }
@@ -69,7 +73,11 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
     }
 
     /**
-     * List all roles for a given User.
+     * List all roles directly assigned to a User.
+     *
+     * Does *not* include the full list of all child roles.
+     *
+     * @param integer   User id to list roles of.
      **/
     public function allRoles($userId)
     {

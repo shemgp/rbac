@@ -37,7 +37,7 @@ class UserManager
         $RoleID = $this->_getRoleId($Role);
         $res = $this->dmap->hasRole($RoleID, $UserID);
 
-        return $res !== null;
+        return $res;
     }
 
     /**
