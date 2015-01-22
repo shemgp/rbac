@@ -25,9 +25,19 @@
 			"role" : "Developer"
 		}
 	],
+	"require" : {
+		"php" : ">=5.4.0"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "4.*"
+	},
 	"autoload" : {
 		"psr-4" : {
 			"PhpRbac\\" : "src/",
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
 			"PhpRbac\\tests\\" : "tests/src/"
 		}
 	},
