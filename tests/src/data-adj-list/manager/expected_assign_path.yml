@@ -8,17 +8,17 @@ phprbac_permissions:
    id: 2
    parent: 1
    title: permissions_1
-   description: ""
+   description:
   -
    id: 3
    parent: 2
    title: permissions_2
-   description: ""
+   description:
   -
    id: 4
    parent: 3
    title: permissions_3
-   description: ""
+   description:
 
 phprbac_rolepermissions:
   -
@@ -38,14 +38,14 @@ phprbac_roles:
    id: 2
    parent: 1
    title: roles_1
-   description: ""
+   description:
   -
    id: 3
    parent: 2
    title: roles_2
-   description: ""
+   description:
   -
    id: 4
    parent: 3
    title: roles_3
-   description: ""
+   description:

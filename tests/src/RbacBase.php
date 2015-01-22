@@ -14,11 +14,6 @@ use PhpRbac\Rbac;
  */
 class RbacBase extends RbacSetup
 {
-    protected function setup() {
-        self::$rbac->reset(true);
-        parent::setup();
-    }
-
     /*
      * Tests for $this->Instance()->add()
      */

@@ -30,7 +30,7 @@ class RbacManagerTest extends RbacSetup
         $filterDataSet->addExcludeTables(array(self::$rbac->tablePrefix() . 'userroles'));
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('manager/expected_assign_id');
@@ -51,7 +51,7 @@ class RbacManagerTest extends RbacSetup
         $filterDataSet->addExcludeTables(array(self::$rbac->tablePrefix() . 'userroles'));
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('manager/expected_assign_title');
@@ -73,7 +73,7 @@ class RbacManagerTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('manager/expected_assign_path');
@@ -281,12 +281,12 @@ class RbacManagerTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->_dataSet('manager/expected_reset');
