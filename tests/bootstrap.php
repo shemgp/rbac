@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/database/database.config';
+require_once __DIR__ . '/database.config';
 
 global $TEST_CFG;
 
