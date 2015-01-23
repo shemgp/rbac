@@ -1,43 +1,68 @@
-#Instructions for running Unit Tests.
+# Instructions for running Unit Tests.
 
-##Front Matter
+## Front Matter
 
-* The Unit Tests should be run using a database specific for Unit Testing. This way your dev/testing/production data will not be affected.
-* To run the Unit Tests using the MySQL adapter you will need to have an existing database with the proper tables and default data prior to running the tests.
-* If you are running the Unit Tests for the SQLite adapter the database will be created/overwritten for you automatically.
+* The Unit Tests should be run using a database specific for Unit Testing. This
+  way your dev/testing/production data will not be affected.
+* To run the Unit Tests using the MySQL adapter you will need to have an
+  existing database with the proper tables and default data prior to running
+  the tests.
+* If you are running the Unit Tests for the SQLite adapter the database will be
+  created/overwritten for you automatically.
 
-##The Setup
+## The Setup
+
+All tables prefixes _must_ be `phprbac_`, since the DbUnit setup assumes that.
 
 * Create the database and tables
     * MySQL
-        * Execute the queries located in the 'mysql.sql' file in the 'rbac/PhpRbac/database/' directory
-            * **WARNING:** Make sure you replace 'PREFIX_' appropriately
+        * Execute the queries located in the `mysql.sql` file in the
+          `PhpRbac/database/` directory
+            * **WARNING:** Make sure you replace `'PREFIX_` appropriately
     * SQLite
-        * The database will be created/overwritten for you automatically when you run the Unit Tests
-* Navigate to 'rbac/PhpRbac/tests/database' and open up 'database.config'. Change the database connection info accordingly
-* Navigate to 'rbac/PhpRbac/tests' and open up 'phpunit_mysql.xml'. Change the database connection info accordingly. Don't forget to change the database name in the DNS string (this is for the DBUnit connection, fixture and datasets)
+        * The database will be created/overwritten for you automatically when
+          you run the Unit Tests
+        * Unfortunately, the location of the sqlite test file is hard-coded
+          into the test setup class - it _must_ be put into the `tests/`
+          directory
+    * Postgres
+        * Execute the queries located in the `pgsql.sql` file in the
+          `PhpRbac/database/` directory
+        * Create the tables in the `public` schema, or any schema that is
+          default reachable by the test user account.
 
-##Run The Unit Tests
+* Open up `/tests/database/database.conf`. Change the database connection info
+  accordingly.
+* Open the  `/tests/*.xml` file for your database. Change the database
+  connection info accordingly. Don't forget to change the database name in the
+  DSN string (this is for the DBUnit connection, fixture and datasets).
 
-* You will need to navigate to 'rbac/PhpRbac/tests/' in order to execute the following commands.
+## Run The Unit Tests
 
-###On Linux
+* This package now lists PHPUnit and DBUnit as developer dependenices. They
+  are installed in your `/vendor/bin` directory once you've done `composer
+  install` or `composer update`.
+* Instead of providing `.bat` and `.sh` files for every possible database to
+  run tests, simply start PHPUnit from your command line, passing it a config
+  parameter based on which database you're using.
 
-**Note:** Make sure you make 'mysql_tests.sh' and 'sqlite_tests.sh' executable
+```
+> composer update
+> cd vendor
+> ./bin/phpunit -c /owasp/phpunit/phpunit_[db_of_your_choice].xml
+```
 
-* To run the tests for MySQL: ./mysql_tests.sh
-* To run the tests for SQLite: ./sqlite_tests.sh
+* To run only selected test files, do the same but specify the file on the
+  command line after the config. (Note that MySQL or sqlite tests should use
+  the tests in the `tests/src-nst/` directory.)
 
-###On Windows
+```
+> ./bin/phpunit -c /owasp/phpunit/phpunit_pgsql.xml owasp/phprbac/tests/src/RbacRolesTest.php
+```
 
-* To run the tests for MySQL: mysql_tests.bat
-* To run the tests for SQLite: sqlite_tests.bat
+## Notes
 
-##Notes
+* You can enter separate credentials and DB config information for each database
+  in the `tests/database/database.config` file. Unused info is ignored.
 
-* Make sure you alter the 'rbac/PhpRbac/tests/database/database.config' file (see above) before switching between MySQL and SQLite tests.
-* We've created scripts for Windows and Linux (any OS that has sh/bash available). All scripts will:
-    * Execute PHPUnit with the proper xml configuration file.
-    * Accept additional PHPUnit parameters (i.e. --colors).
-    * Pause after tests so they can be run from a GUI directory/file explorer application.
 * **Thanks to the AuraPHP team for helping us bootstrap our Unit Testing methods**
