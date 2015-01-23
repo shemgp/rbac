@@ -31,8 +31,8 @@ All tables prefixes _must_ be `phprbac_`, since the DbUnit setup assumes that.
         * Create the tables in the `public` schema, or any schema that is
           default reachable by the test user account.
 
-* Open up `/tests/database/database.conf`. Change the database connection info
-  accordingly.
+* Open up `/tests/database.conf`. Change the database connection info
+  accordingly. (This file, despite the extension, is a PHP file.)
 * Open the  `/tests/*.xml` file for your database. Change the database
   connection info accordingly. Don't forget to change the database name in the
   DSN string (this is for the DBUnit connection, fixture and datasets).
@@ -63,6 +63,6 @@ All tables prefixes _must_ be `phprbac_`, since the DbUnit setup assumes that.
 ## Notes
 
 * You can enter separate credentials and DB config information for each database
-  in the `tests/database/database.config` file. Unused info is ignored.
+  in the `tests/database.config` file. Unused info is ignored.
 
 * **Thanks to the AuraPHP team for helping us bootstrap our Unit Testing methods**
