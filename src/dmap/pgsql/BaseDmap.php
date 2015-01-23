@@ -277,7 +277,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
      * @param integer   PK id of the node.
      * @return array    id, title, description, and depth of each of its descendants
      **/
-    public function descendants($id)
+    public function descendants($id, $discardParent = true)
     {
         $qry = "WITH RECURSIVE
         descendants AS
@@ -300,7 +300,8 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
         $out = array();
 
         if (is_array($res)) {
-            array_shift($res); // discard the parent node
+            if ($discardParent)
+                array_shift($res); // discard the parent node
 
             foreach ($res as $v) {
                 $out[$v['title']] = $v;
@@ -441,7 +442,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
      **/
     public function removeChildren($permId)
     {
-        $descendants = $this->descendants($permId);
+        $descendants = $this->descendants($permId, false);
 
         if ($descendants === null)
             return;

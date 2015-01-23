@@ -146,13 +146,13 @@ abstract class BaseRbac
      *                  e.g. /role1/role2/role3
      * @return integer|null  In primary-key id of the Path, or null if not found
      */
-    public function pathId($Path)
+    public function pathId($path)
     {
         // strip trailing slash
-        if ($Path [strlen($Path) - 1] == "/")
-            $Path = substr ( $Path, 0, strlen ( $Path ) - 1 );
+        if ($path[strlen($path) - 1] == '/')
+            $path = substr($path, 0, strlen($path) - 1);
 
-        return $this->dmap->idFromPath($Path);
+        return $this->dmap->idFromPath($path);
     }
 
     /**

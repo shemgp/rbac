@@ -7,6 +7,7 @@ class RoleDmap extends \PhpRbac\dmap\mysql\RoleDmap {
      **/
     public function idFromPath($path)
     {
+        $path = 'root' . $path;
         $Parts = explode( "/", $path );
 
         $qry = "SELECT node.id AS id, GROUP_CONCAT(parent.title, '/') AS path

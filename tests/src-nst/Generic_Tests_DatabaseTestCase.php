@@ -31,20 +31,25 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
         if ($this->conn === null) {
             if (self::$pdo == null) {
                 if ((string) $GLOBALS['DB_ADAPTER'] === 'pdo_sqlite') {
-                    self::$pdo = new \PDO('sqlite:' . dirname(dirname(__FILE__)) . '/database/' . $GLOBALS['DB_DBNAME']);
+                    $dsn = 'sqlite:' . __DIR__ . '/../' . $GLOBALS['DB_DBNAME'];
+                    self::$pdo = new \PDO($dsn);
 
-                    $sql = file_get_contents(dirname(dirname(__DIR__))."/database/sqlite.sql");
+                    $sql = file_get_contents(__DIR__ . '/../../PhpRbac/database/sqlite.sql');
                     $sql = str_replace("PREFIX_", $GLOBALS['DB_PREFIX'], $sql);
-                    $statements = explode(";", $sql);
+                    $statements = explode(';', $sql);
 
-                    if (is_array($statements))
-                    foreach ($statements as $query)
-                        self::$pdo->query($query);
+                    if (is_array($statements)) {
+                        foreach ($statements as $query) {
+                            self::$pdo->query($query);
+                        }
+                    }
 
-                } else {
-                    self::$pdo = new \PDO( $GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD'] );
+                }
+                else {
+                    self::$pdo = new \PDO($GLOBALS['DB_DSN'], $GLOBALS['DB_USER'], $GLOBALS['DB_PASSWD']);
                 }
             }
+
             $this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
         }
 

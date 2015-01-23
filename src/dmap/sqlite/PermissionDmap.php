@@ -7,6 +7,7 @@ class PermissionDmap extends \PhpRbac\dmap\mysql\PermissionDmap {
      **/
     public function idFromPath($path)
     {
+        $path = 'root' . $path;
         $Parts = explode( "/", $path );
 
         $qry = "SELECT node.id AS id, GROUP_CONCAT(parent.title, '/') AS path
