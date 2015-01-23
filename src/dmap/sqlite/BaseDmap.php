@@ -14,7 +14,8 @@ class BaseDmap extends \PhpRbac\dmap\mysql\BaseDmap {
      **/
     public function idFromPath($path)
     {
-        $Parts = explode( "/", $path );
+        $path = 'root' . $path;
+        $Parts = explode("/", $path);
 
         $qry = "SELECT node.id, GROUP_CONCAT(parent.title, '/') AS path
                   FROM {$this->tblName} AS node,

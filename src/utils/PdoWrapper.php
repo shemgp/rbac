@@ -81,7 +81,7 @@ class PdoWrapper
         }
         catch (\Exception $e) {
             error_log($e->getMessage());
-            die("Database connection error; see error_log or syslog.\n");
+            //die("Database connection error; see error_log or syslog.\n");
         }
     }
 
@@ -110,7 +110,7 @@ class PdoWrapper
             error_log($this->dbh->errorInfo()[2]);
             // debug only:
             echo($qry);
-            die($this->dbh->errorInfo()[2]);
+            //die($this->dbh->errorInfo()[2]);
 
             return array();
         }
@@ -127,7 +127,7 @@ class PdoWrapper
         else {
             echo($qry);
             error_log($this->dbh->errorInfo()[2]);
-            die('Error executing query');
+            //die('Error executing query');
         }
     }
 
@@ -189,7 +189,7 @@ class PdoWrapper
         else {
             echo($qry);
             error_log($this->dbh->errorInfo()[2]);
-            die('Error executing query');
+            //die('Error executing query');
         }
     }
 
@@ -209,7 +209,7 @@ class PdoWrapper
             print_r($qryParams);
             error_log($this->dbh->errorInfo()[2]);
             // debug only:
-            die($this->dbh->errorInfo()[2]);
+            //die($this->dbh->errorInfo()[2]);
 
             return array();
         }
@@ -297,7 +297,7 @@ class PdoWrapper
 
                 error_log($errorInfo[2] . "\t" . $qry);
                 $res['reason']  = $errorInfo[2]; // driver-specific error message
-                die('halt on _execQuery');
+                //die('halt on _execQuery');
          }
 
          return $res;

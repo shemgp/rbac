@@ -19,29 +19,6 @@ class PermissionDmap extends BaseDmap {
         return $res;
     }
 
-    /**
-     * Delete a node and shift its children up a level.
-     *
-     * Return false is nothing to do.
-     *
-     * @param integer   PK id of the node to delete.
-     **/
-    public function moveChildrenUp($permId)
-    {
-        return $this->nst->deleteConditional('id = ?', $permId);
-    }
-
-    /**
-     * Delete a node and all of its descendants.
-     *
-     * Return false is nothing to do.
-     *
-     * @param integer   PK id of the node to delete.
-     **/
-    public function removeChildren($permId)
-    {
-        return $this->nst->deleteSubtreeConditional('id = ?', $permId);
-    }
 
     /**
      * Return all Roles assigned to a Permission.

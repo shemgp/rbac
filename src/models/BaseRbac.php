@@ -202,14 +202,8 @@ abstract class BaseRbac
     function getPath($ID)
     {
         $res = $this->dmap->getPathForId($ID);
-        $out = null;
 
-        if ($res !== null) {
-            // strip leading 'root'
-            $out = substr($res['path'], 4);
-        }
-
-        return $out;
+        return $res;
     }
 
     /**
@@ -266,17 +260,7 @@ abstract class BaseRbac
     {
         $res = $this->dmap->descendants($ID);
 
-        $out = array();
-
-        if (is_array($res)) {
-            array_shift($res); // discard the parent node
-
-            foreach ($res as $v) {
-                $out[$v['title']] = $v;
-            }
-        }
-
-        return $out;
+        return $res;
     }
 
     /**

@@ -42,6 +42,9 @@ class RoleManager extends BaseRbac
         $roleId = $this->returnId($Role);
         $permId = $perms->returnId($Permission);
 
+        if ($roleId === null || $permId === null)
+            return false;
+
         $res = $this->dmap->assign($roleId, $permId);
 
         return $res['success'];

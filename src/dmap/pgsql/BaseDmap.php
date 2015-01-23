@@ -189,7 +189,15 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $params = array($id);
 
-        return $this->_fetchRow($qry, $params);
+        $row = $this->_fetchRow($qry, $params);
+        if ($row !== null) {
+            // strip leading 'root'
+            $out = substr($row['path'], 4);
+        }
+        else
+            $out = null;
+
+        return $out;
     }
 
     public function getDescriptionFromId($id)
@@ -288,7 +296,18 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $params = array($id);
 
-        return $this->_fetchAll($qry, $params);
+        $res = $this->_fetchAll($qry, $params);
+        $out = array();
+
+        if (is_array($res)) {
+            array_shift($res); // discard the parent node
+
+            foreach ($res as $v) {
+                $out[$v['title']] = $v;
+            }
+        }
+
+        return $out;
     }
 
     /**

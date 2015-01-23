@@ -25,7 +25,9 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
                    AND tr.id = ?";
         $params = array($UserID, $RoleID);
 
-        return $this->_fetchOne($qry, $params);
+        $roleId = $this->_fetchOne($qry, $params);
+
+        return $roleId !== null;
     }
 
     public function assign($UserID, $RoleID)

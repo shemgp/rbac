@@ -99,9 +99,16 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
     /**
      * Get the id of a [Role|Permission] given just its string Path.
+     *
+     * Expects $path in the form of /element_1/element_2
+     * No trailing slash, does have leading slash, and no leading 'root'.
+     *
+     * @param string
      **/
     public function idFromPath($path)
     {
+        $path = 'root' . $path;
+
         // 1024 is the MySQL default, though any server can have that globally
         // changed; only way to detect that is another query:
         // SHOW VARIABLES LIKE 'group%';
@@ -172,7 +179,20 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $params = array($id);
 
-        return $this->_fetchAll($qry, $params);
+        $rows = $this->_fetchAll($qry, $params);
+
+        if ($rows === null) {
+            return null;
+        }
+        else {
+            if (count($rows) == '1')
+                return '/';
+
+            array_shift($rows);
+            $titles = array_column($rows, 'title');
+
+            return '/' . implode('/', $titles);
+        }
     }
 
     public function getDescriptionFromId($id)
@@ -270,7 +290,16 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
     public function descendants($id)
     {
-        return $this->nst->descendantsConditional(false, 'id = ?', $id);
+        $res = $this->nst->descendantsConditional(false, 'id = ?', $id);
+        $out = array();
+
+        if (is_array($res)) {
+            foreach ($res as $v) {
+                $out[$v['Title']] = $v;
+            }
+        }
+
+        return $out;
     }
 
     public function depthOfId($id)
@@ -309,14 +338,29 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
         return $res;
     }
 
-    public function deleteConditional($cond, $id)
+
+    /**
+     * Delete a node and shift its children up a level.
+     *
+     * Return false is nothing to do.
+     *
+     * @param integer   PK id of the node to delete.
+     **/
+    public function moveChildrenUp($permId)
     {
-        return $this->nst->deleteConditional($cond, $id);
+        return $this->nst->deleteConditional('id = ?', $permId);
     }
 
-    public function deleteSubtreeConditional($cond, $id)
+    /**
+     * Delete a node and all of its descendants.
+     *
+     * Return false is nothing to do.
+     *
+     * @param integer   PK id of the node to delete.
+     **/
+    public function removeChildren($permId)
     {
-        return $this->nst->deleteSubtreeConditional($cond, $id);
+        return $this->nst->deleteSubtreeConditional('id = ?', $permId);
     }
 
     protected function dbNow()
