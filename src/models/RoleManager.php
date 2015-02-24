@@ -13,7 +13,7 @@ class RoleManager extends BaseRbac
     {
         parent::__construct($cfg);
 
-        $dmapClass = "PhpRbac\\dmap\\{$cfg['dbType']}\\RoleDmap";
+        $dmapClass = "PhpRbac\\dmap\\{$cfg['dmap']}\\RoleDmap";
         $this->dmap = new $dmapClass($cfg);
     }
 

@@ -16,7 +16,7 @@ class UserManager
     {
         $this->cfg = $cfg;
 
-        $dmapClass = "PhpRbac\\dmap\\{$cfg['dbType']}\\UserDmap";
+        $dmapClass = "PhpRbac\\dmap\\{$cfg['dmap']}\\UserDmap";
         $this->dmap = new $dmapClass($cfg);
     }
 
