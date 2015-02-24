@@ -13,7 +13,7 @@ class RoleDmap extends \PhpRbac\dmap\mysql\RoleDmap {
         $qry = "SELECT node.id AS id, GROUP_CONCAT(parent.title, '/') AS path
                   FROM {$this->tblName} AS node,
                        {$this->tblName} AS parent
-                 WHERE node.lft BETWEEN parent.lft AND parent.rght
+                 WHERE node.lft BETWEEN parent.lft AND parent.rgt
                    AND node.title = ?
                  GROUP BY node.id
                 HAVING path = ?
@@ -49,7 +49,7 @@ class RoleDmap extends \PhpRbac\dmap\mysql\RoleDmap {
         $res = $this->_execQuery($qry, array($this->tblName));
 
         $qry = "INSERT INTO {$this->tblName}
-                       (title, description, lft, rght)
+                       (title, description, lft, rgt)
                 VALUES (?, ?, ?, ?)";
 
         $params = array('root', 'root', 0, 1);
