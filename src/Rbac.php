@@ -24,15 +24,17 @@ class Rbac
     /** @var \models\UserManager */
     public $Users;
 
-    public $Config;
+    public $config;
 
     /**
      * Create this class and configure Manager classes with proper backend.
      *
      * You _must_ pass in a map of options with the following parameters:
      *
-     * $Config is a map with the following keys:
+     * $config is a map with the following keys:
      *   - dbType   - DSN prefix for PDO; e.g. 'mysql', 'pgsql', or 'sqlite'
+     *   - dmap     - data mapper type, defaults to same as dbType, but for
+     *                testing it may also be 'pgsql-nst'
      *
      *   - host     - DB host to connect to
      *   - port     - optional, port to connect to if not the default port
@@ -51,17 +53,20 @@ class Rbac
      *   - pfx      - prefix for all table names, default is 'rbac_'
      *
      **/
-    function __construct($Config)
+    function __construct($config)
     {
         $defaultCfg = array(
             'pfx' => 'rbac_'
         );
 
-        $this->Config = array_merge($defaultCfg, $Config);
+        $this->config = array_merge($defaultCfg, $config);
 
-        $this->Permissions = new models\PermissionManager($this->Config);
-        $this->Roles = new models\RoleManager($this->Config);
-        $this->Users = new models\UserManager($this->Config);
+        if (!array_key_exists('dmap', $this->config) || empty($this->config['dmap']))
+            $this->config['dmap'] = $this->config['dbType'];
+
+        $this->Permissions = new models\PermissionManager($this->config);
+        $this->Roles = new models\RoleManager($this->config);
+        $this->Users = new models\UserManager($this->config);
     }
 
     /**
