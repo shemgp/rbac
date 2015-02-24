@@ -34,7 +34,7 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
                     $dsn = 'sqlite:' . __DIR__ . '/../' . $GLOBALS['DB_DBNAME'];
                     self::$pdo = new \PDO($dsn);
 
-                    $sql = file_get_contents(__DIR__ . '/../../PhpRbac/database/sqlite.sql');
+                    $sql = file_get_contents(__DIR__ . '/../../database/sqlite.sql');
                     $sql = str_replace("PREFIX_", $GLOBALS['DB_PREFIX'], $sql);
                     $statements = explode(';', $sql);
 

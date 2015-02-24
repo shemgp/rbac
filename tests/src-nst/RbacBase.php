@@ -531,18 +531,18 @@ class RbacBase extends RbacSetup
 
         $expected = array(
             array(
-            	   'ID' => '5',
-            	   'Lft' => '4',
-            	   'Rght' => '7',
-            	   'Title' => $this->type() . '_4',
-            	   'Description' => null,
+            	   'id' => '5',
+            	   'lft' => '4',
+            	   'rght' => '7',
+            	   'title' => $this->type() . '_4',
+            	   'description' => null,
             ),
             array(
-            	   'ID' => '7',
-            	   'Lft' => '8',
-            	   'Rght' => '11',
-            	   'Title' => $this->type() . '_6',
-            	   'Description' => null,
+            	   'id' => '7',
+            	   'lft' => '8',
+            	   'rght' => '11',
+            	   'title' => $this->type() . '_6',
+            	   'description' => null,
             )
         );
 
@@ -570,36 +570,36 @@ class RbacBase extends RbacSetup
 
         $expected = array(
             $this->type() . '_4' => array(
-            	   'ID' => '5',
-            	   'Lft' => '4',
-            	   'Rght' => '7',
-            	   'Title' => $this->type() . '_4',
-            	   'Description' => null,
-            	   'Depth' => '1',
+            	   'id' => '5',
+            	   'lft' => '4',
+            	   'rght' => '7',
+            	   'title' => $this->type() . '_4',
+            	   'description' => null,
+            	   'depth' => '1',
             ),
             $this->type() . '_5' => array(
-            	   'ID' => '6',
-            	   'Lft' => '5',
-            	   'Rght' => '6',
-            	   'Title' => $this->type() . '_5',
-            	   'Description' => null,
-            	   'Depth' => '2',
+            	   'id' => '6',
+            	   'lft' => '5',
+            	   'rght' => '6',
+            	   'title' => $this->type() . '_5',
+            	   'description' => null,
+            	   'depth' => '2',
             ),
             $this->type() . '_6' => array(
-            	   'ID' => '7',
-            	   'Lft' => '8',
-            	   'Rght' => '11',
-            	   'Title' => $this->type() . '_6',
-            	   'Description' => null,
-        	       'Depth' => '1',
+            	   'id' => '7',
+            	   'lft' => '8',
+            	   'rght' => '11',
+            	   'title' => $this->type() . '_6',
+            	   'description' => null,
+        	       'depth' => '1',
             ),
             $this->type() . '_7' => array(
-            	   'ID' => '8',
-            	   'Lft' => '9',
-            	   'Rght' => '10',
-            	   'Title' => $this->type() . '_7',
-            	   'Description' => null,
-            	   'Depth' => '2',
+            	   'id' => '8',
+            	   'lft' => '9',
+            	   'rght' => '10',
+            	   'title' => $this->type() . '_7',
+            	   'description' => null,
+            	   'depth' => '2',
             ),
         );
 
@@ -647,11 +647,11 @@ class RbacBase extends RbacSetup
         $parent_node = $this->Instance()->parentNode($path_id);
 
         $expected = array(
-            'ID' => '3',
-            'Lft' => '2',
-            'Rght' => '13',
-            'Title' => $this->type() . '_2',
-            'Description' => null,
+            'id' => '3',
+            'lft' => '2',
+            'rght' => '13',
+            'title' => $this->type() . '_2',
+            'description' => null,
         );
 
         $this->assertSame($expected, $parent_node);

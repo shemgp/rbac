@@ -182,25 +182,25 @@ class RbacUsersTest extends RbacSetup
 
         $expected = array(
         	array(
-                'ID' => '2',
-        	    'Lft' => '1',
-        	    'Rght' => '2',
-        	    'Title' => 'roles_1',
-        	    'Description' => 'roles Description 1',
+                'id' => '2',
+        	    'lft' => '1',
+        	    'rght' => '2',
+        	    'title' => 'roles_1',
+        	    'description' => 'roles Description 1',
             ),
         	array(
-                'ID' => '3',
-        	    'Lft' => '3',
-        	    'Rght' => '4',
-        	    'Title' => 'roles_2',
-        	    'Description' => 'roles Description 2',
+                'id' => '3',
+        	    'lft' => '3',
+        	    'rght' => '4',
+        	    'title' => 'roles_2',
+        	    'description' => 'roles Description 2',
             ),
         	array(
-                'ID' => '4',
-        	    'Lft' => '5',
-        	    'Rght' => '6',
-        	    'Title' => 'roles_3',
-        	    'Description' => 'roles Description 3',
+                'id' => '4',
+        	    'lft' => '5',
+        	    'rght' => '6',
+        	    'title' => 'roles_3',
+        	    'description' => 'roles Description 3',
             ),
         );
 

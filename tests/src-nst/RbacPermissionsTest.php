@@ -162,9 +162,9 @@ class RbacPermissionsTest extends RbacBase
 
         $expected = array(
             array(
-                'ID' => '3',
-                'Title' => 'roles_2',
-                'Description' => '',
+                'id' => '3',
+                'title' => 'roles_2',
+                'description' => '',
             ),
         );
 
