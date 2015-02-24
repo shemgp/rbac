@@ -3,55 +3,55 @@
  */
 
 CREATE TABLE IF NOT EXISTS `PREFIX_permissions` (
-  `ID` int(11) NOT NULL auto_increment,
-  `Lft` int(11) NOT NULL,
-  `Rght` int(11) NOT NULL,
-  `Title` char(64) NOT NULL,
-  `Description` text NOT NULL,
-  PRIMARY KEY  (`ID`),
-  KEY `Title` (`Title`),
-  KEY `Lft` (`Lft`),
-  KEY `Rght` (`Rght`)
+  `id` int(11) NOT NULL auto_increment,
+  `lft` int(11) NOT NULL,
+  `rgt` int(11) NOT NULL,
+  `title` char(64) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `title` (`title`),
+  KEY `lft` (`lft`),
+  KEY `rgt` (`rgt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS `PREFIX_rolepermissions` (
-  `RoleID` int(11) NOT NULL,
-  `PermissionID` int(11) NOT NULL,
-  `AssignmentDate` int(11) NOT NULL,
-  PRIMARY KEY  (`RoleID`,`PermissionID`)
+  `roleid` int(11) NOT NULL,
+  `permissionid` int(11) NOT NULL,
+  `assignmentdate` int(11) NOT NULL,
+  PRIMARY KEY  (`roleid`, `permissionid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS `PREFIX_roles` (
-  `ID` int(11) NOT NULL auto_increment,
-  `Lft` int(11) NOT NULL,
-  `Rght` int(11) NOT NULL,
-  `Title` varchar(128) NOT NULL,
-  `Description` text NOT NULL,
-  PRIMARY KEY  (`ID`),
-  KEY `Title` (`Title`),
-  KEY `Lft` (`Lft`),
-  KEY `Rght` (`Rght`)
+  `id` int(11) NOT NULL auto_increment,
+  `lft` int(11) NOT NULL,
+  `rgt` int(11) NOT NULL,
+  `title` varchar(128) NOT NULL,
+  `description` text NOT NULL,
+  PRIMARY KEY  (`id`),
+  KEY `title` (`title`),
+  KEY `lft` (`lft`),
+  KEY `rgt` (`rgt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE IF NOT EXISTS `PREFIX_userroles` (
-  `UserID` int(11) NOT NULL,
-  `RoleID` int(11) NOT NULL,
-  `AssignmentDate` int(11) NOT NULL,
-  PRIMARY KEY  (`UserID`,`RoleID`)
+  `userid` int(11) NOT NULL,
+  `roleid` int(11) NOT NULL,
+  `assignmentdate` int(11) NOT NULL,
+  PRIMARY KEY (`userid`, `roleid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 /*
  * Insert Initial Table Data
  */
 
-INSERT INTO `PREFIX_permissions` (`ID`, `Lft`, `Rght`, `Title`, `Description`)
+INSERT INTO `PREFIX_permissions` (`id`, `lft`, `rgt`, `title`, `description`)
 VALUES (1, 0, 1, 'root', 'root');
 
-INSERT INTO `PREFIX_rolepermissions` (`RoleID`, `PermissionID`, `AssignmentDate`)
+INSERT INTO `PREFIX_rolepermissions` (`roleid`, `permissionid`, `assignmentdate`)
 VALUES (1, 1, UNIX_TIMESTAMP());
 
-INSERT INTO `PREFIX_roles` (`ID`, `Lft`, `Rght`, `Title`, `Description`)
+INSERT INTO `PREFIX_roles` (`id`, `lft`, `rgt`, `title`, `description`)
 VALUES (1, 0, 1, 'root', 'root');
 
-INSERT INTO `PREFIX_userroles` (`UserID`, `RoleID`, `AssignmentDate`)
+INSERT INTO `PREFIX_userroles` (`userid`, `roleid`, `assignmentdate`)
 VALUES (1, 1, UNIX_TIMESTAMP());
