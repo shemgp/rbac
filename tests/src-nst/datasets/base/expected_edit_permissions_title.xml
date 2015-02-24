@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
-    <phprbac_permissions ID="2" Lft="1" Rght="2" Title="permissions_title_edited" Description="permissions Description" />
+    <phprbac_permissions id="2" lft="1" rgt="2" title="permissions_title_edited" description="permissions description" />
 </dataset>

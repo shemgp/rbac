@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <dataset>
     <table name="phprbac_permissions">
-        <column>ID</column>
-        <column>Lft</column>
-        <column>Rght</column>
-        <column>Title</column>
-        <column>Description</column>
+        <column>id</column>
+        <column>lft</column>
+        <column>rgt</column>
+        <column>title</column>
+        <column>description</column>
         <row>
             <value>1</value>
             <value>0</value>
@@ -15,9 +15,9 @@
         </row>
     </table>
     <table name="phprbac_rolepermissions">
-        <column>RoleID</column>
-        <column>PermissionID</column>
-        <column>AssignmentDate</column>
+        <column>roleid</column>
+        <column>permissionid</column>
+        <column>assignmentdate</column>
         <row>
             <value>1</value>
             <value>1</value>
@@ -25,11 +25,11 @@
         </row>
     </table>
     <table name="phprbac_roles">
-        <column>ID</column>
-        <column>Lft</column>
-        <column>Rght</column>
-        <column>Title</column>
-        <column>Description</column>
+        <column>id</column>
+        <column>lft</column>
+        <column>rgt</column>
+        <column>title</column>
+        <column>description</column>
         <row>
             <value>1</value>
             <value>0</value>
@@ -39,9 +39,9 @@
         </row>
     </table>
     <table name="phprbac_userroles">
-        <column>UserID</column>
-        <column>RoleID</column>
-        <column>AssignmentDate</column>
+        <column>userid</column>
+        <column>roleid</column>
+        <column>assignmentdate</column>
         <row>
             <value>1</value>
             <value>1</value>
