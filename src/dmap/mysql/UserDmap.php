@@ -20,7 +20,7 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
                   JOIN {$this->pfx}roles trdirect ON
                        (trdirect.id = tur.roleid)
                   JOIN {$this->pfx}roles tr ON
-                       (tr.lft BETWEEN trdirect.lft AND trdirect.rght)
+                       (tr.lft BETWEEN trdirect.lft AND trdirect.rgt)
                  WHERE tur.userid = ?
                    AND tr.id = ?";
         $params = array($UserID, $RoleID);
@@ -94,18 +94,18 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
     public function check($userId, $permId)
     {
         // this works on MySQL only
-        $LastPart = "ON (TR.ID = TRel.RoleID)
-                WHERE TUrel.UserID = ?
-                  AND TPdirect.ID = ?";
+        $LastPart = "ON (tr.id = trel.roleid)
+                WHERE turel.userid = ?
+                  AND tpdirect.id = ?";
 
-        $qry = "SELECT COUNT(*) AS Result
-                  FROM {$this->pfx}userroles AS TUrel
-                  JOIN {$this->pfx}roles AS TRdirect ON (TRdirect.ID=TUrel.RoleID)
-                  JOIN {$this->pfx}roles AS TR ON ( TR.Lft BETWEEN TRdirect.Lft AND TRdirect.Rght)
+        $qry = "SELECT COUNT(*) AS result
+                  FROM {$this->pfx}userroles AS turel
+                  JOIN {$this->pfx}roles AS TRdirect ON (trdirect.id = turel.roleid)
+                  JOIN {$this->pfx}roles AS TR ON (tr.lft BETWEEN trdirect.lft AND trdirect.rgt)
                   JOIN
-                  (        {$this->pfx}permissions AS TPdirect
-                      JOIN {$this->pfx}permissions AS TP ON ( TPdirect.Lft BETWEEN TP.Lft AND TP.Rght)
-                      JOIN {$this->pfx}rolepermissions AS TRel ON (TP.ID=TRel.PermissionID)
+                  (        {$this->pfx}permissions AS tpdirect
+                      JOIN {$this->pfx}permissions AS tp ON (tpdirect.lft BETWEEN tp.lft AND tp.rgt)
+                      JOIN {$this->pfx}rolepermissions AS trel ON (tp.id = trel.permissionid)
                   ) $LastPart";
 
         $params = array($userId, $permId);

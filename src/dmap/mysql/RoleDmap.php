@@ -38,7 +38,7 @@ class RoleDmap extends BaseDmap {
          * permission, so if one of our role or its descendants has an
          * assignment to any of them, we're good.
          * */
-        $qry = "SELECT COUNT(*) AS Result
+        $qry = "SELECT COUNT(*) As result
                   FROM {$this->pfx}rolepermissions AS trel
                   JOIN {$this->pfx}permissions AS tp ON
                        (tp.id = trel.permissionid)
@@ -79,7 +79,7 @@ class RoleDmap extends BaseDmap {
             return $this->_fetchCol($qry, $params);
         }
         else {
-            $qry = "SELECT tp.ID, tp.Title, tp.Description
+            $qry = "SELECT tp.id, tp.title, tp.description
                       FROM {$this->pfx}permissions AS tp
                  LEFT JOIN {$this->pfx}rolepermissions AS tr ON
                            (tr.permissionid = tp.id)

@@ -19,7 +19,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
         $this->pfx = $cfg['pfx'];
         $this->tblName = $this->pfx . $tblName;
 
-        $this->nst = new \PhpRbac\utils\FullNestedSet($this->tblName, 'id', 'lft', 'rght');
+        $this->nst = new \PhpRbac\utils\FullNestedSet($this->tblName, 'id', 'lft', 'rgt');
 
         // legacy: MySQL data mappers user the Jf utility class to run queries
         // That (singleton) static class needs configuration:
@@ -127,12 +127,12 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         $Parts = explode( "/", $path );
 
-        $GroupConcat = "GROUP_CONCAT(parent.Title ORDER BY parent.Lft SEPARATOR '/')";
+        $GroupConcat = "GROUP_CONCAT(parent.title ORDER BY parent.lft SEPARATOR '/')";
 
         $sql = "SELECT node.id, $GroupConcat AS path
                   FROM {$this->tblName} AS node,
                        {$this->tblName} AS parent
-                 WHERE node.lft BETWEEN parent.lft AND parent.rght
+                 WHERE node.lft BETWEEN parent.lft AND parent.rgt
                    AND node.title = ?
                  GROUP BY node.id
                 HAVING path = ?";
@@ -173,7 +173,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
         $qry = "SELECT parent.id AS id, parent.title AS title
                   FROM {$this->tblName} AS node,
                        {$this->tblName} AS parent
-                 WHERE node.lft BETWEEN parent.lft AND parent.rght
+                 WHERE node.lft BETWEEN parent.lft AND parent.rgt
                    AND (node.id = ?)
                ORDER BY parent.lft";
 
@@ -255,23 +255,23 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
         // return $this->nst->childrenConditional('id = ?', $id);
 
         $qry = "SELECT node.*,
-                      (COUNT(parent.id) - 1 - (sub_tree.innerDepth )) AS Depth
+                      (COUNT(parent.id) - 1 - (sub_tree.innerdepth )) AS depth
                   FROM {$this->tblName} AS node,
                        {$this->tblName} AS parent,
                        {$this->tblName} AS sub_parent,
                    (
                        SELECT node.id,
-                              (COUNT(parent.id) - 1) AS innerDepth
+                              (COUNT(parent.id) - 1) AS innerdepth
                          FROM {$this->tblName} AS node,
                               {$this->tblName} AS parent
-                        WHERE node.lft BETWEEN parent.lft AND parent.rght
+                        WHERE node.lft BETWEEN parent.lft AND parent.rgt
                               AND node.id = ?
                      GROUP BY node.id
                      ORDER BY node.lft
                    ) AS sub_tree
 
-                 WHERE node.lft BETWEEN parent.lft AND parent.rght
-                   AND node.lft BETWEEN sub_parent.lft AND sub_parent.rght
+                 WHERE node.lft BETWEEN parent.lft AND parent.rgt
+                   AND node.lft BETWEEN sub_parent.lft AND sub_parent.rgt
                    AND sub_parent.id = sub_tree.id
               GROUP BY node.id
                 HAVING depth = 1
@@ -325,11 +325,8 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
         $res = $this->_execQuery($qry);
          */
 
-        // for sqlite:
-        // $qry =  "DELETE FROM sqlite_sequence WHERE name = {$this->tblName}";
-
         $qry = "INSERT INTO {$this->tblName}
-                       (title, description, lft, rght)
+                       (title, description, lft, rgt)
                 VALUES (?, ?, ?, ?)";
 
         $params = array('root', 'root', 0, 1);

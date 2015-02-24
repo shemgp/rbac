@@ -41,7 +41,7 @@ class PermissionDmap extends BaseDmap {
             return $this->_fetchCol($qry, $params);
         }
         else {
-            $qry = "SELECT tp.ID, tp.Title, tp.Description
+            $qry = "SELECT tp.id, tp.title, tp.description
                       FROM {$this->pfx}roles AS tp
                  LEFT JOIN {$this->pfx}rolepermissions AS tr ON
                            (tr.roleid = tp.id)
