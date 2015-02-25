@@ -29,13 +29,13 @@ class UserManager
      * @throws \exceptions\UserNotProvidedException
      * @return boolean success
      */
-    function hasRole($Role, $UserID = null)
+    function hasRole($role, $userId = null)
     {
-        if ($UserID === null)
-            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
+        if ($userId === null)
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$userId is a required argument.");
 
-        $RoleID = $this->_getRoleId($Role);
-        $res = $this->dmap->hasRole($RoleID, $UserID);
+        $roleId = $this->_getRoleId($role);
+        $res = $this->dmap->hasRole($roleId, $userId);
 
         return $res;
     }
@@ -49,70 +49,70 @@ class UserManager
      * @throws \exceptions\UserNotProvidedException
      * @return boolean inserted or existing
      */
-    function assign($Role, $UserID = null)
+    function assign($role, $userId = null)
     {
-        if ($UserID === null)
-            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
+        if ($userId === null)
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$userId is a required argument.");
 
-        $RoleID = $this->_getRoleId($Role);
+        $roleId = $this->_getRoleId($role);
 
-        return $this->dmap->assign($UserID, $RoleID);
+        return $this->dmap->assign($userId, $roleId);
     }
 
     /**
      * Unassigns a role from a user
      *
-     * @param mixed $Role
+     * @param mixed $role
      *            Id, Title, Path
-     * @param integer $UserID
+     * @param integer $userId
      *            UserID (use 0 for guest)
      *
      * @throws \exceptions\UserNotProvidedException
      * @return boolean success
      */
-    function unassign($Role, $UserID = null)
+    function unassign($role, $userId = null)
     {
-        if ($UserID === null)
-            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
+        if ($userId === null)
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$userId is a required argument.");
 
-        $RoleID = $this->_getRoleId($Role);
+        $roleId = $this->_getRoleId($role);
 
-        return $this->dmap->unassign($UserID, $RoleID);
+        return $this->dmap->unassign($userId, $roleId);
     }
 
     /**
      * Returns all roles of a user
      *
-     * @param integer $UserID
+     * @param integer $userId
      *            Not optional
      *
      * @throws \exceptions\UserNotProvidedException
      * @return array null
      *
      */
-    function allRoles($UserID = null)
+    function allRoles($userId = null)
     {
-        if ($UserID === null)
-            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
+        if ($userId === null)
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$userId is a required argument.");
 
 
-        return $this->dmap->allRoles($UserID);
+        return $this->dmap->allRoles($userId);
     }
 
     /**
      * Return count of roles assigned to a user
      *
-     * @param integer $UserID
+     * @param integer $userId
      *
      * @throws \exceptions\UserNotProvidedException
      * @return integer Count of Roles assigned to a User
      */
-    function roleCount($UserID = null)
+    function roleCount($userId = null)
     {
-        if ($UserID === null)
-            throw new \PhpRbac\exceptions\UserNotProvidedException("\$UserID is a required argument.");
+        if ($userId === null)
+            throw new \PhpRbac\exceptions\UserNotProvidedException("\$userId is a required argument.");
 
-        return $this->dmap->roleCount($UserID);
+        return $this->dmap->roleCount($userId);
     }
 
     /**
@@ -137,9 +137,9 @@ class UserManager
         return $numDeleted;
     }
 
-    public function check($UserID, $PermissionID)
+    public function check($userId, $permissionId)
     {
-        return $this->dmap->check($UserID, $PermissionID);
+        return $this->dmap->check($userId, $permissionId);
     }
 
 
@@ -154,17 +154,17 @@ class UserManager
      * @param string|integer   Role to identify by its id
      * @param integer          PK id of the Role
      **/
-    protected function _getRoleId($Role)
+    protected function _getRoleId($role)
     {
-        if (is_numeric($Role)) {
-            $RoleID = $Role;
+        if (is_numeric($role)) {
+            $roleId = $role;
         }
         else {
             $roleMgr = new RoleManager($this->cfg);
-            $RoleID = $roleMgr->returnId($Role);
+            $roleId = $roleMgr->returnId($role);
         }
 
-        return $RoleID;
+        return $roleId;
     }
 
 

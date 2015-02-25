@@ -282,7 +282,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         if ($res !== null) {
             foreach ($res as &$v)
-                unset($v['Depth']);
+                unset($v['depth']);
         }
 
         return $res;
@@ -295,7 +295,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
         if (is_array($res)) {
             foreach ($res as $v) {
-                $out[$v['Title']] = $v;
+                $out[$v['title']] = $v;
             }
         }
 

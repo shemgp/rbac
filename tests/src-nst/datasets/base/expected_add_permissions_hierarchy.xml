@@ -2,11 +2,11 @@
 <dataset>
     <phprbac_permissions id="1" lft="0" rgt="17" title="root" description="root" />
     <phprbac_permissions id="2" lft="1" rgt="8" title="blog" description="Define permissions for the Blog" />
-    <phprbac_permissions id="3" lft="2" rgt="3" title="permissions_title_1" description="permissions description 1" />
-    <phprbac_permissions id="4" lft="4" rgt="5" title="permissions_title_2" description="permissions description 2" />
-    <phprbac_permissions id="5" lft="6" rgt="7" title="permissions_title_3" description="permissions description 3" />
+    <phprbac_permissions id="3" lft="2" rgt="3" title="permissions_title_1" description="permissions Description 1" />
+    <phprbac_permissions id="4" lft="4" rgt="5" title="permissions_title_2" description="permissions Description 2" />
+    <phprbac_permissions id="5" lft="6" rgt="7" title="permissions_title_3" description="permissions Description 3" />
     <phprbac_permissions id="6" lft="9" rgt="16" title="forum" description="Define permissions for the Forums" />
-    <phprbac_permissions id="7" lft="10" rgt="11" title="permissions_title_1" description="permissions description 1" />
-    <phprbac_permissions id="8" lft="12" rgt="13" title="permissions_title_2" description="permissions description 2" />
-    <phprbac_permissions id="9" lft="14" rgt="15" title="permissions_title_3" description="permissions description 3" />
+    <phprbac_permissions id="7" lft="10" rgt="11" title="permissions_title_1" description="permissions Description 1" />
+    <phprbac_permissions id="8" lft="12" rgt="13" title="permissions_title_2" description="permissions Description 2" />
+    <phprbac_permissions id="9" lft="14" rgt="15" title="permissions_title_3" description="permissions Description 3" />
 </dataset>

@@ -212,7 +212,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
         array_shift($Arguments);
         array_shift($Arguments); //second argument, $AbsoluteDepths
         $Query="
-            SELECT node.*, (COUNT(parent.{$this->id()})-1 $DepthConcat) AS Depth
+            SELECT node.*, (COUNT(parent.{$this->id()})-1 $DepthConcat) AS depth
             FROM {$this->table()} AS node,
                 {$this->table()} AS parent,
                 {$this->table()} AS sub_parent,
@@ -229,7 +229,7 @@ class FullNestedSet extends BaseNestedSet implements ExtendedNestedSet
                 AND node.{$this->left()} BETWEEN sub_parent.{$this->left()} AND sub_parent.{$this->right()}
                 AND sub_parent.{$this->id()} = sub_tree.{$this->id()}
             GROUP BY node.{$this->id()}
-            HAVING Depth > 0
+            HAVING depth > 0
             ORDER BY node.{$this->left()}";
 
         array_unshift($Arguments,$Query);

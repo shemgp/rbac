@@ -2,7 +2,7 @@
 <dataset>
     <phprbac_rolepermissions roleid="1" permissionid="1" />
     <phprbac_roles id="1" lft="0" rgt="5" title="root" description="root" />
-    <phprbac_roles id="3" lft="1" rgt="2" title="roles_2" description="roles description 2" />
-    <phprbac_roles id="4" lft="3" rgt="4" title="roles_3" description="roles description 3" />
+    <phprbac_roles id="3" lft="1" rgt="2" title="roles_2" description="roles Description 2" />
+    <phprbac_roles id="4" lft="3" rgt="4" title="roles_3" description="roles Description 3" />
     <phprbac_userroles userid="1" roleid="1" />
 </dataset>

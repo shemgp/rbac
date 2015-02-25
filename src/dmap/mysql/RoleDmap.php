@@ -48,7 +48,7 @@ class RoleDmap extends BaseDmap {
                            (SELECT lft
                               FROM {$this->pfx}roles
                               WHERE id = ?) AND
-                           (SELECT rght
+                           (SELECT rgt
                               FROM {$this->pfx}roles
                              WHERE id = ?)
 
@@ -56,7 +56,7 @@ class RoleDmap extends BaseDmap {
                         SELECT parent.id
                           FROM {$this->pfx}permissions AS node,
                                {$this->pfx}permissions AS parent
-                         WHERE node.lft BETWEEN parent.lft AND parent.rght
+                         WHERE node.lft BETWEEN parent.lft AND parent.rgt
                            AND (node.id = ?)
                       ORDER BY parent.lft
                     )";

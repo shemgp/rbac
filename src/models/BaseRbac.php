@@ -77,15 +77,15 @@ abstract class BaseRbac
 
         foreach ($Parts as $p) {
             if (isset($Descriptions[$index]))
-                $Description = $Descriptions[$index];
+                $descrip = $Descriptions[$index];
             else
-                $Description = null;
+                $descrip = null;
 
             $CurrentPath .= "/{$p}";
             $t = $this->pathId($CurrentPath);
 
             if (!$t) {
-                $IID = $this->add($p, $Description, $Parent);
+                $IID = $this->add($p, $descrip, $Parent);
                 $Parent = $IID;
                 $NodesCreated++;
             }
@@ -253,7 +253,7 @@ abstract class BaseRbac
      * Returns descendants of a node, with their depths in integer
      *
      * @param integer $ID
-     * @return array with keys as titles and Title,ID, Depth and Description
+     * @return array with keys as titles and title, id, depth and description
      *
      */
     function descendants($ID)

@@ -72,7 +72,7 @@ class RbacPermissionsTest extends RbacBase
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_single_role.xml');
@@ -104,7 +104,7 @@ class RbacPermissionsTest extends RbacBase
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_recursive.xml');
@@ -214,7 +214,7 @@ class RbacPermissionsTest extends RbacBase
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_unassign_roles.xml');

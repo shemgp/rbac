@@ -40,7 +40,7 @@ class RbacUsersTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->Users->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_assign_with_id.xml');
@@ -64,7 +64,7 @@ class RbacUsersTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->Users->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_assign_with_path.xml');
@@ -184,21 +184,21 @@ class RbacUsersTest extends RbacSetup
         	array(
                 'id' => '2',
         	    'lft' => '1',
-        	    'rght' => '2',
+        	    'rgt' => '2',
         	    'title' => 'roles_1',
         	    'description' => 'roles Description 1',
             ),
         	array(
                 'id' => '3',
         	    'lft' => '3',
-        	    'rght' => '4',
+        	    'rgt' => '4',
         	    'title' => 'roles_2',
         	    'description' => 'roles Description 2',
             ),
         	array(
                 'id' => '4',
         	    'lft' => '5',
-        	    'rght' => '6',
+        	    'rgt' => '6',
         	    'title' => 'roles_3',
         	    'description' => 'roles Description 3',
             ),
@@ -279,7 +279,7 @@ class RbacUsersTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->Users->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_unassign.xml');
@@ -308,7 +308,7 @@ class RbacUsersTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->Users->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_unassign.xml');
@@ -337,7 +337,7 @@ class RbacUsersTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->Users->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_unassign.xml');
@@ -386,7 +386,7 @@ class RbacUsersTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->Users->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_reset_assignments.xml');

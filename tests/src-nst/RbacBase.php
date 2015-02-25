@@ -533,14 +533,14 @@ class RbacBase extends RbacSetup
             array(
             	   'id' => '5',
             	   'lft' => '4',
-            	   'rght' => '7',
+            	   'rgt' => '7',
             	   'title' => $this->type() . '_4',
             	   'description' => null,
             ),
             array(
             	   'id' => '7',
             	   'lft' => '8',
-            	   'rght' => '11',
+            	   'rgt' => '11',
             	   'title' => $this->type() . '_6',
             	   'description' => null,
             )
@@ -572,7 +572,7 @@ class RbacBase extends RbacSetup
             $this->type() . '_4' => array(
             	   'id' => '5',
             	   'lft' => '4',
-            	   'rght' => '7',
+            	   'rgt' => '7',
             	   'title' => $this->type() . '_4',
             	   'description' => null,
             	   'depth' => '1',
@@ -580,7 +580,7 @@ class RbacBase extends RbacSetup
             $this->type() . '_5' => array(
             	   'id' => '6',
             	   'lft' => '5',
-            	   'rght' => '6',
+            	   'rgt' => '6',
             	   'title' => $this->type() . '_5',
             	   'description' => null,
             	   'depth' => '2',
@@ -588,7 +588,7 @@ class RbacBase extends RbacSetup
             $this->type() . '_6' => array(
             	   'id' => '7',
             	   'lft' => '8',
-            	   'rght' => '11',
+            	   'rgt' => '11',
             	   'title' => $this->type() . '_6',
             	   'description' => null,
         	       'depth' => '1',
@@ -596,7 +596,7 @@ class RbacBase extends RbacSetup
             $this->type() . '_7' => array(
             	   'id' => '8',
             	   'lft' => '9',
-            	   'rght' => '10',
+            	   'rgt' => '10',
             	   'title' => $this->type() . '_7',
             	   'description' => null,
             	   'depth' => '2',
@@ -649,7 +649,7 @@ class RbacBase extends RbacSetup
         $expected = array(
             'id' => '3',
             'lft' => '2',
-            'rght' => '13',
+            'rgt' => '13',
             'title' => $this->type() . '_2',
             'description' => null,
         );
@@ -682,7 +682,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '.xml');
@@ -704,7 +704,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '.xml');
@@ -726,7 +726,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_assign_' . $this->type() . '.xml');
@@ -755,7 +755,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->type() . '.xml');
@@ -780,7 +780,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->type() . '.xml');
@@ -805,7 +805,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_unassign_' . $this->type() . '.xml');
@@ -844,7 +844,7 @@ class RbacBase extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/base/expected_reset_assignments_' . $this->type() . '.xml');

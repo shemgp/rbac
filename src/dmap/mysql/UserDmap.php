@@ -13,7 +13,7 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
         $this->tblName = $this->pfx . $tblName;
     }
 
-    public function hasRole($RoleID, $UserID)
+    public function hasRole($roleId, $userId)
     {
         $qry = "SELECT tur.userid
                   FROM {$this->pfx}userroles AS tur
@@ -23,38 +23,38 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
                        (tr.lft BETWEEN trdirect.lft AND trdirect.rgt)
                  WHERE tur.userid = ?
                    AND tr.id = ?";
-        $params = array($UserID, $RoleID);
+        $params = array($userId, $roleId);
 
         $roleId = $this->_fetchOne($qry, $params);
 
         return $roleId !== null;
     }
 
-    public function assign($UserID, $RoleID)
+    public function assign($userId, $roleId)
     {
         $qry = "INSERT INTO {$this->pfx}userroles
                 (userid, roleid, assignmentdate)
                 VALUES (?, ?, {$this->dbNow()})";
 
-        $params = array($UserID, $RoleID);
+        $params = array($userId, $roleId);
         $res = $this->_execQuery($qry, $params);
 
         return $res['success'];
     }
 
-    public function unassign($UserID, $RoleID)
+    public function unassign($userId, $roleId)
     {
         $qry = "DELETE FROM {$this->pfx}userroles
                  WHERE userid = ?
                    AND roleid = ?";
 
-        $params = array($UserID, $RoleID);
+        $params = array($userId, $roleId);
         $res = $this->_execQuery($qry, $params);
 
         return $res['success'];
     }
 
-    public function allRoles($UserID)
+    public function allRoles($userId)
     {
         $qry = "SELECT tr.*
                   FROM {$this->pfx}userroles AS ur
@@ -62,7 +62,7 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
                        (ur.roleid = tr.id)
                  WHERE ur.userid = ?";
 
-        $params = array($UserID);
+        $params = array($userId);
 
         $rows = $this->_fetchAll($qry, $params);
 
@@ -72,13 +72,13 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
             return $rows;
     }
 
-    public function roleCount($UserID)
+    public function roleCount($userId)
     {
         $qry = "SELECT COUNT(userid) AS result
                   FROM {$this->pfx}userroles
                  WHERE userid = ?";
 
-        $params = array($UserID);
+        $params = array($userId);
 
         return (int) $this->_fetchOne($qry, $params);
     }
@@ -100,8 +100,8 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
 
         $qry = "SELECT COUNT(*) AS result
                   FROM {$this->pfx}userroles AS turel
-                  JOIN {$this->pfx}roles AS TRdirect ON (trdirect.id = turel.roleid)
-                  JOIN {$this->pfx}roles AS TR ON (tr.lft BETWEEN trdirect.lft AND trdirect.rgt)
+                  JOIN {$this->pfx}roles AS trdirect ON (trdirect.id = turel.roleid)
+                  JOIN {$this->pfx}roles AS tr ON (tr.lft BETWEEN trdirect.lft AND trdirect.rgt)
                   JOIN
                   (        {$this->pfx}permissions AS tpdirect
                       JOIN {$this->pfx}permissions AS tp ON (tpdirect.lft BETWEEN tp.lft AND tp.rgt)

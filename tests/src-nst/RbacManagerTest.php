@@ -32,7 +32,7 @@ class RbacManagerTest extends RbacSetup
         $filterDataSet->addExcludeTables(array(self::$rbac->tablePrefix() . 'userroles'));
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_id.xml');
@@ -53,7 +53,7 @@ class RbacManagerTest extends RbacSetup
         $filterDataSet->addExcludeTables(array(self::$rbac->tablePrefix() . 'userroles'));
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_title.xml');
@@ -76,7 +76,7 @@ class RbacManagerTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_path.xml');
@@ -142,6 +142,7 @@ class RbacManagerTest extends RbacSetup
     {
         self::$rbac->Permissions->addPath('/permissions_1/permissions_2/permissions_3');
         $perm_id_1 = self::$rbac->Permissions->pathId('/permissions_1/permissions_2/permissions_3');
+
 
         self::$rbac->Roles->addPath('/roles_1/roles_2/roles_3');
         $role_id_1 = self::$rbac->Roles->pathId('/roles_1/roles_2/roles_3');
@@ -278,12 +279,12 @@ class RbacManagerTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_reset.xml');

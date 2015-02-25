@@ -100,7 +100,7 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
 
         $qry = "SELECT COUNT(*) AS result
                   FROM {$this->pfx}userroles AS turel
-                  JOIN {$this->pfx}roles AS trdirect on (trdirect.id=turel.roleid)
+                  JOIN {$this->pfx}roles AS trdirect ON (trdirect.id = turel.roleid)
                   JOIN {$this->pfx}roles AS tr on (tr.lft BETWEEN trdirect.lft AND trdirect.rgt)
                   JOIN
                   (        {$this->pfx}permissions AS tpdirect
