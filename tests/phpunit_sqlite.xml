@@ -18,7 +18,8 @@
         <var name="DB_DBNAME" value="phprbac_tests.sqlite3" />
         <var name="DB_PREFIX" value="phprbac_" />
 
-        <var name="DATASET_PATH" value="/data-nst/" />
-        <var name="DATASET_EXT" value="xml" />
+        <var name="DATASET_PATH" value="/datasets/" />
+        <var name="DATASET_EXT" value="yml" />
+        <var name="CFG_KEY" value="sqlite" />
     </php>
 </phpunit>

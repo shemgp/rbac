@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataset>
     <table name="phprbac_permissions">
         <column>ID</column>
         <column>Lft</column>
@@ -48,4 +47,3 @@
             <value>1376789694</value>
         </row>
     </table>
-</dataset>

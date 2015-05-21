@@ -1,0 +1,55 @@
+phprbac_roles:
+  -
+    id: 1
+    lft: 0
+    rgt: 17
+    title: root
+    description: root
+  -
+    id: 2
+    lft: 1
+    rgt: 8
+    title: blog
+    description: "Define roles for the Blog"
+  -
+    id: 3
+    lft: 2
+    rgt: 3
+    title: roles_title_1
+    description: "roles Description 1"
+  -
+    id: 4
+    lft: 4
+    rgt: 5
+    title: roles_title_2
+    description: "roles Description 2"
+  -
+    id: 5
+    lft: 6
+    rgt: 7
+    title: roles_title_3
+    description: "roles Description 3"
+  -
+    id: 6
+    lft: 9
+    rgt: 16
+    title: forum
+    description: "Define roles for the Forums"
+  -
+    id: 7
+    lft: 10
+    rgt: 11
+    title: roles_title_1
+    description: "roles Description 1"
+  -
+    id: 8
+    lft: 12
+    rgt: 13
+    title: roles_title_2
+    description: "roles Description 2"
+  -
+    id: 9
+    lft: 14
+    rgt: 15
+    title: roles_title_3
+    description: "roles Description 3"

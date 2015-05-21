@@ -24,7 +24,7 @@ class PermissionDmap extends \PhpRbac\dmap\mysql\PermissionDmap {
         $res = $this->_fetchRow($qry, $params);
 
         if ($res)
-            return $res['id'];
+            return (int)$res['id'];
         else
             return null;
     }

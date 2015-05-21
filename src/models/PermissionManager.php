@@ -40,6 +40,10 @@ class PermissionManager extends BaseRbac
         $roleId = $roles->returnId($Role);
         $permId = $this->returnId($Permission);
 
+        if ($roleId === null || $permId === null) {
+            return false;
+        }
+
         $res = $this->dmap->assign($roleId, $permId);
 
         return $res['success'];

@@ -4,7 +4,7 @@
 
 * The Unit Tests should be run using a database specific for Unit Testing. This
   way your dev/testing/production data will not be affected.
-* To run the Unit Tests using the MySQL adapter you will need to have an
+* To run the Unit Tests on MySQL or Postgres, you will need to have an
   existing database with the proper tables and default data prior to running
   the tests.
 * If you are running the Unit Tests for the SQLite adapter the database will be

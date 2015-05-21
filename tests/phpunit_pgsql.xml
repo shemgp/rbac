@@ -5,7 +5,7 @@
          bootstrap="./bootstrap.php"
 >
     <testsuites>
-        <testsuite name="PHPRbac Test Suite">
+        <testsuite name="PHPRbac Test Suite - Postgres Adj-List">
             <directory>./src</directory>
         </testsuite>
     </testsuites>
@@ -13,11 +13,15 @@
     <php>
         <var name="DB_ADAPTER" value="pdo_pgsql" />
         <var name="DB_DSN" value="pgsql:dbname=rbac;host=localhost" />
-        <var name="DB_USER" value="vagrant" />
-        <var name="DB_PASSWD" value="vagrant" />
+
         <var name="DB_DBNAME" value="rbac" />
         <var name="DB_SCHEMA" value="public" />
+
+        <var name="DB_USER" value="vagrant" />
+        <var name="DB_PASSWD" value="vagrant" />
+
         <var name="DATASET_PATH" value="/data-adj-list/" />
         <var name="DATASET_EXT" value="yml" />
+        <var name="CFG_KEY" value="pgsql" />
     </php>
 </phpunit>

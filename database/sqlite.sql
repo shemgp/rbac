@@ -36,7 +36,7 @@ CREATE INDEX role_title_ndx ON PREFIX_roles (title);
 CREATE TABLE `PREFIX_userroles` (
   `userid` INTEGER NOT NULL,
   `roleid` INTEGER NOT NULL,
-  `assignmentDate` INTEGER NOT NULL,
+  `assignmentdate` INTEGER NOT NULL,
   PRIMARY KEY (`userid`, `roleid`)
 );
 

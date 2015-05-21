@@ -50,7 +50,8 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
                 }
             }
 
-            $this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
+            //$this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
+            $this->conn = $this->createDefaultDBConnection(self::$pdo);
         }
 
         return $this->conn;

@@ -47,7 +47,7 @@ class RbacPermissionsTest extends RbacBase
             $this->Instance()->tablePrefix() . $this->type(),
         ));
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_single.xml');
+        $expectedDataSet = $this->_dataSet('/' . $this->type() . '/expected_remove_single');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -75,7 +75,7 @@ class RbacPermissionsTest extends RbacBase
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_single_role.xml');
+        $expectedDataSet = $this->_dataSet('/' . $this->type() . '/expected_remove_single_role');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -107,7 +107,7 @@ class RbacPermissionsTest extends RbacBase
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_recursive.xml');
+        $expectedDataSet = $this->_dataSet('/' . $this->type() . '/expected_remove_recursive');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -139,6 +139,10 @@ class RbacPermissionsTest extends RbacBase
 
         $expected = array('2', '3', '4');
 
+        if ($GLOBALS['DB_ADAPTER'] === 'pdo_pgsql') {
+            $expected = array(2, 3, 4);
+        }
+
         $this->assertSame($expected, $result);
     }
 
@@ -167,6 +171,10 @@ class RbacPermissionsTest extends RbacBase
                 'description' => '',
             ),
         );
+
+        if ($GLOBALS['DB_ADAPTER'] === 'pdo_pgsql') {
+            $expected[0]['id'] = 3;
+        }
 
         $this->assertSame($expected, $rolesAssigned);
     }
@@ -217,7 +225,7 @@ class RbacPermissionsTest extends RbacBase
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_unassign_roles.xml');
+        $expectedDataSet = $this->_dataSet('/' . $this->type() . '/expected_unassign_roles');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }

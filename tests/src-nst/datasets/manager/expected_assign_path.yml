@@ -1,0 +1,59 @@
+phprbac_permissions:
+  -
+   id: 1
+   lft: 0
+   rgt: 7
+   title: root
+   description: root
+  -
+   id: 2
+   lft: 1
+   rgt: 6
+   title: permissions_1
+   description:
+  -
+   id: 3
+   lft: 2
+   rgt: 5
+   title: permissions_2
+   description:
+  -
+   id: 4
+   lft: 3
+   rgt: 4
+   title: permissions_3
+   description:
+
+phprbac_rolepermissions:
+  -
+   roleid: 1
+   permissionid: 1
+  -
+   roleid: 3
+   permissionid: 3
+
+phprbac_roles:
+  -
+   id: 1
+   lft: 0
+   rgt: 7
+   title: root
+   description: root
+  -
+   id: 2
+   lft: 1
+   rgt: 6
+   title: roles_1
+   description:
+  -
+   id: 3
+   lft: 2
+   rgt: 5
+   title: roles_2
+   description:
+  -
+   id: 4
+   lft: 3
+   rgt: 4
+   title: roles_3
+   description:

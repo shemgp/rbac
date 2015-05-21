@@ -24,7 +24,7 @@ class RoleDmap extends \PhpRbac\dmap\mysql\RoleDmap {
         $res = $this->_fetchRow($qry, $params);
 
         if ($res !== null)
-            return $res['id'];
+            return (int)$res['id'];
         else
             return null;
     }

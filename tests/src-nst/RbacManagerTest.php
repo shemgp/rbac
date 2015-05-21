@@ -35,7 +35,7 @@ class RbacManagerTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_id.xml');
+        $expectedDataSet = $this->_dataSet('/manager/expected_assign_id');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -56,14 +56,14 @@ class RbacManagerTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_title.xml');
+        $expectedDataSet = $this->_dataSet('/manager/expected_assign_title');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
 
     public function testManagerAssignWithPath()
     {
-        $emptyDescrips = array('', '', '');
+        $emptyDescrips = array(null, null, null);
         self::$rbac->Permissions->addPath('/permissions_1/permissions_2/permissions_3', $emptyDescrips);
         self::$rbac->Roles->addPath('/roles_1/roles_2/roles_3', $emptyDescrips);
 
@@ -79,7 +79,7 @@ class RbacManagerTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_path.xml');
+        $expectedDataSet = $this->_dataSet('/manager/expected_assign_path');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -287,7 +287,7 @@ class RbacManagerTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_reset.xml');
+        $expectedDataSet = $this->_dataSet('/manager/expected_reset');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }

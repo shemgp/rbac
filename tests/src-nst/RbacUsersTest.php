@@ -43,7 +43,7 @@ class RbacUsersTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_assign_with_id.xml');
+        $expectedDataSet = $this->_dataSet('/users/expected_assign_with_id');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -67,7 +67,7 @@ class RbacUsersTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_assign_with_path.xml');
+        $expectedDataSet = $this->_dataSet('/users/expected_assign_with_path');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -204,6 +204,10 @@ class RbacUsersTest extends RbacSetup
             ),
         );
 
+        if ($GLOBALS['DB_ADAPTER'] === 'pdo_pgsql') {
+            $this->convertIntKeys($expected);
+        }
+
         $this->assertSame($expected, $result);
     }
 
@@ -282,7 +286,7 @@ class RbacUsersTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_unassign.xml');
+        $expectedDataSet = $this->_dataSet('/users/expected_unassign');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -311,7 +315,7 @@ class RbacUsersTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_unassign.xml');
+        $expectedDataSet = $this->_dataSet('/users/expected_unassign');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -340,7 +344,7 @@ class RbacUsersTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_unassign.xml');
+        $expectedDataSet = $this->_dataSet('/users/expected_unassign');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -389,7 +393,7 @@ class RbacUsersTest extends RbacSetup
             array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/users/expected_reset_assignments.xml');
+        $expectedDataSet = $this->_dataSet('/users/expected_reset_assignments');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }

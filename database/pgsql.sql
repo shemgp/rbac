@@ -15,7 +15,7 @@ CREATE TABLE phprbac_permissions (
   id SERIAL,
   parent INTEGER,
   title TEXT NOT NULL,
-  description text NOT NULL,
+  description text DEFAULT NULL,
   PRIMARY KEY (id)
 );
 CREATE INDEX perms_title_ndx ON phprbac_permissions (title);
@@ -25,7 +25,7 @@ CREATE TABLE IF NOT EXISTS phprbac_roles (
   id SERIAL,
   parent INTEGER,
   title TEXT NOT NULL,
-  description TEXT NOT NULL,
+  description TEXT DEFAULT NULL,
   PRIMARY KEY (ID)
 );
 CREATE INDEX roles_title_ndx ON phprbac_roles (title);

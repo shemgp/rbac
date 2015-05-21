@@ -66,8 +66,6 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
     {
         $qry ="TRUNCATE TABLE {$this->pfx}rolepermissions";
         $res = $this->_execQuery($qry);
-
-        // $qry ="DELETE FROM sqlite_sequence WHERE name = {$this->pfx}rolepermissions";
     }
 
 
@@ -142,7 +140,7 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
         $res = $this->_fetchRow($sql, $params);
 
         if ($res)
-            return $res['id'];
+            return (int)$res['id'];
         else
             return null;
     }
@@ -154,7 +152,12 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
                  WHERE Title = ?";
         $params = array($title);
 
-        return $this->_fetchOne($qry, $params);
+        $res = $this->_fetchOne($qry, $params);
+
+        if ($res !== null)
+            return (int)$res;
+        else
+            return null;
     }
 
 

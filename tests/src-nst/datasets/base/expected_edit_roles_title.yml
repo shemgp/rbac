@@ -1,0 +1,7 @@
+phprbac_roles:
+  -
+    id: 2
+    lft: 1
+    rgt: 2
+    title: roles_title_edited
+    description: "roles Description"
