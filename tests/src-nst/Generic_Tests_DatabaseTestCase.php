@@ -56,6 +56,16 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
 
         return $this->conn;
     }
+
+    /**
+     * @return \PHPUnit_Extensions_Database_Operation
+     */
+    protected function getSetUpOperation() {
+        return new \PHPUnit_Extensions_Database_Operation_Composite(array(
+            \PHPUnit_Extensions_Database_Operation_Factory::DELETE_ALL(),
+            \PHPUnit_Extensions_Database_Operation_Factory::INSERT()
+        ));
+    }
 }
 
 /** @} */ // End group phprbac_unit_test_wrapper_generic */

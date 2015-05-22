@@ -85,7 +85,8 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
 
     public function resetAssignments()
     {
-        $qry = "TRUNCATE TABLE {$this->pfx}userroles";
+        //$qry = "TRUNCATE TABLE {$this->pfx}userroles";
+        $qry = "DELETE FROM {$this->pfx}userroles";
         $res = $this->_execQuery($qry);
 
         return $res['output'];

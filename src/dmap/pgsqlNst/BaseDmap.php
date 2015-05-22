@@ -64,7 +64,8 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
     public function resetAssignments()
     {
-        $qry ="TRUNCATE TABLE {$this->pfx}rolepermissions";
+        //$qry ="TRUNCATE TABLE {$this->pfx}rolepermissions";
+        $qry ="DELETE FROM {$this->pfx}rolepermissions";
         $res = $this->_execQuery($qry);
     }
 
@@ -352,7 +353,11 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
     public function reset()
     {
-        $qry = "TRUNCATE TABLE {$this->tblName} RESTART IDENTITY";
+        //$qry = "TRUNCATE TABLE {$this->tblName} RESTART IDENTITY";
+        //$res = $this->_execQuery($qry);
+        $qry = "DELETE FROM {$this->tblName};";
+        $res = $this->_execQuery($qry);
+        $qry = "ALTER SEQUENCE {$this->tblName}_id_seq RESTART;";
         $res = $this->_execQuery($qry);
 
         $qry = "INSERT INTO {$this->tblName}

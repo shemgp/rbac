@@ -262,7 +262,7 @@ class RbacBase extends RbacSetup
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $emptyDescrips);
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' ORDER BY id'
         );
 
         $expectedTable = $this->_dataSet('/base/expected_add_path_' . $this->type() . '_single')
@@ -282,7 +282,7 @@ class RbacBase extends RbacSetup
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions);
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' ORDER BY id'
         );
 
         $expectedTable = $this->_dataSet('/base/expected_add_path_' . $this->type() . '_single_description')
@@ -334,7 +334,7 @@ class RbacBase extends RbacSetup
         $this->Instance()->addPath('/' . $this->type() . '_1/' . $this->type() . '_2/' . $this->type() . '_3', $descriptions_3);
 
         $queryTable = $this->getConnection()->createQueryTable(
-            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type()
+            $this->Instance()->tablePrefix() . $this->type(), 'SELECT * FROM ' . $this->Instance()->tablePrefix() . $this->type() . ' ORDER BY id'
         );
 
         $expectedTable = $this->_dataSet('/base/expected_add_path_' . $this->type() . '_sequential_description')
