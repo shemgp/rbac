@@ -1,0 +1,4 @@
+phprbac_userroles:
+  -
+    userid: 1
+    roleid: 1

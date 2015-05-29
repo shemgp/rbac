@@ -1,0 +1,81 @@
+phprbac_roles:
+  -
+   id: 1
+   parent:
+   title: root
+   description: root
+  -
+   id: 2
+   parent: 1
+   title: roles_1
+   description: "roles Description 1"
+  -
+   id: 3
+   parent: 2
+   title: roles_2
+   description: "roles Description 2"
+  -
+   id: 4
+   parent: 3
+   title: roles_3
+   description: "roles Description 3"
+  -
+   id: 5
+   parent: 3
+   title: roles_4
+   description: "roles Description 4"
+  -
+   id: 6
+   parent: 1
+   title: roles_12
+   description: "roles Description 12"
+  -
+   id: 7
+   parent: 6
+   title: roles_13
+   description: "roles Description 13"
+  -
+   id: 8
+   parent: 7
+   title: roles_14
+   description: "roles Description 14"
+  -
+   id: 9
+   parent: 6
+   title: roles_15
+   description: "roles Description 15"
+  -
+   id: 10
+   parent: 9
+   title: roles_11
+   description: "roles Description 11"
+  -
+   id: 11
+   parent: 1
+   title: roles_23
+   description: "roles Description 23"
+  -
+   id: 12
+   parent: 11
+   title: roles_24
+   description: "roles Description 24"
+  -
+   id: 13
+   parent: 12
+   title: roles_25
+   description: "roles Description 25"
+  -
+   id: 14
+   parent: 1
+   title: roles_33
+   description: "roles Description 33"
+  -
+   id: 15
+   parent: 14
+   title: roles_34
+   description: "roles Description 34"
+  -
+   id: 16
+   parent: 15
+   title: roles_35
+   description: "roles Description 35"
