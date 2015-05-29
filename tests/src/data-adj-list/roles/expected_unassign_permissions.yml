@@ -1,0 +1,4 @@
+phprbac_rolepermissions:
+  -
+    roleid: 1
+    permissionid: 1

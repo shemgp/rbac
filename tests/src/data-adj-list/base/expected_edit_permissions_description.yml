@@ -1,0 +1,6 @@
+phprbac_permissions:
+  -
+    id: 2
+    parent: 1
+    title: permissions_title
+    description: "permissions Description edited"

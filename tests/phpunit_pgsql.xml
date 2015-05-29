@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit colors="true"
+         stopOnFailure="false"
+         bootstrap="./bootstrap.php"
+>
+    <testsuites>
+        <testsuite name="PHPRbac Test Suite">
+            <directory>./src</directory>
+        </testsuite>
+    </testsuites>
+
+    <php>
+        <var name="DB_ADAPTER" value="pdo_pgsql" />
+        <var name="DB_DSN" value="pgsql:dbname=rbac;host=localhost" />
+        <var name="DB_USER" value="vagrant" />
+        <var name="DB_PASSWD" value="vagrant" />
+        <var name="DB_DBNAME" value="rbac" />
+        <var name="DB_SCHEMA" value="public" />
+        <var name="DATASET_PATH" value="/data-adj-list/" />
+        <var name="DATASET_EXT" value="yml" />
+    </php>
+</phpunit>

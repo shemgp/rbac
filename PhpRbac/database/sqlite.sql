@@ -7,7 +7,7 @@ CREATE TABLE `PREFIX_permissions` (
   `Lft` INTEGER NOT NULL,
   `Rght` INTEGER NOT NULL,
   `Title` char(64) NOT NULL,
-  `Description` text NOT NULL
+  `Description` text
 );
 
 CREATE TABLE `PREFIX_rolepermissions` (
@@ -22,7 +22,7 @@ CREATE TABLE `PREFIX_roles` (
   `Lft` INTEGER NOT NULL,
   `Rght` INTEGER NOT NULL,
   `Title` varchar(128) NOT NULL,
-  `Description` text NOT NULL
+  `Description` text
 );
 
 CREATE TABLE `PREFIX_userroles` (

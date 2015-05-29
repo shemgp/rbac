@@ -1,0 +1,81 @@
+phprbac_permissions:
+  -
+   id: 1
+   parent:
+   title: root
+   description: root
+  -
+   id: 2
+   parent: 1
+   title: permissions_1
+   description: "permissions Description 1"
+  -
+   id: 3
+   parent: 2
+   title: permissions_2
+   description: "permissions Description 2"
+  -
+   id: 4
+   parent: 3
+   title: permissions_3
+   description: "permissions Description 3"
+  -
+   id: 5
+   parent: 3
+   title: permissions_4
+   description: "permissions Description 4"
+  -
+   id: 6
+   parent: 1
+   title: permissions_12
+   description: "permissions Description 12"
+  -
+   id: 7
+   parent: 6
+   title: permissions_13
+   description: "permissions Description 13"
+  -
+   id: 8
+   parent: 7
+   title: permissions_14
+   description: "permissions Description 14"
+  -
+   id: 9
+   parent: 6
+   title: permissions_15
+   description: "permissions Description 15"
+  -
+   id: 10
+   parent: 9
+   title: permissions_11
+   description: "permissions Description 11"
+  -
+   id: 11
+   parent: 1
+   title: permissions_23
+   description: "permissions Description 23"
+  -
+   id: 12
+   parent: 11
+   title: permissions_24
+   description: "permissions Description 24"
+  -
+   id: 13
+   parent: 12
+   title: permissions_25
+   description: "permissions Description 25"
+  -
+   id: 14
+   parent: 1
+   title: permissions_33
+   description: "permissions Description 33"
+  -
+   id: 15
+   parent: 14
+   title: permissions_34
+   description: "permissions Description 34"
+  -
+   id: 16
+   parent: 15
+   title: permissions_35
+   description: "permissions Description 35"
