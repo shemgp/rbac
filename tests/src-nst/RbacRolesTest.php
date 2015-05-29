@@ -51,6 +51,10 @@ class RbacRolesTest extends RbacBase
 
         $expected = array('2', '3', '4');
 
+        if ($GLOBALS['DB_ADAPTER'] === 'pdo_pgsql') {
+            $expected = array(2, 3, 4);
+        }
+
         $this->assertSame($expected, $result);
     }
 
@@ -65,11 +69,15 @@ class RbacRolesTest extends RbacBase
 
         $expected = array(
             array(
-                'ID' => '3',
-                'Title' => 'permissions_2',
-                'Description' => null,
+                'id' => '3',
+                'title' => 'permissions_2',
+                'description' => null,
             ),
         );
+
+        if ($GLOBALS['DB_ADAPTER'] === 'pdo_pgsql') {
+            $expected[0]['id'] = 3;
+        }
 
         $this->assertSame($expected, $permissionsAssigned);
     }
@@ -142,10 +150,10 @@ class RbacRolesTest extends RbacBase
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_unassign_permissions.xml');
+        $expectedDataSet = $this->_dataSet('/' . $this->type() . '/expected_unassign_permissions');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -182,10 +190,10 @@ class RbacRolesTest extends RbacBase
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_unassign_users.xml');
+        $expectedDataSet = $this->_dataSet('/' . $this->type() . '/expected_unassign_users');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -214,7 +222,7 @@ class RbacRolesTest extends RbacBase
             $this->Instance()->tablePrefix() . $this->type(),
         ));
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_single.xml');
+        $expectedDataSet = $this->_dataSet('/' . $this->type() . '/expected_remove_single');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -246,15 +254,15 @@ class RbacRolesTest extends RbacBase
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_single_permission.xml');
+        $expectedDataSet = $this->_dataSet('/' . $this->type() . '/expected_remove_single_permission');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -285,15 +293,15 @@ class RbacRolesTest extends RbacBase
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $filterDataSet->setExcludeColumnsForTable(
             $this->Instance()->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/' . $this->type() . '/expected_remove_recursive.xml');
+        $expectedDataSet = $this->_dataSet('/' . $this->type() . '/expected_remove_recursive');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }

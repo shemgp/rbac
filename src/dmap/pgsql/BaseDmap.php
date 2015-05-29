@@ -58,7 +58,11 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
     public function resetAssignments()
     {
-        $qry ="TRUNCATE TABLE {$this->pfx}rolepermissions";
+        // here and other places: TRUNCATE is normally faster on tables
+        // with a lot of data, but for our unit tests, a simple DELETE
+        // is much faster.
+        //$qry ="TRUNCATE TABLE {$this->pfx}rolepermissions";
+        $qry ="DELETE FROM {$this->pfx}rolepermissions";
         $res = $this->_execQuery($qry);
     }
 
@@ -376,7 +380,13 @@ class BaseDmap extends \PhpRbac\utils\PdoWrapper {
 
     public function reset()
     {
-        $qry = "TRUNCATE TABLE {$this->tblName} RESTART IDENTITY";
+        //$qry = "TRUNCATE TABLE {$this->tblName} RESTART IDENTITY";
+        //$res = $this->_execQuery($qry);
+
+        // these 4 lines do the same as the above, slightly faster
+        $qry = "DELETE FROM {$this->tblName};";
+        $res = $this->_execQuery($qry);
+        $qry = "ALTER SEQUENCE {$this->tblName}_id_seq RESTART;";
         $res = $this->_execQuery($qry);
 
         $qry = "INSERT INTO {$this->tblName}

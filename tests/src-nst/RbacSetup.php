@@ -31,6 +31,11 @@ class RbacSetup extends Generic_Tests_DatabaseTestCase
         }
     }
 
+    protected function setup() {
+        self::$rbac->reset(true);
+        parent::setup();
+    }
+
     protected function tearDown()
     {
         if ((string) $GLOBALS['DB_ADAPTER'] === 'pdo_sqlite') {
@@ -40,7 +45,27 @@ class RbacSetup extends Generic_Tests_DatabaseTestCase
 
     public function getDataSet()
     {
-        return $this->createXMLDataSet(dirname(__FILE__) . '/datasets/database-seed.xml');
+        return $this->_dataSet('database-seed', false);
+    }
+
+    protected function _dataSet($fileName, $flatXml = true)
+    {
+        $fileLoc = dirname(__FILE__) . $GLOBALS['DATASET_PATH'] . $fileName . '.' . $GLOBALS['DATASET_EXT'];
+
+        if (!is_file($fileLoc)) {
+            echo "\n" . $fileLoc . "\n";
+            die('data file not found');
+        }
+
+        if ($GLOBALS['DATASET_EXT'] === 'yml') {
+            return new \PHPUnit_Extensions_Database_DataSet_YamlDataSet($fileLoc);
+        }
+        else {
+            if ($flatXml)
+                return $this->createFlatXMLDataSet($fileLoc);
+            else
+                return $this->createXMLDataSet($fileLoc);
+        }
     }
 
     /*
@@ -49,6 +74,28 @@ class RbacSetup extends Generic_Tests_DatabaseTestCase
 
     public function testRbacInstance() {
         $this->assertInstanceOf('PhpRbac\Rbac', self::$rbac);
+    }
+
+    /**
+     * Convert expected results that use strings to use integers.
+     *
+     * Postgres data mappers return integer column values as ints, not
+     * strings (unlike original Jf class).
+     *
+     * Expects an array of rows, where each row contains values for 'id',
+     * 'lft', 'rgt', and (optionally) 'depth'.
+     **/
+    protected function convertIntKeys(&$data)
+    {
+        $intKeys = ['id', 'lft', 'rgt'];
+
+        foreach ($data as &$row) {
+            foreach ($intKeys as $key)
+                $row[$key] = (int)$row[$key];
+
+            if (array_key_exists('depth', $row))
+                $row['depth'] = (int)$row['depth'];
+        }
     }
 }
 

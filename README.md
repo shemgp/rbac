@@ -1,4 +1,8 @@
-# PHP-RBAC v2.x
+# PHP-RBAC v3.x
+
+This is an experimental refactor / update of PHP-RBAC 2.x to use Postgres
+databases as well. All tests are passing but this is unofficial work at this
+point.
 
 PHP-RBAC is the de-facto authorization library for PHP. It provides developers
 with NIST Level 2 Hierarchical Role Based Access Control and more, in the
@@ -44,19 +48,35 @@ With a 'use' statement:
 ```php
     use PhpRbac;
 
-    $rbac = new Rbac();
+    $rbac = new Rbac($cfg);
 ```
 
 Without a 'use' statement, outside of a namespace:
 
 ```php
-    $rbac = new PhpRbac\Rbac();
+    $rbac = new PhpRbac\Rbac($cfg);
 ```
 
 Without a 'use' statement, inside of another namespace (notice the leading backslash):
 
 ```php
-    $rbac = new \PhpRbac\Rbac();
+    $rbac = new \PhpRbac\Rbac($cfg);
+```
+
+Configuration options are fully documented in [Rbac.php](src/Rbac.php),
+and will look like:
+
+```php
+$cfg = array(
+   'dbType' => 'mysql',
+   'host'   => 'localhost',
+
+   'dbName' => 'my_database',
+   'user' => 'vagrant',
+   'pass' => 'secret',
+
+   'pfx' => 'phprbac_',
+);
 ```
 
 ##PHP-RBAC and PSR
@@ -66,7 +86,7 @@ PHP-RBAC's Public API is now fully PSR-0, PSR-1 and PSR-2 compliant.
 You can now:
 
 * Use Composer to install/update PHP-RBAC
-* Use any PSR-0 compliant autoloader with PHP-RBAC
+* Use any PSR-0 or PSR-4 compliant autoloader with PHP-RBAC
 * Use the included autoloader to load PHP-RBAC
 
 **If you notice any conflicts with PSR compliance please

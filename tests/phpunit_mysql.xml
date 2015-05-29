@@ -13,8 +13,13 @@
     <php>
         <var name="DB_ADAPTER" value="pdo_mysql" />
         <var name="DB_DSN" value="mysql:dbname=phprbac_tests;host=localhost" />
-        <var name="DB_USER" value="phprbac_tests" />
-        <var name="DB_PASSWD" value="" />
         <var name="DB_DBNAME" value="phprbac_tests" />
+
+        <var name="DB_USER" value="vagrant" />
+        <var name="DB_PASSWD" value="vagrant" />
+
+        <var name="DATASET_PATH" value="/datasets/" />
+        <var name="DATASET_EXT" value="yml" />
+        <var name="CFG_KEY" value="mysql" />
     </php>
 </phpunit>

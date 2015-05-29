@@ -13,48 +13,48 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
         $this->tblName = $this->pfx . $tblName;
     }
 
-    public function hasRole($RoleID, $UserID)
+    public function hasRole($roleId, $userId)
     {
         $qry = "SELECT tur.userid
                   FROM {$this->pfx}userroles AS tur
                   JOIN {$this->pfx}roles trdirect ON
                        (trdirect.id = tur.roleid)
                   JOIN {$this->pfx}roles tr ON
-                       (tr.lft BETWEEN trdirect.lft AND trdirect.rght)
+                       (tr.lft BETWEEN trdirect.lft AND trdirect.rgt)
                  WHERE tur.userid = ?
                    AND tr.id = ?";
-        $params = array($UserID, $RoleID);
+        $params = array($userId, $roleId);
 
         $roleId = $this->_fetchOne($qry, $params);
 
         return $roleId !== null;
     }
 
-    public function assign($UserID, $RoleID)
+    public function assign($userId, $roleId)
     {
         $qry = "INSERT INTO {$this->pfx}userroles
                 (userid, roleid, assignmentdate)
                 VALUES (?, ?, {$this->dbNow()})";
 
-        $params = array($UserID, $RoleID);
+        $params = array($userId, $roleId);
         $res = $this->_execQuery($qry, $params);
 
         return $res['success'];
     }
 
-    public function unassign($UserID, $RoleID)
+    public function unassign($userId, $roleId)
     {
         $qry = "DELETE FROM {$this->pfx}userroles
                  WHERE userid = ?
                    AND roleid = ?";
 
-        $params = array($UserID, $RoleID);
+        $params = array($userId, $roleId);
         $res = $this->_execQuery($qry, $params);
 
         return $res['success'];
     }
 
-    public function allRoles($UserID)
+    public function allRoles($userId)
     {
         $qry = "SELECT tr.*
                   FROM {$this->pfx}userroles AS ur
@@ -62,7 +62,7 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
                        (ur.roleid = tr.id)
                  WHERE ur.userid = ?";
 
-        $params = array($UserID);
+        $params = array($userId);
 
         $rows = $this->_fetchAll($qry, $params);
 
@@ -72,13 +72,13 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
             return $rows;
     }
 
-    public function roleCount($UserID)
+    public function roleCount($userId)
     {
         $qry = "SELECT COUNT(userid) AS result
                   FROM {$this->pfx}userroles
                  WHERE userid = ?";
 
-        $params = array($UserID);
+        $params = array($userId);
 
         return (int) $this->_fetchOne($qry, $params);
     }
@@ -94,18 +94,18 @@ class UserDmap extends \PhpRbac\utils\PdoWrapper {
     public function check($userId, $permId)
     {
         // this works on MySQL only
-        $LastPart = "ON (TR.ID = TRel.RoleID)
-                WHERE TUrel.UserID = ?
-                  AND TPdirect.ID = ?";
+        $LastPart = "ON (tr.id = trel.roleid)
+                WHERE turel.userid = ?
+                  AND tpdirect.id = ?";
 
-        $qry = "SELECT COUNT(*) AS Result
-                  FROM {$this->pfx}userroles AS TUrel
-                  JOIN {$this->pfx}roles AS TRdirect ON (TRdirect.ID=TUrel.RoleID)
-                  JOIN {$this->pfx}roles AS TR ON ( TR.Lft BETWEEN TRdirect.Lft AND TRdirect.Rght)
+        $qry = "SELECT COUNT(*) AS result
+                  FROM {$this->pfx}userroles AS turel
+                  JOIN {$this->pfx}roles AS trdirect ON (trdirect.id = turel.roleid)
+                  JOIN {$this->pfx}roles AS tr ON (tr.lft BETWEEN trdirect.lft AND trdirect.rgt)
                   JOIN
-                  (        {$this->pfx}permissions AS TPdirect
-                      JOIN {$this->pfx}permissions AS TP ON ( TPdirect.Lft BETWEEN TP.Lft AND TP.Rght)
-                      JOIN {$this->pfx}rolepermissions AS TRel ON (TP.ID=TRel.PermissionID)
+                  (        {$this->pfx}permissions AS tpdirect
+                      JOIN {$this->pfx}permissions AS tp ON (tpdirect.lft BETWEEN tp.lft AND tp.rgt)
+                      JOIN {$this->pfx}rolepermissions AS trel ON (tp.id = trel.permissionid)
                   ) $LastPart";
 
         $params = array($userId, $permId);

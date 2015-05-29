@@ -32,10 +32,10 @@ class RbacManagerTest extends RbacSetup
         $filterDataSet->addExcludeTables(array(self::$rbac->tablePrefix() . 'userroles'));
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_id.xml');
+        $expectedDataSet = $this->_dataSet('/manager/expected_assign_id');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -53,17 +53,17 @@ class RbacManagerTest extends RbacSetup
         $filterDataSet->addExcludeTables(array(self::$rbac->tablePrefix() . 'userroles'));
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_title.xml');
+        $expectedDataSet = $this->_dataSet('/manager/expected_assign_title');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
 
     public function testManagerAssignWithPath()
     {
-        $emptyDescrips = array('', '', '');
+        $emptyDescrips = array(null, null, null);
         self::$rbac->Permissions->addPath('/permissions_1/permissions_2/permissions_3', $emptyDescrips);
         self::$rbac->Roles->addPath('/roles_1/roles_2/roles_3', $emptyDescrips);
 
@@ -76,10 +76,10 @@ class RbacManagerTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_assign_path.xml');
+        $expectedDataSet = $this->_dataSet('/manager/expected_assign_path');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }
@@ -142,6 +142,7 @@ class RbacManagerTest extends RbacSetup
     {
         self::$rbac->Permissions->addPath('/permissions_1/permissions_2/permissions_3');
         $perm_id_1 = self::$rbac->Permissions->pathId('/permissions_1/permissions_2/permissions_3');
+
 
         self::$rbac->Roles->addPath('/roles_1/roles_2/roles_3');
         $role_id_1 = self::$rbac->Roles->pathId('/roles_1/roles_2/roles_3');
@@ -278,15 +279,15 @@ class RbacManagerTest extends RbacSetup
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'rolepermissions',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
         $filterDataSet->setExcludeColumnsForTable(
             self::$rbac->tablePrefix() . 'userroles',
-            array('AssignmentDate')
+            array('assignmentdate')
         );
 
-        $expectedDataSet = $this->createFlatXmlDataSet(dirname(__FILE__) . '/datasets/manager/expected_reset.xml');
+        $expectedDataSet = $this->_dataSet('/manager/expected_reset');
 
         $this->assertDataSetsEqual($expectedDataSet, $filterDataSet);
     }

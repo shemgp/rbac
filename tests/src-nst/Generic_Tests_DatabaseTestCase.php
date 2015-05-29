@@ -34,7 +34,7 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
                     $dsn = 'sqlite:' . __DIR__ . '/../' . $GLOBALS['DB_DBNAME'];
                     self::$pdo = new \PDO($dsn);
 
-                    $sql = file_get_contents(__DIR__ . '/../../PhpRbac/database/sqlite.sql');
+                    $sql = file_get_contents(__DIR__ . '/../../database/sqlite.sql');
                     $sql = str_replace("PREFIX_", $GLOBALS['DB_PREFIX'], $sql);
                     $statements = explode(';', $sql);
 
@@ -50,10 +50,21 @@ abstract class Generic_Tests_DatabaseTestCase extends \PHPUnit_Extensions_Databa
                 }
             }
 
-            $this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
+            //$this->conn = $this->createDefaultDBConnection(self::$pdo, $GLOBALS['DB_DBNAME']);
+            $this->conn = $this->createDefaultDBConnection(self::$pdo);
         }
 
         return $this->conn;
+    }
+
+    /**
+     * @return \PHPUnit_Extensions_Database_Operation
+     */
+    protected function getSetUpOperation() {
+        return new \PHPUnit_Extensions_Database_Operation_Composite(array(
+            \PHPUnit_Extensions_Database_Operation_Factory::DELETE_ALL(),
+            \PHPUnit_Extensions_Database_Operation_Factory::INSERT()
+        ));
     }
 }
 

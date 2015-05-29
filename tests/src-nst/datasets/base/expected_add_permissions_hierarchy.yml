@@ -1,0 +1,55 @@
+phprbac_permissions:
+  -
+    id: 1
+    lft: 0
+    rgt: 17
+    title: root
+    description: root
+  -
+    id: 2
+    lft: 1
+    rgt: 8
+    title: blog
+    description: "Define permissions for the Blog"
+  -
+    id: 3
+    lft: 2
+    rgt: 3
+    title: permissions_title_1
+    description: "permissions Description 1"
+  -
+    id: 4
+    lft: 4
+    rgt: 5
+    title: permissions_title_2
+    description: "permissions Description 2"
+  -
+    id: 5
+    lft: 6
+    rgt: 7
+    title: permissions_title_3
+    description: "permissions Description 3"
+  -
+    id: 6
+    lft: 9
+    rgt: 16
+    title: forum
+    description: "Define permissions for the Forums"
+  -
+    id: 7
+    lft: 10
+    rgt: 11
+    title: permissions_title_1
+    description: "permissions Description 1"
+  -
+    id: 8
+    lft: 12
+    rgt: 13
+    title: permissions_title_2
+    description: "permissions Description 2"
+  -
+    id: 9
+    lft: 14
+    rgt: 15
+    title: permissions_title_3
+    description: "permissions Description 3"
