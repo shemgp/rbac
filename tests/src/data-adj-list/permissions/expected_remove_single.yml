@@ -1,0 +1,6 @@
+phprbac_permissions:
+  -
+   id: 1
+   parent:
+   title: root
+   description: root

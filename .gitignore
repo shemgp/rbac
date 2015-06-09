@@ -1,3 +1,17 @@
+# Temp files #
+###############
+*.swp
+*.orig
+tmp/*
+.DS_Store
+.vimrc
+.lvimrc
+*.sqlite3
+
+# Vendor Code #
+###############
+vendor/*
+
 .settings
 .buildpath
 .project

@@ -1,0 +1,19 @@
+phprbac_permissions:
+  -
+    id: 1
+    parent:
+    title: root
+    description: root
+
+phprbac_rolepermissions:
+  -
+    roleid: 1
+    permissionid: 1
+    assignmentdate: 1376789692
+
+phprbac_roles:
+  -
+    id: 1
+    parent:
+    title: root
+    description: root

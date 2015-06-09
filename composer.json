@@ -19,16 +19,32 @@
 			"email" : "jesse.burns@alliancecms.com",
 			"homepage" : "http://www.jbwebware.com",
 			"role" : "Developer"
+		}, {
+			"name" : "James Van Lommel",
+			"email" : "jamesvl@gmail.com",
+			"role" : "Developer"
 		}
 	],
+	"require" : {
+		"php" : ">=5.4.0"
+	},
+	"require-dev" : {
+		"phpunit/phpunit" : "4.*",
+		"phpunit/dbunit" : ">=1.2"
+	},
 	"autoload" : {
-		"psr-0" : {
-			"PhpRbac" : "PhpRbac/src"
+		"psr-4" : {
+			"PhpRbac\\" : "src/"
+		}
+	},
+	"autoload-dev" : {
+		"psr-4" : {
+			"PhpRbac\\tests\\" : "tests/src/"
 		}
 	},
 	"repositories" : [{
             "type" : "vcs",
-            "url" : "https://github.com/OWASP/rbac.git"
+            "url" : "https://jamesvl@bitbucket.org/jamesvl/php-rbac.git"
         }
     ]
 }

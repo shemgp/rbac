@@ -1,0 +1,7 @@
+phprbac_permissions:
+  -
+   id: 1
+   lft: 0
+   rgt: 1
+   title: root
+   description: root

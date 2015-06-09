@@ -1,0 +1,31 @@
+phprbac_permissions:
+  -
+   id: 1
+   parent:
+   title: root
+   description: root
+  -
+   id: 2
+   parent: 1
+   title: permissions_1
+   description: "permissions Description 1"
+
+phprbac_rolepermissions:
+  -
+   roleid: 1
+   permissionid: 1
+  -
+   roleid: 2
+   permissionid: 2
+
+phprbac_roles:
+  -
+   id: 1
+   parent:
+   title: root
+   description: root
+  -
+   id: 2
+   parent: 1
+   title: roles_1
+   description: "roles Description 1"

@@ -1,0 +1,7 @@
+phprbac_permissions:
+  -
+    id: 2
+    lft: 1
+    rgt: 2
+    title: permissions_title_edited
+    description: "permissions Description"

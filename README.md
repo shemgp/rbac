@@ -1,6 +1,8 @@
-#PHP-RBAC v2.x
+# PHP-RBAC v3.x
 
-PHP-RBAC is an authorization library for PHP. It provides developers with NIST Level 2 Hierarchical Role Based Access Control and more, in the fastest implementation yet.
+This is an experimental refactor / update of PHP-RBAC 2.x to use Postgres
+databases as well. All tests are passing but this is unofficial work at this
+point.
 
 **Current Stable Release:** [PHP-RBAC v2.0](https://sourceforge.net/projects/phprbac/files/latest/download?source=dlp)
 
@@ -16,37 +18,66 @@ PHP-RBAC is an authorization library for PHP. It provides developers with NIST L
 
 ##What is an Rbac System?
 
-Take a look at the "[Before You Begin](http://phprbac.net/docs_before_you_begin.php)" section of our [Documentation](http://phprbac.net/docs_contents.php) to learn what an RBAC system is and what PHP-RBAC has to offer you and your project.
+Take a look at the "[Before You Begin](http://phprbac.net/docs_before_you_begin.php)"
+section of our [Documentation](http://phprbac.net/docs_contents.php) to learn
+what an RBAC system is and what PHP-RBAC has to offer you and your project.
 
 ##NIST Level 2 Compliance
 
-For information regarding NIST RBAC Levels, please see [This Paper](http://csrc.nist.gov/rbac/sandhu-ferraiolo-kuhn-00.pdf).
+For information regarding NIST RBAC Levels, please see
+[This Paper](http://csrc.nist.gov/rbac/sandhu-ferraiolo-kuhn-00.pdf).
 
-For more great resources see the [NIST RBAC Group Page](http://csrc.nist.gov/groups/SNS/rbac/).
+For more great resources see the
+[NIST RBAC Group Page](http://csrc.nist.gov/groups/SNS/rbac/).
 
 ##Installation
 
-You can now use [Composer](https://getcomposer.org/) to install the PHP-RBAC code base.
+You can now use [Composer](https://getcomposer.org/) to install the PHP-RBAC
+code base.
 
-For Installation Instructions please refer to the "[Getting Started](http://phprbac.net/docs_getting_started.php)" section of our [Documentation](http://phprbac.net/docs_contents.php).
+For Installation Instructions please refer to the
+"[Getting Started](http://phprbac.net/docs_getting_started.php)" section of our
+[Documentation](http://phprbac.net/docs_contents.php).
 
 ##Usage##
 
 **Instantiating a PHP-RBAC Object**
-    
+
 With a 'use' statement:
 
-        use PhpRbac;
-        
-        $rbac = new Rbac();
+```php
+    use PhpRbac;
+
+    $rbac = new Rbac($cfg);
+```
 
 Without a 'use' statement, outside of a namespace:
-        
-        $rbac = new PhpRbac\Rbac();
+
+```php
+    $rbac = new PhpRbac\Rbac($cfg);
+```
 
 Without a 'use' statement, inside of another namespace (notice the leading backslash):
-        
-        $rbac = new \PhpRbac\Rbac();
+
+```php
+    $rbac = new \PhpRbac\Rbac($cfg);
+```
+
+Configuration options are fully documented in [Rbac.php](src/Rbac.php),
+and will look like:
+
+```php
+$cfg = array(
+   'dbType' => 'mysql',
+   'host'   => 'localhost',
+
+   'dbName' => 'my_database',
+   'user' => 'vagrant',
+   'pass' => 'secret',
+
+   'pfx' => 'phprbac_',
+);
+```
 
 ##PHP-RBAC and PSR
 
@@ -55,33 +86,41 @@ PHP-RBAC's Public API is now fully PSR-0, PSR-1 and PSR-2 compliant.
 You can now:
 
 * Use Composer to install/update PHP-RBAC
-* Use any PSR-0 compliant autoloader with PHP-RBAC
+* Use any PSR-0 or PSR-4 compliant autoloader with PHP-RBAC
 * Use the included autoloader to load PHP-RBAC
 
-**If you notice any conflicts with PSR compliance please [Submit an Issue](https://github.com/OWASP/rbac/issues/new).**
+**If you notice any conflicts with PSR compliance please
+[Submit an Issue](https://github.com/OWASP/rbac/issues/new).**
 
 ##The future of PHP-RBAC
 
-We are in the process of refactoring the PHP-RBAC internals. We have two goals in mind while doing this:
+We are in the process of refactoring the PHP-RBAC internals. We have two goals
+in mind while doing this:
 
 * To meet modern PHP OOP "Best Practices"
 * To meet PHP-FIG PSR compliance: http://www.php-fig.org/
 
-With a PSR compliant Public API already in place we can continue to work towards our goals one piece at a 
-time without altering the Public API that developers are working with and rely on, making the transition as seamless 
-and invisible as possible.
+With a PSR compliant Public API already in place we can continue to work
+towards our goals one piece at a time without altering the Public API that
+developers are working with and rely on, making the transition as
+seamless and invisible as possible.
 
 ##Contributing##
 
-We welcome all contributions that will help make PHP-RBAC even better tomorrow than it is today!
+We welcome all contributions that will help make PHP-RBAC even better tomorrow
+than it is today!
 
 Please visit the [PHP-RBAC Wiki](https://github.com/OWASP/rbac/wiki) to learn about our development process and workflow.
 
 ###How You Can Help
 
-* Report Bugs, Enhancement Requests or Documentation errors using our [Issue Tracker](https://github.com/OWASP/rbac/issues?state=open)
-* [Choose a Bug](https://github.com/OWASP/rbac/issues?state=open) to work on and submit a Pull Request
-* Make helpful suggestions and contributions to the [Documentation](http://phprbac.net/docs_contents.php) using our [Issue Tracker](https://github.com/OWASP/rbac/issues?state=open)
+* Report Bugs, Enhancement Requests or Documentation errors using our
+  [Issue Tracker](https://github.com/OWASP/rbac/issues?state=open)
+* [Choose a Bug](https://github.com/OWASP/rbac/issues?state=open) to work on
+  and submit a Pull Request
+* Make helpful suggestions and contributions to the
+  [Documentation](http://phprbac.net/docs_contents.php) using our
+  [Issue Tracker](https://github.com/OWASP/rbac/issues?state=open)
 * Spread the word about PHP-RBAC by:
     * Creating Tutorials
     * Blogging
