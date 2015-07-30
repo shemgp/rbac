@@ -10,7 +10,7 @@ class PdoWrapper
     protected $cfg;
     protected $tblName; // sub-classes set this for convenience
 
-    protected $dbh;
+    protected static $dbh;
 
     /**
      * Create a PDO connection to the database to handle common DB tasks.
@@ -64,7 +64,7 @@ class PdoWrapper
      **/
     private function _ensureConnected()
     {
-        if (is_object($this->dbh))
+        if (is_object(self::$dbh))
             return;
 
         $dsn = $this->_constructDSN($this->cfg);
@@ -77,7 +77,7 @@ class PdoWrapper
         );
 
         try {
-            $this->dbh = new \PDO($dsn, $cfg['user'], $cfg['pass'], $opts);
+           self::$dbh = new \PDO($dsn, $cfg['user'], $cfg['pass'], $opts);
         }
         catch (\Exception $e) {
             error_log($e->getMessage());
@@ -91,7 +91,7 @@ class PdoWrapper
     public function getDBH()
     {
         $this->_ensureConnected();
-        return $this->dbh;
+        return self::$dbh;
     }
 
     /**
@@ -104,13 +104,13 @@ class PdoWrapper
     protected function _fetchAll($qry, $qryParams = array())
     {
         $this->_ensureConnected();
-        $stmt = $this->dbh->prepare($qry);
+        $stmt = self::$dbh->prepare($qry);
 
         if ($stmt === false) {
-            error_log($this->dbh->errorInfo()[2]);
+            error_log(self::$dbh->errorInfo()[2]);
             // debug only:
             echo($qry);
-            //die($this->dbh->errorInfo()[2]);
+            //die(self::$dbh->errorInfo()[2]);
 
             return array();
         }
@@ -126,7 +126,7 @@ class PdoWrapper
         }
         else {
             echo($qry);
-            error_log($this->dbh->errorInfo()[2]);
+            error_log(self::$dbh->errorInfo()[2]);
             //die('Error executing query');
         }
     }
@@ -163,7 +163,7 @@ class PdoWrapper
     protected function _fetchAssoc($qry, $qryParams = null, $numCols = null) {
         $this->_ensureConnected();
 
-        $stmt = $this->dbh->prepare($qry);
+        $stmt = self::$dbh->prepare($qry);
         $stmt->execute($qryParams);
 
         if ($stmt->execute($qryParams)) {
@@ -188,7 +188,7 @@ class PdoWrapper
         }
         else {
             echo($qry);
-            error_log($this->dbh->errorInfo()[2]);
+            error_log(self::$dbh->errorInfo()[2]);
             //die('Error executing query');
         }
     }
@@ -202,14 +202,14 @@ class PdoWrapper
     protected function _fetchCol($qry, $qryParams = null) {
         $this->_ensureConnected();
 
-        $stmt = $this->dbh->prepare($qry);
+        $stmt = self::$dbh->prepare($qry);
 
         if ($stmt === false) {
             echo("\n$qry\n");
             print_r($qryParams);
-            error_log($this->dbh->errorInfo()[2]);
+            error_log(self::$dbh->errorInfo()[2]);
             // debug only:
-            //die($this->dbh->errorInfo()[2]);
+            //die(self::$dbh->errorInfo()[2]);
 
             return array();
         }
@@ -257,7 +257,7 @@ class PdoWrapper
 
         $this->_ensureConnected();
 
-        $stmt = $this->dbh->prepare($qry);
+        $stmt = self::$dbh->prepare($qry);
 
         if (is_object($stmt) AND $stmt->execute($qryParams)) {
                 $stmtType = strtoupper(substr($qry, 0, 3));
@@ -292,7 +292,7 @@ class PdoWrapper
          }
          else {
                 echo($qry);
-                $errObj = is_object($stmt) ? $stmt : $this->dbh;
+                $errObj = is_object($stmt) ? $stmt : self::$dbh;
                 $errorInfo = $errObj->errorInfo();
 
                 error_log($errorInfo[2] . "\t" . $qry);
