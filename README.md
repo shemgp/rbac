@@ -4,17 +4,17 @@ This is an experimental refactor / update of PHP-RBAC 2.x to use Postgres
 databases as well. All tests are passing but this is unofficial work at this
 point.
 
-PHP-RBAC is the de-facto authorization library for PHP. It provides developers
-with NIST Level 2 Hierarchical Role Based Access Control and more, in the
-fastest implementation yet.
+**Current Stable Release:** [PHP-RBAC v2.0](https://sourceforge.net/projects/phprbac/files/latest/download?source=dlp)
 
-**Current Stable Release:** [PHP-RBAC v2.0]()
+##Connect With Us
 
 * Home Page: [http://phprbac.net/](http://phprbac.net/)
 * OWASP Project Page: [https://www.owasp.org/index.php/Phprbac](https://www.owasp.org/index.php/Phprbac)
-* User Documentation: [http://phprbac.net/docs_contents.php](http://phprbac.net/docs_contents.php)
-* Development Documentation: [https://github.com/OWASP/rbac/wiki](https://github.com/OWASP/rbac/wiki)
-* Support: [https://github.com/OWASP/rbac/issues?state=open](https://github.com/OWASP/rbac/issues?state=open)
+* PHP-RBAC Documentation: [http://phprbac.net/docs_contents.php](http://phprbac.net/docs_contents.php)
+* PHP-RBAC Wiki: [https://github.com/OWASP/rbac/wiki](https://github.com/OWASP/rbac/wiki)
+* PHP-RBAC API: [http://phprbac.net/api.php](http://phprbac.net/api.php)
+* Issue Tracker: [https://github.com/OWASP/rbac/issues?state=open](https://github.com/OWASP/rbac/issues?state=open)
+* Mailing List: [https://lists.owasp.org/mailman/listinfo/owasp_phprbac](https://lists.owasp.org/mailman/listinfo/owasp_phprbac)
 
 ##What is an Rbac System?
 
@@ -110,7 +110,9 @@ seamless and invisible as possible.
 We welcome all contributions that will help make PHP-RBAC even better tomorrow
 than it is today!
 
-**How You Can Help:**
+Please visit the [PHP-RBAC Wiki](https://github.com/OWASP/rbac/wiki) to learn about our development process and workflow.
+
+###How You Can Help
 
 * Report Bugs, Enhancement Requests or Documentation errors using our
   [Issue Tracker](https://github.com/OWASP/rbac/issues?state=open)
